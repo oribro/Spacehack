@@ -37,6 +37,7 @@ window.onload = () => {
 	enemy1 = new NPC(0, HEIGHT-1);
 	enemy2 = new NPC(WIDTH-1, 0);
 	enemy3 = new NPC(WIDTH-1, HEIGHT-1);
+	enemy4 = new NPC((WIDTH/2).toFixed(0), (HEIGHT/2).toFixed(0));
 }
 
 /* Turn counter */
@@ -62,12 +63,27 @@ function boardInit() {
 	document.getElementById("turn-stat").innerHTML = turn;
 }
 
-/* Returns true if given position is in bounds, false otherwise */
+/* Returns true if given position is in bounds and movable, false otherwise */
 function checkBounds(xPos, yPos) {
+	// Check for board bounds.
 	if(xPos < 0 || xPos > (WIDTH - 1)) {
 		return false;
 	}
 	if(yPos < 0 || yPos > (HEIGHT - 1)) {
+		return false;
+	}
+	// Check for NPCs.
+	// TODO: create an npc list and iterate through it.
+	if(xPos == enemy1.x && yPos == enemy1.y) {
+		return false;
+	}
+	if(xPos == enemy2.x && yPos == enemy2.y) {
+		return false;
+	}
+	if(xPos == enemy3.x && yPos == enemy3.y) {
+		return false;
+	}
+	if(xPos == enemy4.x && yPos == enemy4.y) {
 		return false;
 	}
 	return true;
