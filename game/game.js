@@ -9,13 +9,16 @@ const WIDTH 		= X_ASPECT * ASPECT_MUL;
 const CHARACTER = '@';
 const GROUND 	= '#';
 
+/* Turn counter */
+var turn = 0;
+
 /* Create the board and fill environment */
 var i, j, biDigI, biDigJ;
 for(i = 0; i < HEIGHT; i++) {
 	biDigI = getTwoDigits(i);
 	var div = document.createElement("div");
 	div.setAttribute("id","r"+biDigI);
-	document.getElementById("game").appendChild(div);
+	document.getElementById("game-board").appendChild(div);
 	for(j = 0; j < WIDTH; j++) {
 		biDigJ = getTwoDigits(j);
 		var span = document.createElement("span");
@@ -108,6 +111,9 @@ function moveChar(xPos, yPos) {
 	// Set character position properties to new position.
 	character.xPos = xPos;
 	character.yPos = yPos;
+	
+	// Increment turn counter.
+	turn++;
 }
 
 /* Returns a 2 digit number of a 1-2 digits number */
