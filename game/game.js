@@ -6,80 +6,52 @@ const HEIGHT 		= Y_ASPECT * ASPECT_MUL;
 const WIDTH 		= X_ASPECT * ASPECT_MUL;
 
 /* Game environment ASCII symbols */
-const CHARACTER = '@';
+const PLAYER = '@';
 const GROUND 	= '#';
+const ENEMY = '*';
+
+'use strict';
+
+/*
+* Game setup
+*/
+window.onload = () => {
+
+	// Create the board.
+	boardInit();
+
+	// Create a new player character.
+	// Places the character at the top left.
+	player = new Player(0, 0);
+	
+	// Temp. movement event.
+	document.body.onkeydown = function(event) {player.move(event)};
+
+	// Create 3 Enemies.
+	// Place them at the remaining corners of the board.
+	enemy1 = new NPC(0, HEIGHT-1);
+	enemy2 = new NPC(WIDTH-1, 0);
+	enemy3 = new NPC(WIDTH-1, HEIGHT-1);
+}
 
 /* Turn counter */
 var turn = 0;
 
 /* Create the board and fill environment */
-var i, j, biDigI, biDigJ;
-for(i = 0; i < HEIGHT; i++) {
-	biDigI = getTwoDigits(i);
-	var div = document.createElement("div");
-	div.setAttribute("id","r"+biDigI);
-	document.getElementById("game-board").appendChild(div);
-	for(j = 0; j < WIDTH; j++) {
-		biDigJ = getTwoDigits(j);
-		var span = document.createElement("span");
-		span.setAttribute("id","c"+biDigI+biDigJ);
-		document.getElementById("r"+biDigI).appendChild(span);
-		document.getElementById("c"+biDigI+biDigJ).innerHTML = GROUND;
-	}
-}
-
-var character = {
-	x: 0,
-	y: 0,
-	
-	get xPos() {
-		return this.x;
-	},
-	get yPos() {
-		return this.y;
-	},
-	set xPos(n) {
-		this.x = n;
-	},
-	set yPos(n) {
-		this.y = n;
-	}
-};
-
-// Places the character at the top left.
-moveChar(0,0);
-
-// Temp. movement event.
-document.body.onkeydown = function(event) {move(event)}
-
-/* Character movement */
-function move(event) {
-	var key = event.key;
-	console.log(key);
-	
-	switch(key) {
-		case "ArrowRight":
-			if(checkBounds(character.xPos + 1, character.yPos)) {
-				moveChar(character.xPos + 1, character.yPos);
-			}
-			break;
-		case "ArrowLeft":
-			if(checkBounds(character.xPos - 1, character.yPos)) {
-				moveChar(character.xPos - 1, character.yPos);
-			}
-			break;
-		case "ArrowUp":
-			if(checkBounds(character.xPos, character.yPos - 1)) {
-				moveChar(character.xPos, character.yPos - 1);
-			}
-			break;
-		case "ArrowDown":
-			if(checkBounds(character.xPos, character.yPos + 1)) {
-				moveChar(character.xPos, character.yPos + 1);
-			}
-			break;
-		default:
-			break;
+function boardInit() {	
+	var i, j, biDigI, biDigJ;
+	for(i = 0; i < HEIGHT; i++) {
+		biDigI = getTwoDigits(i);
+		var div = document.createElement("div");
+		div.setAttribute("id","r"+biDigI);
+		document.getElementById("game").appendChild(div);
+		for(j = 0; j < WIDTH; j++) {
+			biDigJ = getTwoDigits(j);
+			var span = document.createElement("span");
+			span.setAttribute("id","c"+biDigI+biDigJ);
+			document.getElementById("r"+biDigI).appendChild(span);
+			document.getElementById("c"+biDigI+biDigJ).innerHTML = GROUND;
+		}
 	}
 }
 
@@ -94,30 +66,152 @@ function checkBounds(xPos, yPos) {
 	return true;
 }
 
-/* Redraws and sets character at new position */
-function moveChar(xPos, yPos) {
-	var biDigX = getTwoDigits(xPos);
-	var biDigY = getTwoDigits(yPos);
-	var biDigCurX = getTwoDigits(character.xPos);
-	var biDigCurY = getTwoDigits(character.yPos);
-	
-	// Set current character cell to ground symbol and new cell to character symbol.
-	document.getElementById("c"+biDigCurY+biDigCurX).innerHTML = GROUND;
-	document.getElementById("c"+biDigY+biDigX).innerHTML = CHARACTER;
-	
-	document.getElementById("c"+biDigCurY+biDigCurX).style.color = "orange";
-	document.getElementById("c"+biDigY+biDigX).style.color = "white";
-	
-	// Set character position properties to new position.
-	character.xPos = xPos;
-	character.yPos = yPos;
-	
-	// Increment turn counter.
-	turn++;
-}
 
 /* Returns a 2 digit number of a 1-2 digits number */
 function getTwoDigits(n) {
 	return ("0" + n).slice(-2);
 }
+
+/* Returns a random position within the given dimensions */
+function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
+	xPos = Math.floor((Math.random() * xMax));
+	yPos = Math.floor((Math.random() * yMax));
+
+	return [
+		xPos,
+		yPos
+	];
+}
+
+/*
+*	Class for a game character
+*/
+
+class Character {
+
+	constructor(x=0, y=0){
+		this.x = x;
+		this.y = y;
+	}
+
+	get xPos() {
+		return this.x;
+	}
+	get yPos() {
+		return this.y;
+	}
+	set xPos(n) {
+		this.x = n;
+	}
+	set yPos(n) {
+		this.y = n;
+	}
+
+	/* Redraws the ground and sets character at new position.
+	*  Returns the new position to draw the character symbol at.
+	*/
+	moveChar(xPos, yPos) {
+
+		var biDigCurX = getTwoDigits(this.xPos);
+		var biDigCurY = getTwoDigits(this.yPos);
+		
+		// Set current character cell to ground symbol.
+		document.getElementById("c"+biDigCurY+biDigCurX).innerHTML = GROUND;
+		
+		// Set character position properties to new position.
+		this.xPos = xPos;
+		this.yPos = yPos;
+
+		return [
+			xPos,
+			yPos
+		];
+	}
+
+}
+
+
+/*
+*	Class for the human player character.
+*/
+class Player extends Character {
+
+	constructor(x=0, y=0){
+		super(x, y);
+		this.draw(x, y);
+	}
+
+	move(event) {
+		var key = event.key;
+		console.log(key);
+		let newBiDig = []; 
+		
+		switch(key) {
+			case "ArrowRight":
+				if(checkBounds(this.xPos + 1, this.yPos)) {
+					newBiDig = this.moveChar(this.xPos + 1, this.yPos);
+					// Draw the character symbol at the updated location.
+					this.draw(...newBiDig);
+				}
+				break;
+			case "ArrowLeft":
+				if(checkBounds(this.xPos - 1, this.yPos)) {
+					newBiDig = this.moveChar(this.xPos - 1, this.yPos);
+					// Draw the character symbol at the updated location.
+					this.draw(...newBiDig);
+				}
+				break;
+			case "ArrowUp":
+				if(checkBounds(this.xPos, this.yPos - 1)) {
+					newBiDig = this.moveChar(this.xPos, this.yPos - 1);
+					// Draw the character symbol at the updated location.
+					this.draw(...newBiDig);
+				}
+				break;
+			case "ArrowDown":
+				if(checkBounds(this.xPos, this.yPos + 1)) {
+					newBiDig = this.moveChar(this.xPos, this.yPos + 1);
+					// Draw the character symbol at the updated location.
+					this.draw(...newBiDig);
+				}
+				break;
+			default:
+				break;
+		}
+
+	}
+
+	/*
+	*	Draws the character symbol at the given position. 
+	*/
+	draw(xPos, yPos){
+		const biDigX = getTwoDigits(xPos);
+		const biDigY = getTwoDigits(yPos);
+		document.getElementById("c"+biDigY+biDigX).innerHTML = PLAYER;
+	}
+}
+
+/*
+* Class for a Non Playable Character - the player's enemy.
+*/
+class NPC extends Character{
+
+	constructor(x, y){
+		super(x, y);
+		this.draw(x, y);
+	}
+
+	/*
+	*	Draws the character symbol at the given position.
+	*/
+	draw(xPos, yPos){
+		const biDigX = getTwoDigits(xPos);
+		const biDigY = getTwoDigits(yPos);
+		document.getElementById("c"+biDigY+biDigX).innerHTML = ENEMY;
+	}
+
+}
+
+
+
 
