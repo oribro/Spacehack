@@ -10,6 +10,11 @@ const PLAYER = '@';
 const GROUND 	= '#';
 const ENEMY = '*';
 
+/* Symbol colors */
+const C_PLAYER = "white";
+const C_GROUND = "orange";
+const C_NPC = "red";
+
 'use strict';
 
 /*
@@ -38,21 +43,23 @@ window.onload = () => {
 var turn = 0;
 
 /* Create the board and fill environment */
-function boardInit() {	
+function boardInit() {
 	var i, j, biDigI, biDigJ;
 	for(i = 0; i < HEIGHT; i++) {
 		biDigI = getTwoDigits(i);
 		var div = document.createElement("div");
 		div.setAttribute("id","r"+biDigI);
-		document.getElementById("game").appendChild(div);
+		document.getElementById("game-board").appendChild(div);
 		for(j = 0; j < WIDTH; j++) {
 			biDigJ = getTwoDigits(j);
 			var span = document.createElement("span");
 			span.setAttribute("id","c"+biDigI+biDigJ);
 			document.getElementById("r"+biDigI).appendChild(span);
 			document.getElementById("c"+biDigI+biDigJ).innerHTML = GROUND;
+			document.getElementById("c"+biDigI+biDigJ).style.color = C_GROUND;
 		}
 	}
+	document.getElementById("turn-stat").innerHTML = turn;
 }
 
 /* Returns true if given position is in bounds, false otherwise */
@@ -81,6 +88,12 @@ function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
 		xPos,
 		yPos
 	];
+}
+
+/** Increments turn counter and prints it to the stat line **/
+function incrementTurnCounter() {
+	turn++;
+	document.getElementById("turn-stat").innerHTML = turn;
 }
 
 /*
@@ -115,12 +128,16 @@ class Character {
 		var biDigCurX = getTwoDigits(this.xPos);
 		var biDigCurY = getTwoDigits(this.yPos);
 		
-		// Set current character cell to ground symbol.
+		// Set current character cell to ground symbol and color.
 		document.getElementById("c"+biDigCurY+biDigCurX).innerHTML = GROUND;
+		document.getElementById("c"+biDigCurY+biDigCurX).style.color = C_GROUND;
 		
 		// Set character position properties to new position.
 		this.xPos = xPos;
 		this.yPos = yPos;
+		
+		// Increment the turn counter.
+		incrementTurnCounter();
 
 		return [
 			xPos,
@@ -188,11 +205,12 @@ class Player extends Character {
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
 		document.getElementById("c"+biDigY+biDigX).innerHTML = PLAYER;
+		document.getElementById("c"+biDigY+biDigX).style.color = C_PLAYER;
 	}
 }
 
 /*
-* Class for a Non Playable Character - the player's enemy.
+* Class for a Non Playable Character.
 */
 class NPC extends Character{
 
@@ -208,6 +226,7 @@ class NPC extends Character{
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
 		document.getElementById("c"+biDigY+biDigX).innerHTML = ENEMY;
+		document.getElementById("c"+biDigY+biDigX).style.color = C_NPC;
 	}
 
 }
