@@ -36,10 +36,10 @@ var character = {
 		return this.y;
 	},
 	set xPos(n) {
-		this.xPos = n;
+		this.x = n;
 	},
 	set yPos(n) {
-		this.yPos = n;
+		this.y = n;
 	}
 };
 
