@@ -102,6 +102,9 @@ function moveChar(xPos, yPos) {
 	document.getElementById("c"+biDigCurY+biDigCurX).innerHTML = GROUND;
 	document.getElementById("c"+biDigY+biDigX).innerHTML = CHARACTER;
 	
+	document.getElementById("c"+biDigCurY+biDigCurX).style.color = "orange";
+	document.getElementById("c"+biDigY+biDigX).style.color = "white";
+	
 	// Set character position properties to new position.
 	character.xPos = xPos;
 	character.yPos = yPos;
