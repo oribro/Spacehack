@@ -9,7 +9,6 @@ span {
 #game {
 	/* Center game board */
 	margin: auto;
-	width: 50%;
 	text-align: center;
 	line-height: 100%;
 	position: absolute;
@@ -21,6 +20,10 @@ span {
 	font-family: monospace;
 	font-weight: bolder;
 	font-size: 1.5em;
-	color: orange;
 	opacity: 0.6;
+}
+
+p.stat {
+	color: orange;
+	float: left;
 }
