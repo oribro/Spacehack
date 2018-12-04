@@ -89,7 +89,7 @@ class Player extends Character {
 				newPos = [this.xPos, this.yPos + 1]
 				break;
 			default:
-				break;
+				return;
 		}
 
 		if(checkBounds(...newPos, npcs)) {
