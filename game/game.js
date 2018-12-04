@@ -77,7 +77,8 @@ function boardInit() {
 		}
 	}
 	document.getElementById("turn-stat").innerHTML = turn;
-	printToLog("test");
+	printToLog("test1");
+	printToLog("test2");
 }
 
 /* Returns true if given position is in bounds and movable, false otherwise.
@@ -131,7 +132,12 @@ function incrementTurnCounter() {
 
 /* Prints string to game log */
 function printToLog(string) {
-	document.getElementById("log").innerHTML = log + string;
+	if(log === "") {
+		log += string;
+	} else {
+		log += "\n" + string;
+	}
+	document.getElementById("log").innerHTML = log;
 }
 
 class Character {
