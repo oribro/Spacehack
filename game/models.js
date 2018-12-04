@@ -6,6 +6,7 @@ class Character {
 	constructor(x=0, y=0){
 		this.x = x;
 		this.y = y;
+		this.hp = DEFAULT_HP;
 	}
 
 	get xPos() {
@@ -14,13 +15,18 @@ class Character {
 	get yPos() {
 		return this.y;
 	}
+	get health(){
+		return this.hp;
+	}
 	set xPos(n) {
 		this.x = n;
 	}
 	set yPos(n) {
 		this.y = n;
 	}
-
+	set health(hp){
+		this.hp = hp;
+	}
 	/* Redraws the ground and sets character at new position.
 	*  Returns the new position to draw the character symbol at.
 	*/

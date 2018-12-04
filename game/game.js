@@ -15,6 +15,9 @@ const C_PLAYER = "white";
 const C_GROUND = "orange";
 const C_NPC = "red";
 
+/* Character traits */
+const DEFAULT_HP = 20;
+
 'use strict';
 
 /*
@@ -76,7 +79,8 @@ function boardInit() {
 			document.getElementById("c"+biDigI+biDigJ).style.color = C_GROUND;
 		}
 	}
-	document.getElementById("turn-stat").innerHTML = turn;
+	document.getElementById("turn-value").innerHTML = turn;
+	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
 	printToLog("test1");
 	printToLog("test2");
 }
@@ -123,7 +127,7 @@ function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
 /** Increments turn counter and prints it to the stat line **/
 function incrementTurnCounter() {
 	turn++;
-	document.getElementById("turn-stat").innerHTML = turn;
+	document.getElementById("turn-value").innerHTML = turn;
 }
 
 
@@ -136,7 +140,6 @@ function printToLog(string) {
 	}
 	document.getElementById("log").innerHTML = log;
 }
-
 
 
 
