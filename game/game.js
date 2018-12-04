@@ -8,7 +8,7 @@ const WIDTH 		= X_ASPECT * ASPECT_MUL;
 /* Game environment ASCII symbols */
 const PLAYER = '@';
 const GROUND 	= '#';
-const ENEMY = '*';
+const NON_PLAYER = '*';
 
 /* Symbol colors */
 const C_PLAYER = "white";
@@ -27,7 +27,7 @@ window.onload = () => {
 
 	// Create a new player character.
 	// Places the character at the top left.
-	player = new Player(0, 0);
+	var player = new Player(0, 0);
 	
 	// Temp. movement event.
 	document.body.onkeydown = function(event) {player.move(event)};
@@ -72,6 +72,7 @@ function checkBounds(xPos, yPos) {
 	if(yPos < 0 || yPos > (HEIGHT - 1)) {
 		return false;
 	}
+
 	// Check for NPCs.
 	// TODO: create an npc list and iterate through it.
 	if(xPos == enemy1.x && yPos == enemy1.y) {
@@ -241,7 +242,7 @@ class NPC extends Character{
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
-		document.getElementById("c"+biDigY+biDigX).innerHTML = ENEMY;
+		document.getElementById("c"+biDigY+biDigX).innerHTML = NON_PLAYER;
 		document.getElementById("c"+biDigY+biDigX).style.color = C_NPC;
 	}
 
