@@ -44,6 +44,9 @@ p.stat {
 	resize: none;
 	box-sizing: border-box;
     border-top: 2px solid orange;
+	border-bottom: 0px;
+	border-right: 0px;
+	border-left: 0px;
     background-color: black;
 	font-size: 1em;
 	padding-left: 5px;
