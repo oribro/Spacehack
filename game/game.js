@@ -56,6 +56,9 @@ function getNPCArray(){
 /* Turn counter */
 var turn = 0;
 
+/* Game log string */
+var log = "";
+
 /* Create the board and fill environment */
 function boardInit() {
 	var i, j, biDigI, biDigJ;
@@ -74,6 +77,7 @@ function boardInit() {
 		}
 	}
 	document.getElementById("turn-stat").innerHTML = turn;
+	printToLog("test");
 }
 
 /* Returns true if given position is in bounds and movable, false otherwise.
@@ -124,6 +128,11 @@ function incrementTurnCounter() {
 /*
 *	Class for a game character
 */
+
+/* Prints string to game log */
+function printToLog(string) {
+	document.getElementById("log").innerHTML = log + string;
+}
 
 class Character {
 
