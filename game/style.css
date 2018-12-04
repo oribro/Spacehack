@@ -1,5 +1,8 @@
 body {
 	background-color: black;
+	color: orange;
+	font-family: monospace;
+	font-weight: bolder;
 }
 
 span {
@@ -32,7 +35,6 @@ span {
 }
 
 p.stat {
-	color: orange;
 	float: left;
 }
 
@@ -54,4 +56,24 @@ p.stat {
 	-webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	color: orange;
+}
+a:hover {
+	text-decoration: underline;
+	color: orange;
+}
+a:active {
+	color: white;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	font-size: 1.2em;
 }
