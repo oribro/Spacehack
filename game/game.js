@@ -185,7 +185,9 @@ class Player extends Character {
 
 	move(event) {
 		var key = event.key;
+		// Vars for computing the new position to move the character.
 		let newBiDig = [];
+		let newPos = [];
 		// Obtain the npcs from the storage to check for bounds.
 		let npcs = JSON.parse(
 			sessionStorage.getItem('npcs')
@@ -193,35 +195,25 @@ class Player extends Character {
 		
 		switch(key) {
 			case "ArrowRight":
-				if(checkBounds(this.xPos + 1, this.yPos, npcs)) {
-					newBiDig = this.moveChar(this.xPos + 1, this.yPos);
-					// Draw the character symbol at the updated location.
-					this.draw(...newBiDig);
-				}
+				newPos = [this.xPos + 1, this.yPos];
 				break;
 			case "ArrowLeft":
-				if(checkBounds(this.xPos - 1, this.yPos, npcs)) {
-					newBiDig = this.moveChar(this.xPos - 1, this.yPos);
-					// Draw the character symbol at the updated location.
-					this.draw(...newBiDig);
-				}
+				newPos = [this.xPos - 1, this.yPos];
 				break;
 			case "ArrowUp":
-				if(checkBounds(this.xPos, this.yPos - 1, npcs)) {
-					newBiDig = this.moveChar(this.xPos, this.yPos - 1);
-					// Draw the character symbol at the updated location.
-					this.draw(...newBiDig);
-				}
+				newPos = [this.xPos, this.yPos - 1]
 				break;
 			case "ArrowDown":
-				if(checkBounds(this.xPos, this.yPos + 1, npcs)) {
-					newBiDig = this.moveChar(this.xPos, this.yPos + 1);
-					// Draw the character symbol at the updated location.
-					this.draw(...newBiDig);
-				}
+				newPos = [this.xPos, this.yPos + 1]
 				break;
 			default:
 				break;
+		}
+
+		if(checkBounds(...newPos, npcs)) {
+			newBiDig = this.moveChar(...newPos);
+			// Draw the character symbol at the updated location.
+			this.draw(...newBiDig);
 		}
 
 	}
