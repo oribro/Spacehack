@@ -30,7 +30,7 @@ window.onload = () => {
 	var player = new Player(0, 0);
 	
 	// Temp. movement event.
-	document.body.onkeydown = function(event) {player.move(event)};
+	//document.body.onkeydown = function(event) {player.move(event)};
 
 	// Create npcs and keep them in the browser storage.
 	npcs = getNPCArray();
@@ -59,6 +59,12 @@ var turn = 0;
 /* Game log string */
 var log = "";
 
+/* Index for the strings array */
+var stringIndex = 1;
+
+/* Enable/disable movement */
+var movement = false;
+
 /* Create the board and fill environment */
 function boardInit() {
 	var i, j, biDigI, biDigJ;
@@ -77,8 +83,31 @@ function boardInit() {
 		}
 	}
 	document.getElementById("turn-stat").innerHTML = turn;
-	printToLog("test1");
-	printToLog("test2");
+	
+	// Print first text to log.
+	printToLog(STRINGS[0]);
+	promptContinue();
+	
+	// Movement possible only when movement is enabled.
+	if(movement) {
+		document.body.onkeydown = function(event) {player.move(event)};
+	}
+	
+}
+
+/* Deletes the prompt message and prints next string */
+function nextString() {
+	log = log.replace(CONTINUE_PROMPT, "");
+	printToLog(STRINGS[stringIndex]);
+	stringIndex++;
+	movement = true;
+}
+
+/* Prompts the player to press a key */
+function promptContinue() {
+	movement = false;
+	printToLog(CONTINUE_PROMPT);
+	document.body.onkeydown = function(event) {nextString()};
 }
 
 /* Returns true if given position is in bounds and movable, false otherwise.
