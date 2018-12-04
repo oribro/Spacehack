@@ -32,12 +32,25 @@ window.onload = () => {
 	// Temp. movement event.
 	document.body.onkeydown = function(event) {player.move(event)};
 
-	// Create 3 Enemies.
-	// Place them at the remaining corners of the board.
-	enemy1 = new NPC(0, HEIGHT-1);
-	enemy2 = new NPC(WIDTH-1, 0);
-	enemy3 = new NPC(WIDTH-1, HEIGHT-1);
-	enemy4 = new NPC((WIDTH/2).toFixed(0), (HEIGHT/2).toFixed(0));
+	// Create npcs and keep them in the browser storage.
+	npcs = getNPCArray();
+	sessionStorage.setItem(
+		'npcs', JSON.stringify(npcs)
+	);
+}
+
+// Create NPCS.
+// Place them at the remaining corners of the board.
+function getNPCArray(){
+	return [
+	 	new NPC(0, HEIGHT-1),
+		new NPC(WIDTH-1, 0),
+	 	new NPC(WIDTH-1, HEIGHT-1),
+		new NPC(
+			parseInt((WIDTH/2).toFixed(0)), 
+			parseInt((HEIGHT/2).toFixed(0))
+		)
+	];
 }
 
 /* Turn counter */
@@ -63,8 +76,11 @@ function boardInit() {
 	document.getElementById("turn-stat").innerHTML = turn;
 }
 
-/* Returns true if given position is in bounds and movable, false otherwise */
-function checkBounds(xPos, yPos) {
+/* Returns true if given position is in bounds and movable, false otherwise.
+*  xPos, yPos: Number.
+*	npcs: Array<NPC>. Character cannot stand where an NPC is found. 
+*/
+function checkBounds(xPos, yPos, npcs) {
 	// Check for board bounds.
 	if(xPos < 0 || xPos > (WIDTH - 1)) {
 		return false;
@@ -74,20 +90,12 @@ function checkBounds(xPos, yPos) {
 	}
 
 	// Check for NPCs.
-	// TODO: create an npc list and iterate through it.
-	if(xPos == enemy1.x && yPos == enemy1.y) {
-		return false;
-	}
-	if(xPos == enemy2.x && yPos == enemy2.y) {
-		return false;
-	}
-	if(xPos == enemy3.x && yPos == enemy3.y) {
-		return false;
-	}
-	if(xPos == enemy4.x && yPos == enemy4.y) {
-		return false;
-	}
-	return true;
+	// If there are npcs in the way the check fails.
+	return !npcs.some(
+		(npc) => {
+			return xPos === npc.x && yPos === npc.y
+		}
+	); 
 }
 
 
@@ -177,33 +185,36 @@ class Player extends Character {
 
 	move(event) {
 		var key = event.key;
-		console.log(key);
-		let newBiDig = []; 
+		let newBiDig = [];
+		// Obtain the npcs from the storage to check for bounds.
+		let npcs = JSON.parse(
+			sessionStorage.getItem('npcs')
+		); 
 		
 		switch(key) {
 			case "ArrowRight":
-				if(checkBounds(this.xPos + 1, this.yPos)) {
+				if(checkBounds(this.xPos + 1, this.yPos, npcs)) {
 					newBiDig = this.moveChar(this.xPos + 1, this.yPos);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
 				}
 				break;
 			case "ArrowLeft":
-				if(checkBounds(this.xPos - 1, this.yPos)) {
+				if(checkBounds(this.xPos - 1, this.yPos, npcs)) {
 					newBiDig = this.moveChar(this.xPos - 1, this.yPos);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
 				}
 				break;
 			case "ArrowUp":
-				if(checkBounds(this.xPos, this.yPos - 1)) {
+				if(checkBounds(this.xPos, this.yPos - 1, npcs)) {
 					newBiDig = this.moveChar(this.xPos, this.yPos - 1);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
 				}
 				break;
 			case "ArrowDown":
-				if(checkBounds(this.xPos, this.yPos + 1)) {
+				if(checkBounds(this.xPos, this.yPos + 1, npcs)) {
 					newBiDig = this.moveChar(this.xPos, this.yPos + 1);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
