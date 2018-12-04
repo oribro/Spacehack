@@ -15,6 +15,9 @@ const C_PLAYER = "white";
 const C_GROUND = "orange";
 const C_NPC = "red";
 
+/* Character traits */
+const DEFAULT_HP = 20;
+
 'use strict';
 
 /*
@@ -28,7 +31,7 @@ window.onload = () => {
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(0, 0);
-	
+
 	// Temp. movement event.
 	//document.body.onkeydown = function(event) {player.move(event)};
 
@@ -47,7 +50,7 @@ function getNPCArray(){
 		new NPC(WIDTH-1, 0),
 	 	new NPC(WIDTH-1, HEIGHT-1),
 		new NPC(
-			parseInt((WIDTH/2).toFixed(0)), 
+			parseInt((WIDTH/2).toFixed(0)),
 			parseInt((HEIGHT/2).toFixed(0))
 		)
 	];
@@ -82,17 +85,18 @@ function boardInit() {
 			document.getElementById("c"+biDigI+biDigJ).style.color = C_GROUND;
 		}
 	}
-	document.getElementById("turn-stat").innerHTML = turn;
-	
+	document.getElementById("turn-value").innerHTML = turn;
+	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
+
 	// Print first text to log.
 	printToLog(STRINGS[0]);
 	promptContinue();
-	
+
 	// Movement possible only when movement is enabled.
 	if(movement) {
 		document.body.onkeydown = function(event) {player.move(event)};
 	}
-	
+
 }
 
 /* Deletes the prompt message and prints next string */
@@ -112,7 +116,7 @@ function promptContinue() {
 
 /* Returns true if given position is in bounds and movable, false otherwise.
 *  xPos, yPos: Number.
-*	npcs: Array<NPC>. Character cannot stand where an NPC is found. 
+*	npcs: Array<NPC>. Character cannot stand where an NPC is found.
 */
 function checkBounds(xPos, yPos, npcs) {
 	// Check for board bounds.
@@ -129,7 +133,7 @@ function checkBounds(xPos, yPos, npcs) {
 		(npc) => {
 			return xPos === npc.x && yPos === npc.y
 		}
-	); 
+	);
 }
 
 
@@ -152,7 +156,7 @@ function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
 /** Increments turn counter and prints it to the stat line **/
 function incrementTurnCounter() {
 	turn++;
-	document.getElementById("turn-stat").innerHTML = turn;
+	document.getElementById("turn-value").innerHTML = turn;
 }
 
 
@@ -165,7 +169,3 @@ function printToLog(string) {
 	}
 	document.getElementById("log").innerHTML = log;
 }
-
-
-
-

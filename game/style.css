@@ -34,8 +34,16 @@ span {
 	
 }
 
+#player-stats{
+	float: right;
+}
+
 p.stat {
 	float: left;
+}
+
+#hp{
+	padding-right: 30px;
 }
 
 #log {
