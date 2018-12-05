@@ -32,6 +32,8 @@ window.onload = () => {
 	// Places the character at the top left.
 	var player = new Player(0, 0);
 
+	promptContinue(player);
+
 	// Temp. movement event.
 	//document.body.onkeydown = function(event) {player.move(event)};
 
@@ -90,28 +92,21 @@ function boardInit() {
 
 	// Print first text to log.
 	printToLog(STRINGS[0]);
-	promptContinue();
-
-	// Movement possible only when movement is enabled.
-	if(movement) {
-		document.body.onkeydown = function(event) {player.move(event)};
-	}
-
 }
 
 /* Deletes the prompt message and prints next string */
-function nextString() {
+function nextString(player) {
 	log = log.replace(CONTINUE_PROMPT, "");
 	printToLog(STRINGS[stringIndex]);
 	stringIndex++;
-	movement = true;
+	document.body.onkeydown = function(event) {player.move(event)};
 }
 
 /* Prompts the player to press a key */
-function promptContinue() {
+function promptContinue(player) {
 	movement = false;
 	printToLog(CONTINUE_PROMPT);
-	document.body.onkeydown = function(event) {nextString()};
+	document.body.onkeydown = function(event) {nextString(player)};
 }
 
 /* Returns true if given position is in bounds and movable, false otherwise.
