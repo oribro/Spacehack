@@ -9,11 +9,13 @@ const WIDTH 		= X_ASPECT * ASPECT_MUL;
 const PLAYER = '@';
 const GROUND 	= '#';
 const NON_PLAYER = '*';
+const SHIP = '^';
 
 /* Symbol colors */
 const C_PLAYER = "white";
 const C_GROUND = "orange";
 const C_NPC = "red";
+const C_SHIP = "purple";
 
 /* Character traits */
 const DEFAULT_HP = 20;
@@ -30,7 +32,7 @@ window.onload = () => {
 
 	// Create a new player character.
 	// Places the character at the top left.
-	var player = new Player(0, 0);
+	var player = new Player(8, 7);
 
 	promptContinue(player);
 
@@ -42,6 +44,7 @@ window.onload = () => {
 	sessionStorage.setItem(
 		'npcs', JSON.stringify(npcs)
 	);
+	
 }
 
 // Create NPCS.
@@ -83,10 +86,29 @@ function boardInit() {
 			var span = document.createElement("span");
 			span.setAttribute("id","c"+biDigI+biDigJ);
 			document.getElementById("r"+biDigI).appendChild(span);
-			document.getElementById("c"+biDigI+biDigJ).innerHTML = GROUND;
-			document.getElementById("c"+biDigI+biDigJ).style.color = C_GROUND;
+			
+			setCell("c"+biDigI+biDigJ, GROUND, C_GROUND);
 		}
 	}
+	// Ship.
+	setCell("c0505", SHIP, C_SHIP);
+	setCell("c0604", SHIP, C_SHIP);
+	setCell("c0605", SHIP, C_SHIP);
+	setCell("c0606", SHIP, C_SHIP);
+	setCell("c0703", SHIP, C_SHIP);
+	setCell("c0704", SHIP, C_SHIP);
+	setCell("c0705", SHIP, C_SHIP);
+	setCell("c0706", SHIP, C_SHIP);
+	setCell("c0707", SHIP, C_SHIP);
+	
+	// Ship debris.
+	setCell("c1207", SHIP, C_SHIP);
+	setCell("c1208", SHIP, C_SHIP);
+	setCell("c1618", SHIP, C_SHIP);
+	setCell("c1619", SHIP, C_SHIP);
+	setCell("c1718", SHIP, C_SHIP);
+	setCell("c1719", SHIP, C_SHIP);
+	
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
 
@@ -96,7 +118,7 @@ function boardInit() {
 
 /* Deletes the prompt message and prints next string */
 function nextString(player) {
-	log = log.replace(CONTINUE_PROMPT, "");
+	log = log.replace(CONTINUE_PROMPT, HR);
 	printToLog(STRINGS[stringIndex]);
 	stringIndex++;
 	document.body.onkeydown = function(event) {player.move(event)};
@@ -121,14 +143,23 @@ function checkBounds(xPos, yPos, npcs) {
 	if(yPos < 0 || yPos > (HEIGHT - 1)) {
 		return false;
 	}
-
-	// Check for NPCs.
+	
+	var biDigX = getTwoDigits(xPos);
+	var biDigY = getTwoDigits(yPos);
+	
+	// Movement possible only if cell is ground.
+	if(document.getElementById("c"+biDigY+biDigX).innerText != GROUND) {
+		return false;
+	}
+	return true;
+	
+	/*// Check for NPCs.
 	// If there are npcs in the way the check fails.
 	return !npcs.some(
 		(npc) => {
 			return xPos === npc.x && yPos === npc.y
 		}
-	);
+	);*/
 }
 
 
@@ -162,5 +193,24 @@ function printToLog(string) {
 	} else {
 		log += "\n" + string;
 	}
-	document.getElementById("log").innerHTML = log;
+	
+	var logElement = document.getElementById("log");
+	logElement.innerHTML = log;
+	// Automatic scroll log to bottom.
+	//logElement.scrollTop = logElement.scrollHeight;
+}
+
+/* TODO: make it work. */
+/* Prints to the log 'length' strings starting from STRINGS[index], then prompts to continue */
+function plot(index, length, player) {
+	for (;index < length; index++) {
+		printToLog(STRINGS[index]);
+	}
+	promptContinue(player);
+}
+
+/* Sets a symbol and color to a cell */
+function setCell(cell, symbol, color) {
+	document.getElementById(cell).innerHTML = symbol;
+	document.getElementById(cell).style.color = color;
 }
