@@ -40,9 +40,6 @@ window.onload = () => {
 
 	eventSys.publish(promptContinue(player));
 
-	// Temp. movement event.
-	//document.body.onkeydown = function(event) {player.move(event)};
-
 	// Create npcs and keep them in the browser storage.
 	npcs = getNPCArray();
 	sessionStorage.setItem(
@@ -159,13 +156,6 @@ function checkBounds(xPos, yPos, npcs) {
 	}
 	return true;
 	
-	/*// Check for NPCs.
-	// If there are npcs in the way the check fails.
-	return !npcs.some(
-		(npc) => {
-			return xPos === npc.x && yPos === npc.y
-		}
-	);*/
 }
 
 
