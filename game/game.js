@@ -33,7 +33,7 @@ window.onload = () => {
 	// Subscribe game events.
 	var eventSys = new EventSystem();
 	subscribeGameEvents(eventSys);
-	
+
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(8, 7);
@@ -123,6 +123,8 @@ function boardInit() {
 
 /* Deletes the prompt message and prints next string */
 function exitShip(player) {
+	const playerPos = [player.xPos, player.yPos];
+	player.draw(...playerPos);
 	log = log.replace(CONTINUE_PROMPT, HR);
 	printToLog(STRINGS[EVENT.EXIT_SHIP]);
 	document.body.onkeydown = function(event) {player.move(event)};

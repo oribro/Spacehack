@@ -62,7 +62,6 @@ class Player extends Character {
 
 	constructor(x=0, y=0){
 		super(x, y);
-		this.draw(x, y);
 	}
 
 	move(event) {
