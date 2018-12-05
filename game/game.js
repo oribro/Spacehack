@@ -30,11 +30,15 @@ window.onload = () => {
 	// Create the board.
 	boardInit();
 
+	// Subscribe game events.
+	var eventSys = new EventSystem();
+	subscribeGameEvents(eventSys);
+	
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(8, 7);
 
-	promptContinue(player);
+	eventSys.publish(promptContinue(player));
 
 	// Temp. movement event.
 	//document.body.onkeydown = function(event) {player.move(event)};
