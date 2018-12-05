@@ -51,6 +51,7 @@ window.onload = () => {
 	
 }
 
+
 // Create NPCS.
 // Place them at the remaining corners of the board.
 function getNPCArray(){
@@ -117,14 +118,13 @@ function boardInit() {
 	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
 
 	// Print first text to log.
-	printToLog(STRINGS[0]);
+	printToLog(STRINGS[EVENT.WAKEUP]);
 }
 
 /* Deletes the prompt message and prints next string */
-function nextString(player) {
+function exitShip(player) {
 	log = log.replace(CONTINUE_PROMPT, HR);
-	printToLog(STRINGS[stringIndex]);
-	stringIndex++;
+	printToLog(STRINGS[EVENT.EXIT_SHIP]);
 	document.body.onkeydown = function(event) {player.move(event)};
 }
 
@@ -132,7 +132,7 @@ function nextString(player) {
 function promptContinue(player) {
 	movement = false;
 	printToLog(CONTINUE_PROMPT);
-	document.body.onkeydown = function(event) {nextString(player)};
+	document.body.onkeydown = function(event) {exitShip(player)};
 }
 
 /* Returns true if given position is in bounds and movable, false otherwise.
