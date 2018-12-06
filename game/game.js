@@ -13,7 +13,15 @@ const TILESET = "tileset/"
 const T_PLAYER = ASSETS + TILESET + "player1.png";
 const T_GROUND 	= ASSETS + TILESET + "ground1.png";
 const T_NON_PLAYER = ASSETS + TILESET + "npc1.png";
-const T_SHIP = ASSETS + TILESET + "ship1.png";
+const T_SHIP1 = ASSETS + TILESET + "ship1.png";
+const T_SHIP2 = ASSETS + TILESET + "ship2.png";
+const T_SHIP3 = ASSETS + TILESET + "ship3.png";
+const T_SHIP4 = ASSETS + TILESET + "ship4.png";
+const T_SHIP5 = ASSETS + TILESET + "ship5.png";
+const T_SHIP6 = ASSETS + TILESET + "ship6.png";
+const T_SHIP7 = ASSETS + TILESET + "ship7.png";
+const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
+const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 
 /* Game environment ASCII symbols */
 const PLAYER = '@';
@@ -107,23 +115,20 @@ function boardInit() {
 	}
 	
 	// Ship.
-	setCell("c0505", T_SHIP, SHIP, C_SHIP);
-	setCell("c0604", T_SHIP, SHIP, C_SHIP);
-	setCell("c0605", T_SHIP, SHIP, C_SHIP);
-	setCell("c0606", T_SHIP, SHIP, C_SHIP);
-	setCell("c0703", T_SHIP, SHIP, C_SHIP);
-	setCell("c0704", T_SHIP, SHIP, C_SHIP);
-	setCell("c0705", T_SHIP, SHIP, C_SHIP);
-	setCell("c0706", T_SHIP, SHIP, C_SHIP);
-	setCell("c0707", T_SHIP, SHIP, C_SHIP);
+	setTileOnTop("c0505", T_SHIP2);
+	setTileOnTop("c0605", T_SHIP3);
+	setTileOnTop("c0606", T_SHIP4);
+	setTileOnTop("c0604", T_SHIP5);
+	setTileOnTop("c0705", T_SHIP6);
+	setTileOnTop("c0805", T_SHIP7);
 	
 	// Ship debris.
-	setCell("c1207", T_SHIP, SHIP, C_SHIP);
-	setCell("c1208", T_SHIP, SHIP, C_SHIP);
-	setCell("c1618", T_SHIP, SHIP, C_SHIP);
-	setCell("c1619", T_SHIP, SHIP, C_SHIP);
-	setCell("c1718", T_SHIP, SHIP, C_SHIP);
-	setCell("c1719", T_SHIP, SHIP, C_SHIP);
+	setTileOnTop("c0318", T_DEBRIS1);
+	setTileOnTop("c0512", T_DEBRIS2);
+	setTileOnTop("c1203", T_DEBRIS1);
+	setTileOnTop("c1619", T_DEBRIS2);
+	setTileOnTop("c1018", T_DEBRIS1);
+	setTileOnTop("c1704", T_DEBRIS2);
 	
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
@@ -165,7 +170,10 @@ function checkBounds(xPos, yPos, npcs) {
 	var biDigY = getTwoDigits(yPos);
 	
 	// Movement possible only if cell is ground.
-	if((!useTileset && (document.getElementById("c"+biDigY+biDigX).innerText != GROUND)) || (useTileset && (document.getElementById("i"+biDigY+biDigX).src.search(T_GROUND) == -1))) {
+	if((!useTileset && (document.getElementById("c"+biDigY+biDigX).innerText != GROUND))) {
+		return false;
+	}
+	if(useTileset && ((document.getElementById("i"+biDigY+biDigX).src.search(T_GROUND) == -1) || (document.getElementById("c"+biDigY+biDigX).getElementsByTagName("img").length > 1))) {
 		return false;
 	}
 	return true;
@@ -236,4 +244,21 @@ function setCell(cell, tile, symbol, color) {
 		element.innerHTML = symbol;
 		element.style.color = color;
 	}
+}
+
+/* Sets a tile on top of the tile already in the cell. */
+function setTileOnTop(cell, tile) {
+	var img = document.createElement("img");
+	document.getElementById(cell).appendChild(img);
+	document.getElementById(cell).style.position = "relative";
+	img.setAttribute("id", cell.replace('c', 'o'));
+	img.setAttribute("src", tile);
+	img.style.position = "absolute";
+	img.style.top = "0";
+	img.style.left = "0";
+}
+
+function removeTileOnTop(cell) {
+	var overTile = document.getElementById(cell.replace('c','o'));
+	document.getElementById(cell).removeChild(overTile);
 }

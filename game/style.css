@@ -62,6 +62,7 @@ p.stat {
 span {
 	height: 24px;
 	width: 24px;
+	float: left;
 }
 
 #log {

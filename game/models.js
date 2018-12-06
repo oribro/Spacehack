@@ -36,7 +36,11 @@ class Character {
 		var biDigCurY = getTwoDigits(this.yPos);
 		
 		// Set current character cell to ground.
-		setCell("c"+biDigCurY+biDigCurX, T_GROUND, GROUND, C_GROUND);
+		if(useTileset) {
+			removeTileOnTop("c"+biDigCurY+biDigCurX);
+		} else {
+			setCell("c"+biDigCurY+biDigCurX, T_GROUND, GROUND, C_GROUND);
+		}
 		
 		// Set character position properties to new position.
 		this.xPos = xPos;
@@ -104,7 +108,11 @@ class Player extends Character {
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
-		setCell("c"+biDigY+biDigX, T_PLAYER, PLAYER, C_PLAYER);
+		if(useTileset) {
+			setTileOnTop("c"+biDigY+biDigX, T_PLAYER);
+		} else {
+			setCell("c"+biDigY+biDigX, T_PLAYER, PLAYER, C_PLAYER);
+		}
 	}
 }
 
@@ -119,12 +127,16 @@ class NPC extends Character{
 	}
 
 	/*
-	*	Draws the character symbol at the given position.
+	*	Draws the character at the given position.
 	*/
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
+		if(useTileset) {
+			setTileOnTop("c"+biDigY+biDigX, T_NPC);
+		} else {
 		setCell("c"+biDigY+biDigX, T_NPC, NON_PLAYER, C_NPC);
+		}
 	}
 
 }
