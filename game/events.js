@@ -35,11 +35,16 @@ class EventSystem{
 	/*
 	* Calls the appropriate callback(s) for the given event
 	* for the subscribers to notice.
+	* event: string. Event name to dispatch.
+	* args: array. List of arguments to call the callback function with.
 	*/
-	publish(event){
+	publish(event, ...args){
 		if (this.subscribers && this.subscribers[event]){
 			this.subscribers[event].forEach((callback) => {
-				callback();
+				// TODO: functions should not be declared on the global scope (aka window).
+				// We should make a Game class and declare there the callback
+				// functions OR make them anonymous and declare inside subscribeGameEvents. 
+				callback.apply(window, args);
 			});
 		}
 	}

@@ -38,7 +38,7 @@ window.onload = () => {
 	// Places the character at the top left.
 	var player = new Player(8, 7);
 
-	eventSys.publish(promptContinue(player));
+	eventSys.publish(EVENT.WAKEUP, player);
 
 	// Create npcs and keep them in the browser storage.
 	npcs = getNPCArray();
