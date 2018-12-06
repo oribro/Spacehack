@@ -258,6 +258,7 @@ function setTileOnTop(cell, tile) {
 	img.style.left = "0";
 }
 
+/* Removes the tile that covers another tile */
 function removeTileOnTop(cell) {
 	var overTile = document.getElementById(cell.replace('c','o'));
 	document.getElementById(cell).removeChild(overTile);

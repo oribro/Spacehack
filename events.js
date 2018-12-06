@@ -1,7 +1,8 @@
 // This is the place to define event names.
 const EVENT = {
 	'WAKEUP': 'wakeup',
-	'EXIT_SHIP': 'exit_ship'
+	'EXIT_SHIP': 'exit_ship',
+	'EXAMINE_SHIP': 'examine_ship'
 };
 
 /*
@@ -58,4 +59,5 @@ class EventSystem{
 function subscribeGameEvents(eventSys) {
 	eventSys.subscribe(EVENT.WAKEUP, promptContinue);
 	eventSys.subscribe(EVENT.EXIT_SHIP, exitShip);
+	eventSys.subscribe(EVENT.EXAMINE, examine);
 }
