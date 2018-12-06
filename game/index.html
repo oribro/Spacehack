@@ -4,29 +4,33 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<div id="game">
-			<div id="game-stats">
-				<div id="turn">
-					<p class="stat" id="turn-label">Turn:&nbsp</p> 
-					<p class="stat" id="turn-value"></p>
+		<div id="main">
+			<div id="game">
+				<div id="stats">
+					<div id="game-stats">
+						<div id="turn">
+							<p class="stat" id="turn-label">Turn:&nbsp</p> 
+							<p class="stat" id="turn-value"></p>
+						</div>
+					</div>
+					<div id="player-stats">
+						<div id="hp">
+							<p class="stat" id="hp-label">HP:&nbsp</p>
+							<p class="stat" id="hp-value"></p>
+						</div>
+					</div>
+				</div>
+				<div id="game-board"></div>
+				<div id="game-log">
+					<textarea readonly id="log"></textarea>
 				</div>
 			</div>
-			<div id="player-stats">
-				<div id="hp">
-					<p class="stat" id="hp-label">HP:&nbsp</p>
-					<p class="stat" id="hp-value"></p>
-				</div>
-			</div>
-			<div id="game-board"></div>
-			<div id="game-log">
-				<textarea readonly id="log"></textarea>
-			</div>
-		</div>
 
-		<script src = "models.js"></script>
-		<script src = "strings.js"></script>
-		<script src = "events.js"></script>
-		<script src = "game.js"></script>
-		<footer><a href="https://github.com/oribro/epic-game/tree/master/game" target="_blank">Github</a></footer>
+			<script src = "models.js"></script>
+			<script src = "strings.js"></script>
+			<script src = "events.js"></script>
+			<script src = "game.js"></script>
+			<footer><a href="https://github.com/oribro/epic-game/tree/master/game" target="_blank">Github</a></footer>
+		</div>
 	</body>
 </html>

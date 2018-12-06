@@ -35,9 +35,8 @@ class Character {
 		var biDigCurX = getTwoDigits(this.xPos);
 		var biDigCurY = getTwoDigits(this.yPos);
 		
-		// Set current character cell to ground symbol and color.
-		document.getElementById("c"+biDigCurY+biDigCurX).innerHTML = GROUND;
-		document.getElementById("c"+biDigCurY+biDigCurX).style.color = C_GROUND;
+		// Set current character cell to ground.
+		setCell("c"+biDigCurY+biDigCurX, T_GROUND, GROUND, C_GROUND);
 		
 		// Set character position properties to new position.
 		this.xPos = xPos;
@@ -100,13 +99,12 @@ class Player extends Character {
 	}
 
 	/*
-	*	Draws the character symbol at the given position. 
+	*	Draws the character at the given position. 
 	*/
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
-		document.getElementById("c"+biDigY+biDigX).innerHTML = PLAYER;
-		document.getElementById("c"+biDigY+biDigX).style.color = C_PLAYER;
+		setCell("c"+biDigY+biDigX, T_PLAYER, PLAYER, C_PLAYER);
 	}
 }
 
@@ -126,8 +124,7 @@ class NPC extends Character{
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
-		document.getElementById("c"+biDigY+biDigX).innerHTML = NON_PLAYER;
-		document.getElementById("c"+biDigY+biDigX).style.color = C_NPC;
+		setCell("c"+biDigY+biDigX, T_NPC, NON_PLAYER, C_NPC);
 	}
 
 }

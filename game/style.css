@@ -5,37 +5,46 @@ body {
 	font-weight: bolder;
 }
 
-span {
-	padding: 0px 2px;
+#main {
+	height: -webkit-fill-available; /* Chrome vertical centering */
+	height: -moz-available; 		/* Firefox vertical centering */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 #game {
+	display: grid;
+	
 	/* Center game board */
 	margin: auto;
 	text-align: center;
 	line-height: 100%;
-	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 	
 	/* Text style */
 	font-family: monospace;
 	font-weight: bolder;
 	font-size: 1.5em;
-	opacity: 0.6;
 	
 	border: 2px solid orange;
     border-radius: 4px;
+	
+	max-width: fit-content;
 }
 
 #game-stats {
 	padding-left: 5px;
+	float: left;
 	
 }
 
-#player-stats{
+#player-stats {
 	float: right;
+}
+
+#game-board {
+	margin: auto;
+	width: 100%;
 }
 
 p.stat {
@@ -44,6 +53,15 @@ p.stat {
 
 #hp{
 	padding-right: 5px;
+}
+
+.tileline {
+	height: 24px;
+}
+
+span {
+	height: 24px;
+	width: 24px;
 }
 
 #log {
