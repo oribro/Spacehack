@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" source="planet_spacing.tsx"/>
- <layer name="Tile Layer 1" width="100" height="100">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VZ2oDMRRGUaX33rvTnd573f+q8oWxSbIA2wGfAxeEfj3QSFNK+/Wk3tSX+tNAGkxDabix11zTeiNpNI2l8TSRJtNUmi7V+TiP9plJs2kuzaeFtJiW0nKpzqK5pvVW0mpaS+tpI22mrVRr9JlOOjJd99lOO2k37aX9dJAOU73R9ztW69B83eYoHZfq+z9NZ+k8XaTL8nNf6p0asMtcpet0k27TXbpPD+mx/L0vtN5Tek4v6TW9pff0Uar/xu+3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+H++AO6l/JpAnAAA
-  </data>
- </layer>
-</map>
