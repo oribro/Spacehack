@@ -102,20 +102,7 @@ class Player extends Character {
 			newBiDig = this.moveChar(...newPos);
 			// Draw the character symbol at the updated location.
 			this.draw(...newBiDig);
-		}
-		this.hunger--;
-		console.log(this.hunger);
-		if(this.hunger == 50) {
-			printToLog(STRINGS[EVENT.HUNGRY1]);
-		}
-		if(this.hunger == 20) {
-			printToLog(STRINGS[EVENT.HUNGRY2]);
-		}
-		if(this.hunger == 0) {
-			printToLog(STRINGS[EVENT.HUNGRY3]);
-		}
-		if(this.hunger < 0) {
-			this.health = this.health - 1;
+			this.getHungrier();
 		}
 	}
 
@@ -129,6 +116,25 @@ class Player extends Character {
 			setTileOnTop("c"+biDigY+biDigX, T_PLAYER);
 		} else {
 			setCell("c"+biDigY+biDigX, T_PLAYER, PLAYER, C_PLAYER);
+		}
+	}
+	
+	/* Reduces hunger value with each turn and eventually reduces health */
+	getHungrier() {
+		this.hunger--;
+		console.log(this.hunger);
+		if(this.hunger == 50) {
+			printToLog(STRINGS[EVENT.HUNGRY1]);
+		}
+		if(this.hunger == 20) {
+			printToLog(STRINGS[EVENT.HUNGRY2]);
+		}
+		if(this.hunger == 0) {
+			printToLog(STRINGS[EVENT.HUNGRY3]);
+		}
+		if(this.hunger < 0) {
+			this.health = this.health - 1;
+			document.getElementById("hp-value").innerHTML = this.health;
 		}
 	}
 }
