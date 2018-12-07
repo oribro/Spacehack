@@ -57,7 +57,7 @@ window.onload = () => {
 
 	// Create a new player character.
 	// Places the character at the top left.
-	var player = new Player(8, 7);
+	var player = new Player(6, 5);
 
 	eventSys.publish(EVENT.WAKEUP, player);
 
