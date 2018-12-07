@@ -59,5 +59,5 @@ class EventSystem{
 function subscribeGameEvents(eventSys) {
 	eventSys.subscribe(EVENT.WAKEUP, promptContinue);
 	eventSys.subscribe(EVENT.EXIT_SHIP, exitShip);
-	eventSys.subscribe(EVENT.EXAMINE, examine);
+	
 }
