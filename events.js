@@ -2,7 +2,9 @@
 const EVENT = {
 	'WAKEUP': 'wakeup',
 	'EXIT_SHIP': 'exit_ship',
-	'EXAMINE_SHIP': 'examine_ship'
+	'EXAMINE_SHIP': 'examine_ship',
+	'EXAMINE_DEBRIS': 'examine_debris',
+	'EXAMINE_NOTHING': 'examine_nothing'
 };
 
 /*
