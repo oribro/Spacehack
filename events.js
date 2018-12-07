@@ -4,7 +4,10 @@ const EVENT = {
 	'EXIT_SHIP': 'exit_ship',
 	'EXAMINE_SHIP': 'examine_ship',
 	'EXAMINE_DEBRIS': 'examine_debris',
-	'EXAMINE_NOTHING': 'examine_nothing'
+	'EXAMINE_NOTHING': 'examine_nothing',
+	'HUNGRY1': 'hungry1',
+	'HUNGRY2': 'hungry2',
+	'HUNGRY3': 'hungry3'
 };
 
 /*

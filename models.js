@@ -15,8 +15,11 @@ class Character {
 	get yPos() {
 		return this.y;
 	}
-	get health(){
+	get health() {
 		return this.hp;
+	}
+	get hungerVal() {
+		return this.hunger;
 	}
 	set xPos(n) {
 		this.x = n;
@@ -65,6 +68,7 @@ class Player extends Character {
 
 	constructor(x=0, y=0){
 		super(x, y);
+		this.hunger = 100;
 	}
 
 	move(event) {
@@ -99,7 +103,20 @@ class Player extends Character {
 			// Draw the character symbol at the updated location.
 			this.draw(...newBiDig);
 		}
-
+		this.hunger--;
+		console.log(this.hunger);
+		if(this.hunger == 50) {
+			printToLog(STRINGS[EVENT.HUNGRY1]);
+		}
+		if(this.hunger == 20) {
+			printToLog(STRINGS[EVENT.HUNGRY2]);
+		}
+		if(this.hunger == 0) {
+			printToLog(STRINGS[EVENT.HUNGRY3]);
+		}
+		if(this.hunger < 0) {
+			this.health = this.health - 1;
+		}
 	}
 
 	/*

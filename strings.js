@@ -16,7 +16,13 @@ const STRINGS = {
 	
 	"examine_debris": "\"Debris from the ship.\"",
 	
-	"examine_nothing": "\"There's nothing interesting around.\""
+	"examine_nothing": "\"There's nothing interesting around.\"",
+	
+	"hungry1": "You are getting hungry.",
+	
+	"hungry2": "You are very hungry.",
+	
+	"hungry3": "You are malnourished and are starting to lose health."
 };
 
 const CONTINUE_PROMPT = "Press any key to continue...";
