@@ -141,7 +141,7 @@ function boardInit() {
 function exitShip(player) {
 	const playerPos = [player.xPos, player.yPos];
 	player.draw(...playerPos);
-	log = log.replace(CONTINUE_PROMPT, HR);
+	log = log.slice(0, log.lastIndexOf("\n") - 1);
 	printToLog(STRINGS[EVENT.EXIT_SHIP]);
 	document.body.onkeydown = function(event) {control(event, player)};
 }
@@ -209,7 +209,7 @@ function printToLog(string) {
 	if(log === "") {
 		log += string;
 	} else {
-		log += "\n" + string;
+		log += "\n\n" + string;
 	}
 	
 	var logElement = document.getElementById("log");

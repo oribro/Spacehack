@@ -20,4 +20,3 @@ const STRINGS = {
 };
 
 const CONTINUE_PROMPT = "Press any key to continue...";
-const HR = "--------------------";
