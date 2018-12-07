@@ -69,7 +69,7 @@ span {
 	color: orange;
 	float: left;
 	width: 100%;
-	height: 5em;
+	height: 6em;
 	resize: none;
 	box-sizing: border-box;
     border-top: 2px solid orange;
@@ -83,6 +83,28 @@ span {
 	-webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: orange; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: orange; 
 }
 
 a:link, a:visited {
