@@ -1,4 +1,4 @@
-A roguelike game inspired by Nethack.
+A roguelike game inspired by [Nethack](https://en.wikipedia.org/wiki/NetHack).
 
 
 Your spaceship crashes on an unknown planet and you barely make it. The ship is badly damaged and your partner is missing.
