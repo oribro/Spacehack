@@ -176,12 +176,11 @@ class Player extends Character {
 		await sleep(3500);
 		image.style.display = "none";
 		// ES6 style for writing multiline strings with variables.
-		alert(`
-			Oh no! You died.
-			Sadly, this is where your journey ends.
-			You survived for ${ turn } turns.
-			Cause of death: ${ cause }. 
-		`);
+		alert(`Oh no! You died.\n` +
+		`Sadly, this is where your journey ends.\n` +
+		`You survived for ${ turn } turns.\n` +
+		`Cause of death: ${ cause }.`
+		);
 	}
 }
 
