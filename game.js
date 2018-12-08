@@ -51,15 +51,20 @@ window.onload = () => {
 	// Create the board.
 	boardInit();
 
-	// Subscribe game events.
-	var eventSys = new EventSystem();
-	subscribeGameEvents(eventSys);
-
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(6, 5);
+	
+	// Create an event system and make it accessible to all files.
+	var eventSys = new EventSystem();
+	// Note: this is a bad practice, we should find other way to do it.
+	window.eventSys = eventSys;
 
-	eventSys.publish(EVENT.WAKEUP, player);
+	// TODO: Enable subscriptions of class methods so we don't have to pass player.
+	// Subscribe game events.
+	window.eventSys.subscribeGameEvents(player);
+	window.eventSys.publish(EVENT.WAKEUP, player);
+
 
 	/*// Create npcs and keep them in the browser storage.
 	npcs = getNPCArray();

@@ -54,15 +54,16 @@ class EventSystem{
 			});
 		}
 	}
+
+	/*
+	* This is the place to register all possible game events.
+	* eventSys: EventSystem. The object that keeps track of the events.
+	*/
+	subscribeGameEvents(player) {
+		this.subscribe(EVENT.WAKEUP, promptContinue);
+		this.subscribe(EVENT.EXIT_SHIP, exitShip);
+		this.subscribe(EVENT.STARVATION, player.die);
+	}
 }
 
 
-/*
-* This is the place to register all possible game events.
-* eventSys: EventSystem. The object that keeps track of the events.
-*/
-function subscribeGameEvents(eventSys) {
-	eventSys.subscribe(EVENT.WAKEUP, promptContinue);
-	eventSys.subscribe(EVENT.EXIT_SHIP, exitShip);
-	
-}

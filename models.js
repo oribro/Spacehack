@@ -123,6 +123,8 @@ class Player extends Character {
 	getHungrier() {
 		this.hunger--;
 		console.log(this.hunger);
+		// TODO: Subscribe and publish the different hunger events.
+
 		if(this.hunger == 50) {
 			printToLog(STRINGS[EVENT.HUNGRY1]);
 		}
