@@ -173,7 +173,7 @@ class Player extends Character {
 		// Using the power of ES to make a beautiful async animation:
 		// Once the animation starts, the program waits for it to finish.
 		image.style.animation = "rotate90 2s";
-		await sleep(3500);
+		await sleep(2500);
 		image.style.display = "none";
 		// ES6 style for writing multiline strings with variables.
 		alert(`Oh no! You died.\n` +
