@@ -65,6 +65,32 @@ span {
 	float: left;
 }
 
+/* TODO: use SASS for loop for this */
+/* Perform a rotation of 90 degrees anti-clockwise */
+@keyframes rotate90 {
+	0% {
+		transform: skewX(0deg);
+	}
+	10% {
+		transform: skewX(9deg);
+	}
+	20% {
+		transform: skewX(18deg);
+	}
+	40% {
+		transform: skewX(36deg);
+	}
+	60% {
+		transform: skewX(54deg);
+	}
+	80% {
+		transform: skewX(72deg);
+	}
+	100%{
+		transform: skewX(90deg);
+	}
+}
+
 #log {
 	color: orange;
 	float: left;

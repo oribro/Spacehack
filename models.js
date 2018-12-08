@@ -69,6 +69,10 @@ class Player extends Character {
 	constructor(x=0, y=0){
 		super(x, y);
 		this.hunger = 100;
+		// TODO: We wouldn't need this if we had enabled EventSystem.publish
+		// to accept methods. Right now the binding is needed because currently
+		// die is defined at WINDOW (global) scope.  
+		this.die = this.die.bind(this);
 	}
 
 	move(event) {
@@ -119,6 +123,15 @@ class Player extends Character {
 		}
 	}
 	
+	/*
+	*	Returns the player's image on the tileset.
+	*/
+	getImage(){
+		const biDigX = getTwoDigits(this.xPos);
+		const biDigY = getTwoDigits(this.yPos);
+		return "o" + biDigY + biDigX;
+	}
+
 	/* Reduces hunger value with each turn and eventually reduces health */
 	getHungrier() {
 		this.hunger--;
@@ -138,6 +151,37 @@ class Player extends Character {
 			this.health = this.health - 1;
 			document.getElementById("hp-value").innerHTML = this.health;
 		}
+		if(this.health === 0){
+			// Disable player movement. The syntax could be improved with JQuery.
+			document.body.onkeydown = null;
+			window.eventSys.publish(EVENT.STARVATION, "Staying hungry for too long");
+		}
+
+	}
+
+
+	/*
+	*  The tragic event of the player's health reaching zero.
+	*  cause: string. The reason why the player died.
+	*/
+	async die(cause) {
+		await sleep(2000);
+		const turn = document.getElementById("turn-value").innerText;
+		let image = document.getElementById(this.getImage());
+		document.getElementById("log").style.display = "none";
+		document.getElementById("stats").style.display = "none";
+		// Using the power of ES to make a beautiful async animation:
+		// Once the animation starts, the program waits for it to finish.
+		image.style.animation = "rotate90 3s";
+		await sleep(3500);
+		image.style.display = "none";
+		// ES6 style for writing multiline strings with variables.
+		alert(`
+			Oh no! You died.
+			Sadly, this is where your journey ends.
+			You survived for ${ turn } turns.
+			Cause of death: ${ cause }. 
+		`);
 	}
 }
 

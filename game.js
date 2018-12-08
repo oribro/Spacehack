@@ -297,3 +297,15 @@ function examine(player) {
 	}
 	printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 }
+
+
+/*
+* Function for introducing delay into the game.
+* Calling this function should freeze game execution.
+* duration: number. The amount of time to sleep.
+*/
+function sleep(duration){
+	return new Promise(
+		resolve => setTimeout(resolve, duration)
+	);
+}

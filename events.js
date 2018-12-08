@@ -7,7 +7,8 @@ const EVENT = {
 	'EXAMINE_NOTHING': 'examine_nothing',
 	'HUNGRY1': 'hungry1',
 	'HUNGRY2': 'hungry2',
-	'HUNGRY3': 'hungry3'
+	'HUNGRY3': 'hungry3',
+	'STARVATION': 'starvation'
 };
 
 /*
