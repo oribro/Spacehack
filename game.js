@@ -309,3 +309,13 @@ function sleep(duration){
 		resolve => setTimeout(resolve, duration)
 	);
 }
+
+/* Shows/hides the inventory window */
+function inventory() {
+	var inventory = document.getElementById("inventory");
+	if(inventory.style.display != "block") {
+		inventory.style.display = "block";
+	} else {
+		inventory.style.display = "none";
+	}
+}

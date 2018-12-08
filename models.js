@@ -135,7 +135,6 @@ class Player extends Character {
 	/* Reduces hunger value with each turn and eventually reduces health */
 	getHungrier() {
 		this.hunger--;
-		console.log(this.hunger);
 		// TODO: Subscribe and publish the different hunger events.
 
 		if(this.hunger == 50) {

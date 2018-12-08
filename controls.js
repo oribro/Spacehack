@@ -8,6 +8,7 @@ const MOVE_LEFT = "ArrowLeft";
 const MOVE_UP = "ArrowUp";
 const MOVE_DOWN = "ArrowDown";
 const EXAMINE = "e";
+const INVENTORY = "i";
 
 /* Passes the keydown event to the suitable function */
 function control(event, player) {
@@ -27,6 +28,9 @@ function control(event, player) {
 			break;
 		case EXAMINE:
 			examine(player);
+			break;
+		case INVENTORY:
+			inventory();
 			break;
 	}
 }

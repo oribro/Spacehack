@@ -1,3 +1,6 @@
+html {
+	height: 100%;
+}
 body {
 	background-color: black;
 	color: orange;
@@ -15,6 +18,7 @@ body {
 
 #game {
 	display: grid;
+	grid-gap: 0px 0px;
 	
 	/* Center game board */
 	margin: auto;
@@ -32,6 +36,11 @@ body {
 	max-width: fit-content;
 }
 
+#stats {
+	grid-row-start: 1;
+	grid-row-end: 2;
+}
+
 #game-stats {
 	padding-left: 5px;
 	float: left;
@@ -45,6 +54,8 @@ body {
 #game-board {
 	margin: auto;
 	width: 100%;
+	grid-row-start: 2;
+	grid-row-end: 3;
 }
 
 p.stat {
@@ -91,6 +102,12 @@ span {
 	}
 }
 
+#game-log {
+	grid-row-start: 3;
+	grid-row-end: 4;
+	width: 100%;
+}
+
 #log {
 	color: orange;
 	float: left;
@@ -131,6 +148,16 @@ span {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: orange; 
+}
+
+#inventory {
+	grid-column-start: 2;
+	grid-column-end: 2;
+	grid-row-start: 1;
+	grid-row-end: 4;
+	width: 200px;
+	border-left: 2px solid orange;
+	display: none;
 }
 
 a:link, a:visited {
