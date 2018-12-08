@@ -165,14 +165,14 @@ class Player extends Character {
 	*  cause: string. The reason why the player died.
 	*/
 	async die(cause) {
-		await sleep(2000);
+		await sleep(700);
 		const turn = document.getElementById("turn-value").innerText;
 		let image = document.getElementById(this.getImage());
 		document.getElementById("log").style.display = "none";
 		document.getElementById("stats").style.display = "none";
 		// Using the power of ES to make a beautiful async animation:
 		// Once the animation starts, the program waits for it to finish.
-		image.style.animation = "rotate90 3s";
+		image.style.animation = "rotate90 2s";
 		await sleep(3500);
 		image.style.display = "none";
 		// ES6 style for writing multiline strings with variables.
