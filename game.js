@@ -315,3 +315,23 @@ function repopInv(player) {
 	}
 	
 }
+
+/* Prompts the player for an item number and uses the item */
+function use(player) {
+	var errMsg = "Please enter a valid item number.";
+	var itemSel = parseInt(prompt("Enter item number:"), 10);
+	if(typeof itemSel != "number") {
+		printToLog(errMsg);
+	} else if (itemSel < 0 || itemSel >= player.getInventory().length) {
+		printToLog(errMsg);
+	} else {
+		var item = player.getInventory()[itemSel];
+		switch(item.type) {
+			case "Food":
+				player.incHunger = item.value;
+				printToLog("You eat the " + item.name + ". You feel satiated.");
+				break;
+		}
+		player.getInventory().splice(itemSel, 1);
+	}
+}

@@ -18,9 +18,6 @@ class Character {
 	get health() {
 		return this.hp;
 	}
-	get hungerVal() {
-		return this.hunger;
-	}
 	set xPos(n) {
 		this.x = n;
 	}
@@ -73,7 +70,7 @@ class Player extends Character {
 		// to accept methods. Right now the binding is needed because currently
 		// die is defined at WINDOW (global) scope.  
 		this.die = this.die.bind(this);
-		this.inventory = [new Item("Ration", "Food")];
+		this.inventory = [new Item("Ration", "Food", 50)];
 	}
 
 	move(event) {
@@ -214,6 +211,15 @@ class Player extends Character {
 		`You survived for ${ turn } turns.\n` +
 		`Cause of death: ${ cause }.`
 		);
+	}
+	get hungerVal() {
+		return this.hunger;
+	}
+	set hungerVal(newHunger) {
+		this.hunger = newHunger;
+	}
+	set incHunger(addHunger) {
+		this.hunger += addHunger;
 	}
 }
 
