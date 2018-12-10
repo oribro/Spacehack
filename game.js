@@ -311,11 +311,37 @@ function sleep(duration){
 }
 
 /* Shows/hides the inventory window */
-function inventory() {
+function inventory(player) {
 	var inventory = document.getElementById("inventory");
 	if(inventory.style.display != "block") {
+		repopInv(player);
 		inventory.style.display = "block";
 	} else {
 		inventory.style.display = "none";
 	}
+}
+
+/* Repopulates the player inventory */
+function repopInv(player) {
+	var invElement = document.getElementById("inventory");
+	
+	// Removes old inventory list.
+	var invLists = document.getElementsByClassName("inv-list");
+	if(invLists.length > 0) {
+		invElement.removeChild(invLists[0]);
+	}
+	
+	// Creates new inventory list.
+	var ulElement = document.createElement("ul");
+	ulElement.setAttribute("class", "inv-list");
+	invElement.appendChild(ulElement);
+	var inventory = player.getInventory();
+	var i;
+	for(i = 0; i < inventory.length; i++) {
+		var liElement = document.createElement("li");
+		var li = ulElement.appendChild(liElement);
+		li.setAttribute("id", "inv-item-"+i);
+		li.innerHTML = inventory[i].name + " (" + inventory[i].type + ")";
+	}
+	
 }

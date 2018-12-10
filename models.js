@@ -73,6 +73,7 @@ class Player extends Character {
 		// to accept methods. Right now the binding is needed because currently
 		// die is defined at WINDOW (global) scope.  
 		this.die = this.die.bind(this);
+		this.inventory = [new Item("Ration", "Food")];
 	}
 
 	move(event) {
@@ -156,6 +157,10 @@ class Player extends Character {
 			window.eventSys.publish(EVENT.STARVATION, "Staying hungry for too long");
 		}
 
+	}
+	
+	getInventory() {
+		return this.inventory;
 	}
 
 

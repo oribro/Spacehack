@@ -160,6 +160,12 @@ span {
 	display: none;
 }
 
+.inv-list {
+	list-style-type: none;
+	padding: 10px;
+	text-align: left;
+}
+
 a:link, a:visited {
 	text-decoration: none;
 	color: orange;

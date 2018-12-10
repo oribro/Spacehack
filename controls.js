@@ -30,7 +30,7 @@ function control(event, player) {
 			examine(player);
 			break;
 		case INVENTORY:
-			inventory();
+			inventory(player);
 			break;
 	}
 }
