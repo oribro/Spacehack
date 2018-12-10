@@ -27,10 +27,10 @@ function control(event, player) {
 			player.move(event);
 			break;
 		case EXAMINE:
-			examine(player);
+			player.examine();
 			break;
 		case INVENTORY:
-			inventory(player);
+			toggleInventory(player);
 			break;
 	}
 }

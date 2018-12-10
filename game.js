@@ -269,36 +269,6 @@ function removeTileOnTop(cell) {
 	document.getElementById(cell).removeChild(overTile);
 }
 
-/* On key press of matching key, examines the perimeter around the player and prints information to log */
-function examine(player) {
-	var i,j;
-	for(i = -1; i <= 1; i++) {
-		for(j = -1; j <= 1; j++) {
-			if(i == 0 && j == 0) {
-				continue;
-			}
-			if((player.xPos + i) >= 0 && (player.xPos + i) < WIDTH && (player.yPos + j) >= 0 && (player.yPos + j) < HEIGHT) {
-				var biDigX = getTwoDigits(player.xPos + i);
-				var biDigY = getTwoDigits(player.yPos + j);
-				var checkedCell = document.getElementById("c" + biDigY + biDigX);
-				if(checkedCell.getElementsByTagName("img").length > 1) {
-					var checkedOverTile = document.getElementById("o" + biDigY + biDigX);
-					if(checkedOverTile.src.search("ship") != -1) {
-						printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
-						return;
-					}
-					if(checkedOverTile.src.search("debris") != -1) {
-						printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
-						return;
-					}
-				}
-			}
-		}
-	}
-	printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
-}
-
-
 /*
 * Function for introducing delay into the game.
 * Calling this function should freeze game execution.

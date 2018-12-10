@@ -163,6 +163,35 @@ class Player extends Character {
 		return this.inventory;
 	}
 
+	/* On key press of matching key, examines the perimeter around the player and prints information to log */
+	examine() {
+		var i,j;
+		for(i = -1; i <= 1; i++) {
+			for(j = -1; j <= 1; j++) {
+				if(i == 0 && j == 0) {
+					continue;
+				}
+				if((this.xPos + i) >= 0 && (this.xPos + i) < WIDTH && 
+					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
+					var biDigX = getTwoDigits(this.xPos + i);
+					var biDigY = getTwoDigits(this.yPos + j);
+					var checkedCell = document.getElementById("c" + biDigY + biDigX);
+					if(checkedCell.getElementsByTagName("img").length > 1) {
+						var checkedOverTile = document.getElementById("o" + biDigY + biDigX);
+						if(checkedOverTile.src.search("ship") != -1) {
+							printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
+							return;
+						}
+						if(checkedOverTile.src.search("debris") != -1) {
+							printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
+							return;
+						}
+					}
+				}
+			}
+		}
+		printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+	}
 
 	/*
 	*  The tragic event of the player's health reaching zero.
