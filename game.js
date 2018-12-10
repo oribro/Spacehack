@@ -311,7 +311,7 @@ function sleep(duration){
 }
 
 /* Shows/hides the inventory window */
-function inventory(player) {
+function toggleInventory(player) {
 	var inventory = document.getElementById("inventory");
 	if(inventory.style.display != "block") {
 		repopInv(player);
