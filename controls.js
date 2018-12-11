@@ -12,6 +12,12 @@ const INVENTORY = "i";
 const USE = "u";
 const PICKUP = "p";
 
+/* Show the key bindings on the 'controls' list */
+document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
+document.getElementById("inventory-key").innerHTML = "'"+INVENTORY+"'";
+document.getElementById("use-key").innerHTML = "'"+USE+"'";
+document.getElementById("pickup-key").innerHTML = "'"+PICKUP+"'";
+
 /* Passes the keydown event to the suitable function */
 function control(event, player) {
 	var key = event.key;

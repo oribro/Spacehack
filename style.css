@@ -1,11 +1,35 @@
 html {
 	height: 100%;
 }
+
 body {
 	background-color: black;
 	color: orange;
 	font-family: monospace;
 	font-weight: bolder;
+}
+
+header {
+	text-align: center;
+}
+
+h1 {
+	letter-spacing: 10px;
+	margin-bottom: 0;
+}
+
+#controls {
+	font-size: 1.1em;
+	border: 2px solid orange;
+	border-left: none;
+	width: fit-content;
+	padding: 10px;
+	float: left;
+	grid-column-start: 0;
+	grid-column-end: 1;
+	grid-row-start: 1;
+	grid-row-end: 4;
+	display: none;
 }
 
 #main {
@@ -70,7 +94,7 @@ p.stat {
 	height: 24px;
 }
 
-span {
+.tileline > span {
 	height: 24px;
 	width: 24px;
 	float: left;

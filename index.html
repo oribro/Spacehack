@@ -5,6 +5,9 @@
 	</head>
 	<body>
 		<div id="main">
+			<header>
+				<h1>SpaceHack</h1>
+			</header>
 			<div id="game">
 				<div id="stats">
 					<div id="game-stats">
@@ -19,6 +22,16 @@
 							<p class="stat" id="hp-value"></p>
 						</div>
 					</div>
+				</div>
+				<div id="controls">
+					<h2>Game controls</h2>
+					<ul>
+						<li><span class="controls-label">Movement: </span><span id="movement-key">Arrow keys</span></li>
+						<li><span class="controls-label">Examine: </span><span id="examine-key"></span></li>
+						<li><span class="controls-label">Inventory: </span><span id="inventory-key"></span></li>
+						<li><span class="controls-label">Use: </span><span id="use-key"></span></li>
+						<li><span class="controls-label">Pick up: </span><span id="pickup-key"></span></li>
+					</ul>
 				</div>
 				<div id="game-board"></div>
 				<div id="game-log">
