@@ -7,6 +7,9 @@ body {
 	color: orange;
 	font-family: monospace;
 	font-weight: bolder;
+	/* Need to fit the game into the window without overflow.
+	Namely, adjust top and bottom of the screen */
+	overflow: hidden;
 }
 
 header {
@@ -80,7 +83,7 @@ h2 {
 #game-stats {
 	padding-left: 5px;
 	float: left;
-	
+		
 }
 
 #player-stats {

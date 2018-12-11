@@ -31,9 +31,11 @@ function control(event, player) {
 			player.move(event);
 			break;
 		case MOVE_UP:
+			event.preventDefault();
 			player.move(event);
 			break;
 		case MOVE_DOWN:
+			event.preventDefault();
 			player.move(event);
 			break;
 		case EXAMINE:
