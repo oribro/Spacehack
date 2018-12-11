@@ -12,6 +12,7 @@ const INVENTORY = "i";
 const USE = "u";
 const PICKUP = "p";
 const CONTROLS = "c";
+const DROP = "d";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -52,6 +53,9 @@ function control(event, player) {
 			break;
 		case CONTROLS:
 			toggleControls();
+			break;
+		case DROP:
+			player.use(true);
 			break;
 	}
 }
