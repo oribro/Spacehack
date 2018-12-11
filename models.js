@@ -202,7 +202,7 @@ class Player extends Character {
 									let coins = new Item(
 										"Coins", 
 										"Currency", 
-										Math.floor((Math.random() * MAX_PILE_COINS) + 1)
+										MAX_PILE_COINS
 									);
 									this.inventory = [...this.inventory, coins];
 									// Stack all coins together
