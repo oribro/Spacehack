@@ -10,6 +10,7 @@ const MOVE_DOWN = "ArrowDown";
 const EXAMINE = "e";
 const INVENTORY = "i";
 const USE = "u";
+const PICKUP = "p";
 
 /* Passes the keydown event to the suitable function */
 function control(event, player) {
@@ -34,7 +35,10 @@ function control(event, player) {
 			toggleInventory(player);
 			break;
 		case USE:
-			use(player);
+			player.use();
+			break;
+		case PICKUP:
+			player.examine(true);
 			break;
 	}
 }
