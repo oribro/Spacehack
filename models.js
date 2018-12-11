@@ -159,15 +159,13 @@ class Player extends Character {
 	getInventory() {
 		return this.inventory;
 	}
-
-	setInventory(inventory) {
-		this.inventory = inventory;
+	
+	setInventory(newInv) {
+		this.inventory = newInv;
 	}
 
-	/* On key press of matching key, examines the perimeter around the player and prints information to log.
-	*  pickup: boolean. Determines whether to pick an item from the ground or just examine.
-	*/
-	examine(pickup = false) {
+	/* On key press of matching key, examines the perimeter around the player and prints information to log */
+	examine() {
 		var i,j;
 		for(i = -1; i <= 1; i++) {
 			for(j = -1; j <= 1; j++) {
@@ -181,66 +179,40 @@ class Player extends Character {
 					var checkedCell = document.getElementById("c" + biDigY + biDigX);
 					if(checkedCell.getElementsByTagName("img").length > 1) {
 						var checkedOverTile = document.getElementById("o" + biDigY + biDigX);
-						// Unpickable, examine only items.
-						if (!pickup) {
-							if(checkedOverTile.src.search("ship") != -1) {
-								printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
-								return;
-							}
-							if(checkedOverTile.src.search("debris") != -1) {
-								printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
-								return;
-							}
+						if(checkedOverTile.src.search("ship") != -1) {
+							printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
+							return;
 						}
-						// Pickable items
-						// TODO: Make this function extendable and generalize for multiple item cases.
-						if(checkedOverTile.src.search("coins") != -1) {
-							if (pickup){
-								if (confirm(`Do you want to pick coins?`)) {
-									let coins = new Item(
-										"coins", 
-										"Currency", 
-										Math.floor((Math.random() * MAX_PILE_COINS) + 1)
-									);
-									this.inventory = [...this.inventory, coins];
-									removeTileOnTop("c" + biDigY + biDigX);
-								}
-							}
-							else
-								printToLog(STRINGS[EVENT.EXAMINE_COINS]);
+						if(checkedOverTile.src.search("debris") != -1) {
+							printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
 							return;
 						}
 					}
 				}
 			}
 		}
-		if (!pickup)
-			printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+		printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 	}
-
+	
 	/* Prompts the player for an item number and uses the item */
 	use() {
-		var errMsg = "Please enter a valid item number.";
-		var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
+		var itemSel = parseInt(prompt("Enter item number:"), 10);
 		if(typeof itemSel != "number") {
-			printToLog(errMsg);
+			printToLog(STRINGS["use_err_msg"]);
 		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
-			printToLog(errMsg);
+			printToLog(STRINGS["use_err_msg"]);
 		} else {
 			var item = this.getInventory()[itemSel-1];
 			switch(item.type) {
 				case "Food":
 					this.incHunger = item.value;
 					printToLog("You eat the " + item.name + ". You feel satiated.");
-					var ulElement = document.getElementsByClassName("inv-list")[0];
-					var liElement = document.getElementById("inv-item-"+ (itemSel-1));
-					ulElement.removeChild(liElement);
-					this.getInventory().splice(itemSel-1, 1);
 					break;
 				default:
-					printToLog("You can't use that");	
+					printToLog(STRINGS["use_err_msg"]);
 			}
-
+			this.getInventory().splice(itemSel-1, 1);
+			repopInv(this);
 		}
 	}
 

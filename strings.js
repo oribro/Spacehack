@@ -24,7 +24,10 @@ const STRINGS = {
 	
 	"hungry2": "You are very hungry.",
 	
-	"hungry3": "You are malnourished and are starting to lose health."
+	"hungry3": "You are malnourished and are starting to lose health.",
+	
+	"use_err_msg": "Please enter a valid item number."
+	
 };
 
 const CONTINUE_PROMPT = "Press any key to continue...";
