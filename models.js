@@ -205,6 +205,9 @@ class Player extends Character {
 										Math.floor((Math.random() * MAX_PILE_COINS) + 1)
 									);
 									this.inventory = [...this.inventory, coins];
+									// Stack all coins together
+									this.inventory = coinStack(this.inventory);
+									this.setInventory(this.inventory);
 									removeTileOnTop("c" + biDigY + biDigX);
 									repopInv(this);
 								}

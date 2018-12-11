@@ -312,18 +312,12 @@ function repopInv(player) {
 	olElement.setAttribute("class", "inv-list");
 	invElement.appendChild(olElement);
 	var inventory = player.getInventory();
-	// Stack all coins together
-	inventory = coinStack(inventory);
-	player.setInventory(inventory);
 	var i;
 	for(i = 0; i < inventory.length; i++) {
 		var liElement = document.createElement("li");
 		var li = olElement.appendChild(liElement);
 		li.setAttribute("id", "inv-item-"+i);
 		let item = inventory[i];
-		// Handle edge case where 0 coins exist but we don't want to show them. 
-		if (item.name === "coins" && item.value === 0)
-			continue;
 		li.innerHTML =  item.name + " (" + item.type + ", " + item.value + ")";
 	}
 	
