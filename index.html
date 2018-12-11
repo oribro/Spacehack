@@ -25,19 +25,20 @@
 				</div>
 				<div id="controls">
 					<h2>Game controls</h2>
-					<ul>
+					<ul id ="controls-list">
 						<li><span class="controls-label">Movement: </span><span id="movement-key">Arrow keys</span></li>
 						<li><span class="controls-label">Examine: </span><span id="examine-key"></span></li>
 						<li><span class="controls-label">Inventory: </span><span id="inventory-key"></span></li>
 						<li><span class="controls-label">Use: </span><span id="use-key"></span></li>
 						<li><span class="controls-label">Pick up: </span><span id="pickup-key"></span></li>
+						<li><span class="controls-label">Controls: </span><span id="controls-key"></span></li>
 					</ul>
 				</div>
 				<div id="game-board"></div>
 				<div id="game-log">
 					<textarea readonly id="log"></textarea>
 				</div>
-				<div id="inventory"><p>Inventory</p></div>
+				<div id="inventory"><h2>Inventory</h2></div>
 			</div>
 
 			<script src = "item.js"></script>
@@ -46,7 +47,10 @@
 			<script src = "strings.js"></script>
 			<script src = "events.js"></script>
 			<script src = "game.js"></script>
-			<footer><a href="https://github.com/oribro/Spacehack" target="_blank">Github</a></footer>
+			<footer>
+				<a id="toggle-controls" href="#" onclick="toggleControls()">Controls</a>
+				<a id="github-link" href="https://github.com/oribro/Spacehack" target="_blank">Github</a>
+			</footer>
 		</div>
 	</body>
 </html>

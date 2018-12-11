@@ -286,6 +286,16 @@ function sleep(duration){
 	);
 }
 
+/* Shows/hides the controls window */
+function toggleControls() {
+	var controls = document.getElementById("controls");
+	if(controls.style.display != "block") {
+		controls.style.display = "block";
+	} else {
+		controls.style.display = "none";
+	}
+}
+
 /* Shows/hides the inventory window */
 function toggleInventory(player) {
 	var inventory = document.getElementById("inventory");
@@ -328,13 +338,13 @@ function repopInv(player) {
 */
 function coinStack(inventory) {
 	return inventory.filter(
-		item => item.name !== "coins"
+		item => item.name !== "Coins"
 	).concat(
 		new Item(
-			"coins",
+			"Coins",
 			"Currency",
 			inventory.filter(
-				item => item.name === "coins"
+				item => item.name === "Coins"
 			).map(
 				item => item.value
 			).reduce(

@@ -200,7 +200,7 @@ class Player extends Character {
 							if (pickup){
 								if (confirm(`Do you want to pick coins?`)) {
 									let coins = new Item(
-										"coins", 
+										"Coins", 
 										"Currency", 
 										Math.floor((Math.random() * MAX_PILE_COINS) + 1)
 									);

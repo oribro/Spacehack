@@ -11,12 +11,14 @@ const EXAMINE = "e";
 const INVENTORY = "i";
 const USE = "u";
 const PICKUP = "p";
+const CONTROLS = "c";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
 document.getElementById("inventory-key").innerHTML = "'"+INVENTORY+"'";
 document.getElementById("use-key").innerHTML = "'"+USE+"'";
 document.getElementById("pickup-key").innerHTML = "'"+PICKUP+"'";
+document.getElementById("controls-key").innerHTML = "'"+CONTROLS+"'";
 
 /* Passes the keydown event to the suitable function */
 function control(event, player) {
@@ -45,6 +47,9 @@ function control(event, player) {
 			break;
 		case PICKUP:
 			player.examine(true);
+			break;
+		case CONTROLS:
+			toggleControls();
 			break;
 	}
 }
