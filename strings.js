@@ -26,7 +26,9 @@ const STRINGS = {
 	
 	"hungry3": "You are malnourished and are starting to lose health.",
 	
-	"use_err_msg": "Please enter a valid item number."
+	"use_err_msg": "Please enter a valid item number.",
+
+	"not_implemented_err": "Oops. We are still working on this option."
 	
 };
 

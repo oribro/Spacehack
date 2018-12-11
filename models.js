@@ -165,8 +165,11 @@ class Player extends Character {
 		this.inventory = newInv;
 	}
 
-	/* On key press of matching key, examines the perimeter around the player and prints information to log */
-	examine() {
+	
+	/* On key press of matching key, examines the perimeter around the player and prints information to log.
+	*  pickup: boolean. Determines whether to pick an item from the ground or just examine.
+	*/
+	examine(pickup = false) {
 		var i,j;
 		for(i = -1; i <= 1; i++) {
 			for(j = -1; j <= 1; j++) {
@@ -180,24 +183,46 @@ class Player extends Character {
 					var checkedCell = document.getElementById("c" + biDigY + biDigX);
 					if(checkedCell.getElementsByTagName("img").length > 1) {
 						var checkedOverTile = document.getElementById("o" + biDigY + biDigX);
-						if(checkedOverTile.src.search("ship") != -1) {
-							printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
-							return;
+						// Unpickable, examine only items.
+						if (!pickup) {
+							if(checkedOverTile.src.search("ship") != -1) {
+								printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
+								return;
+							}
+							if(checkedOverTile.src.search("debris") != -1) {
+								printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
+								return;
+							}
 						}
-						if(checkedOverTile.src.search("debris") != -1) {
-							printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
+						// Pickable items
+						// TODO: Make this function extendable and generalize for multiple item cases.
+						if(checkedOverTile.src.search("coins") != -1) {
+							if (pickup){
+								if (confirm(`Do you want to pick coins?`)) {
+									let coins = new Item(
+										"coins", 
+										"Currency", 
+										Math.floor((Math.random() * MAX_PILE_COINS) + 1)
+									);
+									this.inventory = [...this.inventory, coins];
+									removeTileOnTop("c" + biDigY + biDigX);
+								}
+							}
+							else
+								printToLog(STRINGS[EVENT.EXAMINE_COINS]);
 							return;
 						}
 					}
 				}
 			}
 		}
-		printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+		if (!pickup)
+			printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 	}
 	
 	/* Prompts the player for an item number and uses the item */
 	use() {
-		var itemSel = parseInt(prompt("Enter item number:"), 10);
+		var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
 		if(typeof itemSel != "number") {
 			printToLog(STRINGS["use_err_msg"]);
 		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
@@ -208,12 +233,12 @@ class Player extends Character {
 				case "Food":
 					this.incHunger = item.value;
 					printToLog("You eat the " + item.name + ". You feel satiated.");
+					this.getInventory().splice(itemSel-1, 1);
+					repopInv(this);
 					break;
 				default:
-					printToLog(STRINGS["use_err_msg"]);
+					printToLog(STRINGS["not_implemented_err"]);
 			}
-			this.getInventory().splice(itemSel-1, 1);
-			repopInv(this);
 		}
 	}
 
