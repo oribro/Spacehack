@@ -300,7 +300,7 @@ function repopInv(player) {
 	if(invLists.length > 0) {
 		invElement.removeChild(invLists[0]);
 	}
-	
+
 	// Creates new inventory list.
 	var ulElement = document.createElement("ul");
 	ulElement.setAttribute("class", "inv-list");

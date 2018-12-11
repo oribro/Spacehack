@@ -187,7 +187,34 @@ class Player extends Character {
 				}
 			}
 		}
-		printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+		if (!pickup)
+			printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+	}
+
+	/* Prompts the player for an item number and uses the item */
+	use() {
+		var errMsg = "Please enter a valid item number.";
+		var itemSel = parseInt(prompt("Enter item number:"), 10);
+		if(typeof itemSel != "number") {
+			printToLog(errMsg);
+		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
+			printToLog(errMsg);
+		} else {
+			var item = this.getInventory()[itemSel-1];
+			switch(item.type) {
+				case "Food":
+					this.incHunger = item.value;
+					printToLog("You eat the " + item.name + ". You feel satiated.");
+					var ulElement = document.getElementsByClassName("inv-list")[0];
+					var liElement = document.getElementById("inv-item-"+ (itemSel-1));
+					ulElement.removeChild(liElement);
+					this.getInventory().splice(itemSel-1, 1);
+					break;
+				default:
+					printToLog("You can't use that");	
+			}
+
+		}
 	}
 
 	/*
