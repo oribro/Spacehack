@@ -194,7 +194,7 @@ class Player extends Character {
 	/* Prompts the player for an item number and uses the item */
 	use() {
 		var errMsg = "Please enter a valid item number.";
-		var itemSel = parseInt(prompt("Enter item number:"), 10);
+		var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
 		if(typeof itemSel != "number") {
 			printToLog(errMsg);
 		} else if (itemSel < 1 || itemSel > this.getInventory().length) {

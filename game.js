@@ -311,7 +311,11 @@ function repopInv(player) {
 		var liElement = document.createElement("li");
 		var li = ulElement.appendChild(liElement);
 		li.setAttribute("id", "inv-item-"+i);
-		li.innerHTML = inventory[i].name + " (" + inventory[i].type + ")";
+		let item = inventory[i];
+		// Handle edge case where 0 coins exist but we don't want to show them. 
+		if (item.name === "coins" && item.value === 0)
+			continue;
+		li.innerHTML = i+1 + " : " + item.value + " " + item.name + " (" + item.type + ")";
 	}
 	
 }
