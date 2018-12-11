@@ -308,9 +308,9 @@ function repopInv(player) {
 	}
 
 	// Creates new inventory list.
-	var ulElement = document.createElement("ul");
-	ulElement.setAttribute("class", "inv-list");
-	invElement.appendChild(ulElement);
+	var olElement = document.createElement("ol");
+	olElement.setAttribute("class", "inv-list");
+	invElement.appendChild(olElement);
 	var inventory = player.getInventory();
 	// Stack all coins together
 	inventory = coinStack(inventory);
@@ -318,13 +318,13 @@ function repopInv(player) {
 	var i;
 	for(i = 0; i < inventory.length; i++) {
 		var liElement = document.createElement("li");
-		var li = ulElement.appendChild(liElement);
+		var li = olElement.appendChild(liElement);
 		li.setAttribute("id", "inv-item-"+i);
 		let item = inventory[i];
 		// Handle edge case where 0 coins exist but we don't want to show them. 
 		if (item.name === "coins" && item.value === 0)
 			continue;
-		li.innerHTML = i+1 + " : " + item.value + " " + item.name + " (" + item.type + ")";
+		li.innerHTML =  item.name + " (" + item.type + ", " + item.value + ")";
 	}
 	
 }

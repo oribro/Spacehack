@@ -161,9 +161,11 @@ span {
 }
 
 .inv-list {
-	list-style-type: none;
-	padding: 10px;
+	list-style-type: decimal;
 	text-align: left;
+}
+.inv-list > li {
+	padding-bottom: 5px;
 }
 
 a:link, a:visited {
