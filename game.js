@@ -22,6 +22,7 @@ const T_SHIP6 = ASSETS + TILESET + "ship6.png";
 const T_SHIP7 = ASSETS + TILESET + "ship7.png";
 const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
 const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
+const T_COINS = ASSETS + TILESET + "coins.png";
 
 /* Game environment ASCII symbols */
 const PLAYER = '@';
@@ -134,7 +135,12 @@ function boardInit() {
 	setTileOnTop("c1619", T_DEBRIS2);
 	setTileOnTop("c1018", T_DEBRIS1);
 	setTileOnTop("c1704", T_DEBRIS2);
-	
+
+	// Item spawn
+	setTileOnTop("c1010", T_COINS);
+	setTileOnTop("c1626", T_COINS);
+	setTileOnTop("c0729", T_COINS);
+
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
 
@@ -306,6 +312,9 @@ function repopInv(player) {
 	ulElement.setAttribute("class", "inv-list");
 	invElement.appendChild(ulElement);
 	var inventory = player.getInventory();
+	// Stack all coins together
+	inventory = coinStack(inventory);
+	player.setInventory(inventory);
 	var i;
 	for(i = 0; i < inventory.length; i++) {
 		var liElement = document.createElement("li");
@@ -320,22 +329,25 @@ function repopInv(player) {
 	
 }
 
-/* Prompts the player for an item number and uses the item */
-function use(player) {
-	var errMsg = "Please enter a valid item number.";
-	var itemSel = parseInt(prompt("Enter item number:"), 10);
-	if(typeof itemSel != "number") {
-		printToLog(errMsg);
-	} else if (itemSel < 0 || itemSel >= player.getInventory().length) {
-		printToLog(errMsg);
-	} else {
-		var item = player.getInventory()[itemSel];
-		switch(item.type) {
-			case "Food":
-				player.incHunger = item.value;
-				printToLog("You eat the " + item.name + ". You feel satiated.");
-				break;
-		}
-		player.getInventory().splice(itemSel, 1);
-	}
+/* Stacks all coins in the inventory into one pile of coins
+*  Return the inventory with all coins stacked as one item.
+*/
+function coinStack(inventory) {
+	return inventory.filter(
+		item => item.name !== "coins"
+	).concat(
+		new Item(
+			"coins",
+			"Currency",
+			inventory.filter(
+				item => item.name === "coins"
+			).map(
+				item => item.value
+			).reduce(
+				(val1, val2) => val1 + val2,
+				0
+			)
+		)
+	);
 }
+

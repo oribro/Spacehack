@@ -1,3 +1,7 @@
+// Constant item values.
+const MAX_PILE_COINS = 10;
+
+
 /*
  *	Class for game items.
  */

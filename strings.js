@@ -15,6 +15,8 @@ const STRINGS = {
 	"examine_ship": "\"It's badly damaged. I should look for the missing parts. With some luck maybe I can fix it and get home. I should find " + PARTNER_NAME + " too.\"",
 	
 	"examine_debris": "\"Debris from the ship.\"",
+
+	"examine_coins": "\"It's a pile of coins.\"",
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
