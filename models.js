@@ -206,6 +206,7 @@ class Player extends Character {
 									);
 									this.inventory = [...this.inventory, coins];
 									removeTileOnTop("c" + biDigY + biDigX);
+									repopInv(this);
 								}
 							}
 							else
