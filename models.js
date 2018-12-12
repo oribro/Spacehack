@@ -70,8 +70,8 @@ class Player extends Character {
 		// to accept methods. Right now the binding is needed because currently
 		// die is defined at WINDOW (global) scope.  
 		this.die = this.die.bind(this);
-		this.inventory = [new Item("Ration", "Food", 100),
-						  new Item("Ration", "Food", 100)];
+		this.inventory = [new Item("Ration"),
+						  new Item("Ration")];
 	}
 
 	move(event) {
