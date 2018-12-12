@@ -20,6 +20,7 @@ document.getElementById("inventory-key").innerHTML = "'"+INVENTORY+"'";
 document.getElementById("use-key").innerHTML = "'"+USE+"'";
 document.getElementById("pickup-key").innerHTML = "'"+PICKUP+"'";
 document.getElementById("controls-key").innerHTML = "'"+CONTROLS+"'";
+document.getElementById("drop-key").innerHTML = "'"+DROP+"'";
 
 /* Passes the keydown event to the suitable function */
 function control(event, player) {
