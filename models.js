@@ -243,7 +243,9 @@ class Player extends Character {
 			switch(item.type) {
 				case "Food":
 					if (drop) {
-						// TODO: Drop food ration icon on top of the ground.
+						const biDigX = getTwoDigits(this.xPos);
+						const biDigY = getTwoDigits(this.yPos);
+						setTileOnTop("c" + biDigY + biDigX, T_RATION);
 						printToLog("You drop " + item.name + " on the ground.");
 					}
 					else {

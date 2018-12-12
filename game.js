@@ -23,6 +23,7 @@ const T_SHIP7 = ASSETS + TILESET + "ship7.png";
 const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
 const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 const T_COINS = ASSETS + TILESET + "coins.png";
+const T_RATION = ASSETS + TILESET + "ration.png";
 
 /* Game environment ASCII symbols */
 const PLAYER = '@';
