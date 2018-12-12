@@ -25,12 +25,12 @@ class Item {
 			this.itemName = ITEMS[name].slice(0, itemNameLastIndex);
 			this.itemType = ITEMS[name].slice(itemTypeFirstIndex, itemTypeLastIndex);
 			this.itemValue = ITEMS[name].slice(itemValueFirstIndex);
-			this.itemTile = "T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase();
+			this.itemTile = eval("T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase());
 		} else {
 			this.itemName = name;
 			this.itemType = type;
 			this.itemValue = value;
-			this.itemTile = "T_" + name.toUpperCase();
+			this.itemTile = eval("T_" + name.toUpperCase());
 		}
 	}
 	
@@ -42,6 +42,9 @@ class Item {
 	}
 	get value() {
 		return this.itemValue;
+	}
+	get tile() {
+		return this.itemTile;
 	}
 	set name(newName) {
 		this.itemName = newName;

@@ -56,7 +56,7 @@ function control(event, player) {
 			toggleControls();
 			break;
 		case DROP:
-			player.use(true);
+			player.drop();
 			break;
 	}
 }

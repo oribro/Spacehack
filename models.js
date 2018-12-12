@@ -224,54 +224,54 @@ class Player extends Character {
 			printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 	}
 	
-	/* Prompts the player for an item number and uses the item.
-	*	drop: boolean. Determines whether to use the item or drop it.
-	*/
-	use(drop = false) {
+	/* Prompts the player for an item number and returns the input. */
+	itemSelection() {
 		var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
 		if(typeof itemSel != "number") {
 			printToLog(STRINGS["use_err_msg"]);
 		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
 			printToLog(STRINGS["use_err_msg"]);
 		} else {
-			var item = this.getInventory()[itemSel-1];
-
-			// TODO: Iterate predefined item list in a generic way and find matching type.
-			// There should be a way to generalize this function behaviour. We don't want
-			// 'use' and 'examine' to get too bloated.
-			// This is a nasty code duplication right here.
-			switch(item.type) {
-				case "Food":
-					if (drop) {
-						const biDigX = getTwoDigits(this.xPos);
-						const biDigY = getTwoDigits(this.yPos);
-						setTileOnTop("c" + biDigY + biDigX, T_RATION);
-						printToLog("You drop " + item.name + " on the ground.");
-					}
-					else {
-						this.incHunger = item.value;
-						printToLog("You eat the " + item.name + ". You feel satiated.");
-					}
-					this.getInventory().splice(itemSel-1, 1);
-					repopInv(this);
-					break;
-				case "Currency":
-					if (drop) {
-						const biDigX = getTwoDigits(this.xPos);
-						const biDigY = getTwoDigits(this.yPos);
-						setTileOnTop("c" + biDigY + biDigX, T_COINS);
-						printToLog("You drop " + item.name + " on the ground.");
-						this.getInventory().splice(itemSel-1, 1);
-						repopInv(this);
-						break;
-					}
-					else {
-						// TODO: Implement usage of coins i.e for buying items at a shop
-					}
-				default:
-					printToLog(STRINGS["not_implemented_err"]);
-			}
+			return itemSel;
 		}
+	}
+	
+	/* Prompts the player for an item number and uses the item.
+	*	drop: boolean. Determines whether to use the item or drop it.
+	*/
+	use() {
+		var itemSel = this.itemSelection();
+		var item = this.getInventory()[itemSel-1];
+
+		// TODO: Iterate predefined item list in a generic way and find matching type.
+		// There should be a way to generalize this function behaviour. We don't want
+		// 'use' and 'examine' to get too bloated.
+		// This is a nasty code duplication right here.
+		switch(item.type) {
+			case "Food":
+				this.incHunger = item.value;
+				printToLog("You eat the " + item.name + ". You feel satiated.");
+				this.getInventory().splice(itemSel-1, 1);
+				repopInv(this);
+				break;
+			case "Currency":
+				// TODO: Implement usage of coins i.e for buying items at a shop
+			default:
+				printToLog(STRINGS["not_implemented_err"]);
+		}
+	}
+	
+	/* Prompts the player for an item number and drops the item. */
+	drop() {
+		var itemSel = this.itemSelection();
+		var item = this.getInventory()[itemSel-1];
+		
+		const biDigX = getTwoDigits(this.xPos);
+		const biDigY = getTwoDigits(this.yPos);
+		setTileOnTop("c" + biDigY + biDigX, item.tile);
+		printToLog("You dropped " + item.name + " on the ground.");
+		this.getInventory().splice(itemSel-1, 1);
+		repopInv(this);
 	}
 
 	/*
