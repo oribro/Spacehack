@@ -164,6 +164,7 @@ class Player extends Character {
 	setInventory(newInv) {
 		this.inventory = newInv;
 	}
+	
 
 	
 	/* On key press of matching key, examines the perimeter around the player and prints information to log.
@@ -180,42 +181,42 @@ class Player extends Character {
 					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
 					var biDigX = getTwoDigits(this.xPos + i);
 					var biDigY = getTwoDigits(this.yPos + j);
-					var checkedCell = document.getElementById("c" + biDigY + biDigX);
-					if(checkedCell.getElementsByTagName("img").length > 1) {
-						var checkedOverTile = document.getElementById("o" + biDigY + biDigX);
-						// Unpickable, examine only items.
-						if (!pickup) {
-							if(checkedOverTile.src.search("ship") != -1) {
-								printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
-								return;
-							}
-							if(checkedOverTile.src.search("debris") != -1) {
-								printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
-								return;
-							}
-						}
-						// Pickable items
-						// TODO: Make this function extendable and generalize for multiple item cases.
-						if(checkedOverTile.src.search("coins") != -1) {
-							if (pickup){
-								if (confirm(`Do you want to pick coins?`)) {
-									let coins = new Item(
-										"Coins", 
-										"Currency", 
-										MAX_PILE_COINS
-									);
-									this.inventory = [...this.inventory, coins];
-									// Stack all coins together
-									this.inventory = coinStack(this.inventory);
-									this.setInventory(this.inventory);
-									removeTileOnTop("c" + biDigY + biDigX);
-									repopInv(this);
-								}
-							}
-							else
-								printToLog(STRINGS[EVENT.EXAMINE_COINS]);
+					var checkedOverTile = getTileOnTop("c" + biDigY + biDigX);
+					if(checkedOverTile === undefined) {
+						continue;
+					}
+					// Unpickable, examine only items.
+					if (!pickup) {
+						if(checkedOverTile.src.search("ship") != -1) {
+							printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
 							return;
 						}
+						if(checkedOverTile.src.search("debris") != -1) {
+							printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
+							return;
+						}
+					}
+					// Pickable items
+					// TODO: Make this function extendable and generalize for multiple item cases.
+					if(checkedOverTile.src.search("coins") != -1) {
+						if (pickup){
+							if (confirm(`Do you want to pick coins?`)) {
+								let coins = new Item(
+									"Coins", 
+									"Currency", 
+									MAX_PILE_COINS
+								);
+								this.inventory = [...this.inventory, coins];
+								// Stack all coins together
+								this.inventory = coinStack(this.inventory);
+								this.setInventory(this.inventory);
+								removeTileOnTop("c" + biDigY + biDigX);
+								repopInv(this);
+							}
+						}
+						else
+							printToLog(STRINGS[EVENT.EXAMINE_COINS]);
+						return;
 					}
 				}
 			}

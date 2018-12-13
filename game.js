@@ -270,6 +270,14 @@ function setTileOnTop(cell, tile) {
 	img.style.left = "0";
 }
 
+/* Returns the tile on top of the tile already in the cell. */
+function getTileOnTop(cell) {
+	var cellElement = document.getElementById(cell);
+	if(cellElement.getElementsByTagName("img").length > 1) {
+		return document.getElementById(cell.replace("c", "o"));
+	}
+}
+
 /* Removes the tile that covers another tile */
 function removeTileOnTop(cell) {
 	var overTile = document.getElementById(cell.replace('c','o'));
