@@ -24,6 +24,14 @@ const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
 const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 const T_COINS = ASSETS + TILESET + "coins.png";
 const T_RATION = ASSETS + TILESET + "ration.png";
+const T_VEGETATION = ASSETS + TILESET + "vegetation.png";
+const T_BEACH1 = ASSETS + TILESET + "beach1.png";
+const T_WATER1 = ASSETS + TILESET + "water1.png";
+const T_BOULDER1 = ASSETS + TILESET + "boulder1.png";
+const T_BOULDER2 = ASSETS + TILESET + "boulder2.png";
+const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
+const T_FIRE1 = ASSETS + TILESET + "fire1.png";
+const T_BUCKET = ASSETS + TILESET + "bucket.png";
 
 /* Game environment ASCII symbols */
 const PLAYER = '@';
@@ -136,6 +144,11 @@ function spawnGameObjects() {
 	setTileOnTop("c0604", T_SHIP5);
 	setTileOnTop("c0705", T_SHIP6);
 	setTileOnTop("c0805", T_SHIP7);
+	
+	// Fire on ship.
+	setTileOnTop("c0604", T_FIRE1);
+	setTileOnTop("c0705", T_FIRE1);
+	setTileOnTop("c0805", T_FIRE1);
 	
 	// Ship debris.
 	setTileOnTop("c0318", T_DEBRIS1);
