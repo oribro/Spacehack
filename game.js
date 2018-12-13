@@ -24,7 +24,9 @@ const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
 const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 const T_COINS = ASSETS + TILESET + "coins.png";
 const T_RATION = ASSETS + TILESET + "ration.png";
-const T_VEGETATION = ASSETS + TILESET + "vegetation.png";
+const T_VEGETATION1 = ASSETS + TILESET + "vegetation1.png";
+const T_VEGETATION2 = ASSETS + TILESET + "vegetation2.png";
+const T_SAND_G = ASSETS + TILESET + "sand_g.png";
 const T_BEACH1 = ASSETS + TILESET + "beach1.png";
 const T_WATER1 = ASSETS + TILESET + "water1.png";
 const T_BOULDER1 = ASSETS + TILESET + "boulder1.png";
@@ -110,10 +112,24 @@ function boardInit() {
 			var span = document.createElement("span");
 			span.setAttribute("id","c"+biDigI+biDigJ);
 			document.getElementById("r"+biDigI).appendChild(span);
-			setCell("c"+biDigI+biDigJ, T_GROUND);
+			if(j == 0) {
+				setCell("c"+biDigI+biDigJ, T_WATER1);
+			} else if (j == 1) {
+				setCell("c"+biDigI+biDigJ, T_BEACH1);
+			} else if (j == 2) {
+				setCell("c"+biDigI+biDigJ, T_SAND_G);
+			} else {
+				setCell("c"+biDigI+biDigJ, T_GROUND);
+				if(j == WIDTH - 5) {
+					setTileOnTop("c"+biDigI+biDigJ, T_VEGETATION2);
+				} else if(j >= WIDTH - 4) {
+					setTileOnTop("c"+biDigI+biDigJ, T_VEGETATION1);
+				}
+			}
 		}
 	}
-
+	
+	
 	spawnGameObjects();
 
 	// Print first text to log.
@@ -138,7 +154,7 @@ function spawnGameObjects() {
 	// Ship debris.
 	setTileOnTop("c0318", T_DEBRIS1);
 	setTileOnTop("c0512", T_DEBRIS2);
-	setTileOnTop("c1203", T_DEBRIS1);
+	setTileOnTop("c1205", T_DEBRIS1);
 	setTileOnTop("c1619", T_DEBRIS2);
 	setTileOnTop("c1018", T_DEBRIS1);
 	setTileOnTop("c1704", T_DEBRIS2);
