@@ -146,16 +146,74 @@ function spawnGameObjects() {
 	setTileOnTop("c1704", T_DEBRIS2);
 
 	// Item spawn
-	setTileOnTop("c1010", T_COINS);
-	setTileOnTop("c1626", T_COINS);
-	setTileOnTop("c0729", T_COINS);
+	spawnItem(
+		"c1010", 
+		T_COINS, 
+		ITEMS["Coins"]
+	);
+	spawnItem(
+		"c1626", 
+		T_COINS, 
+		ITEMS["Coins"]
+	);
+	spawnItem(
+		"c0729", 
+		T_COINS, 
+		ITEMS["Coins"]
+	);
 
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
-
-	// Print first text to log.
-	printToLog(STRINGS[EVENT.WAKEUP]);
 }
+
+/* Spawns a game item at the given cell with the given item parameters.
+*  cell: string. The DOM element that contains the cell.
+*  tile: string. Path to the image that represents the tile.
+*  item: string. Item string representation.
+*/
+function spawnItem(cell, tile, item) {
+	// Spawn item image
+	setTileOnTop(cell, tile);
+	document.getElementById(cell).setAttribute("item", item);
+}
+
+/*
+*  Creates a game item object from the string in the cell assuming such
+*  a string is found.
+*/
+function createItemFromCell(cell) {
+	cellElement = document.getElementById(cell);
+	if (cellElement.hasAttribute("item")) {
+		let item = cellElement.getAttribute("item");
+		let itemNameLastIndex = item.indexOf(";");
+		let name = item.slice(0, itemNameLastIndex);
+		let itemValueFirstIndex = item.lastIndexOf(";") + 1;
+		let value = item.slice(itemValueFirstIndex);
+		item = new Item(name);
+		// Update item value with the value from the cell.
+		// TODO: Constructor for name and value maybe?
+		item.value = value;
+		return item;
+	}
+	return null;
+}
+
+/* Sets the given item on the given cell */
+function setItemOntoCell(cell, item) {
+	setTileOnTop(cell, item.tile);
+	let cellElement = document.getElementById(cell);
+	cellElement.setAttribute("item", item.toString());
+}
+
+/* Removes item from the given cell if item exists, otherwise nothing happens. */
+function removeItemFromCell(cell) {
+	let cellElement = document.getElementById(cell);
+	if (cellElement.hasAttribute("item")) {
+		cellElement.removeAttribute("item");
+		removeTileOnTop(cell);
+	}
+}
+
 
 /* Deletes the prompt message and prints next string */
 function exitShip(player) {
@@ -350,20 +408,21 @@ function repopInv(player) {
 	
 }
 
-/* Stacks all coins in the inventory into one pile of coins
-*  Return the inventory with all coins stacked as one item.
+/* Stacks all items in the inventory of the given item into one pile of items.
+*  Return the inventory with all items that are similar to the given item
+*  stacked as one item.
 */
-function coinStack(inventory) {
+function itemStack(inventory, sampleItem) {
 	return inventory.filter(
-		item => item.name !== "Coins"
+		item => item.name !== sampleItem.name
 	).concat(
 		new Item(
-			"Coins",
-			"Currency",
+			sampleItem.name,
+			sampleItem.type,
 			inventory.filter(
-				item => item.name === "Coins"
+				item => item.name === sampleItem.name
 			).map(
-				item => item.value
+				item => parseInt(item.value)
 			).reduce(
 				(val1, val2) => val1 + val2,
 				0

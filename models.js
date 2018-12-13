@@ -177,22 +177,16 @@ class Player extends Character {
 					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
 					var biDigX = getTwoDigits(this.xPos + i);
 					var biDigY = getTwoDigits(this.yPos + j);
-					var checkedOverTile = getTileOnTop("c" + biDigY + biDigX);
-					if(checkedOverTile === undefined) {
+					// Check if the cell has item in it.
+					var item = createItemFromCell("c" + biDigY + biDigX);
+					if (item) {
+						printToLog(item.description);
+						return;
+					}
+					// TODO: Examine non-items!
+					// The cell does not contain item. What if it contains a background element?
+					else
 						continue;
-					}
-					if(checkedOverTile.src.search("ship") != -1) {
-						printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
-						return;
-					}
-					if(checkedOverTile.src.search("debris") != -1) {
-						printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
-						return;
-					}
-					if(checkedOverTile.src.search("coins") != -1) {
-						printToLog(STRINGS[EVENT.EXAMINE_COINS]);
-						return;
-					}
 				}
 			}
 		}
@@ -211,22 +205,22 @@ class Player extends Character {
 					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
 					var biDigX = getTwoDigits(this.xPos + i);
 					var biDigY = getTwoDigits(this.yPos + j);
-					var checkedOverTile = getTileOnTop("c" + biDigY + biDigX);
-					if(checkedOverTile === undefined) {
-						continue;
-					}
-					if(checkedOverTile.src.search("coins") != -1) {
-						if (confirm(`Do you want to pick coins?`)) {
-							let coins = new Item(
-								"Coins", 
-								"Currency", 
-								MAX_PILE_COINS
-							);
-							this.inventory = [...this.inventory, coins];
-							// Stack all coins together
-							this.inventory = coinStack(this.inventory);
+					var cell = "c" + biDigY + biDigX;
+					// Check if the cell has item in it.
+					var item = createItemFromCell(cell);
+					if (item) {
+						if (confirm(`Do you want to pick-up ${item.name}?`)) {
+							// Adds the item to player's inventory and removes it from the cell.
+							this.inventory = [...this.inventory, item];
+							removeItemFromCell(cell);
+							// Checks if the items can be stacked together.
+
+							// TODO: Not all items should be stackable!
+
+							//if (item.isStackable) {
+							this.inventory = itemStack(this.inventory, item);
 							this.setInventory(this.inventory);
-							removeTileOnTop("c" + biDigY + biDigX);
+							//}
 							repopInv(this);
 						}
 						return;
@@ -277,10 +271,9 @@ class Player extends Character {
 	drop() {
 		var itemSel = this.itemSelection();
 		var item = this.getInventory()[itemSel-1];
-		
 		const biDigX = getTwoDigits(this.xPos);
 		const biDigY = getTwoDigits(this.yPos);
-		setTileOnTop("c" + biDigY + biDigX, item.tile);
+		setItemOntoCell("c" + biDigY + biDigX, item);
 		printToLog("You dropped " + item.name + " on the ground.");
 		this.getInventory().splice(itemSel-1, 1);
 		repopInv(this);

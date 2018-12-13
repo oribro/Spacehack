@@ -62,5 +62,13 @@ class Item {
 	set value(newValue) {
 		this.itemValue = newValue;
 	}
+	set description(newDescription) {
+		this.description = newDescription;
+	}
+
+	/* Returns a string representation of the item similar to ITEMS values */
+	toString() {
+		return `${this.name};${this.type};${this.value}`;
+	}
 }
 
