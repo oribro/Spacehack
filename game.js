@@ -422,7 +422,7 @@ function itemStack(inventory, sampleItem) {
 			inventory.filter(
 				item => item.name === sampleItem.name
 			).map(
-				item => item.value
+				item => parseInt(item.value)
 			).reduce(
 				(val1, val2) => val1 + val2,
 				0
