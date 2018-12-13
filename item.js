@@ -25,7 +25,7 @@ class Item {
 
 			this.itemName = ITEMS[name].slice(0, itemNameLastIndex);
 			this.itemType = ITEMS[name].slice(itemTypeFirstIndex, itemTypeLastIndex);
-			this.itemValue = ITEMS[name].slice(itemValueFirstIndex);
+			this.itemValue = parseInt(ITEMS[name].slice(itemValueFirstIndex));
 			this.itemTile = eval("T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase());
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 
