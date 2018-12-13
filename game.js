@@ -353,6 +353,7 @@ function setTileOnTop(cell, tile) {
 	img.style.position = "absolute";
 	img.style.top = "0";
 	img.style.left = "0";
+	document.getElementById(cell).setAttribute("walkable", "false");
 }
 
 /* Returns the tile on top of the tile already in the cell. */
@@ -367,6 +368,7 @@ function getTileOnTop(cell) {
 function removeTileOnTop(cell) {
 	var overTile = document.getElementById(cell.replace('c','o'));
 	document.getElementById(cell).removeChild(overTile);
+	document.getElementById(cell).setAttribute("walkable", "true");
 }
 
 /*
