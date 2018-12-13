@@ -114,26 +114,39 @@ function boardInit() {
 			document.getElementById("r"+biDigI).appendChild(span);
 			if(j == 0) {
 				setCell("c"+biDigI+biDigJ, T_WATER1);
+				span.setAttribute("walkable", "false");
 			} else if (j == 1) {
 				setCell("c"+biDigI+biDigJ, T_BEACH1);
+				span.setAttribute("walkable", "false");
 			} else if (j == 2) {
 				setCell("c"+biDigI+biDigJ, T_SAND_G);
+				span.setAttribute("walkable", "true");
+			} else if(j == WIDTH - 5) {
+				setCell("c"+biDigI+biDigJ, T_VEGETATION2);
+				span.setAttribute("walkable", "true");
+			} else if(j >= WIDTH - 4) {
+				setCell("c"+biDigI+biDigJ, T_VEGETATION1);
+				span.setAttribute("walkable", "true");
 			} else {
 				setCell("c"+biDigI+biDigJ, T_GROUND);
-				if(j == WIDTH - 5) {
-					setTileOnTop("c"+biDigI+biDigJ, T_VEGETATION2);
-				} else if(j >= WIDTH - 4) {
-					setTileOnTop("c"+biDigI+biDigJ, T_VEGETATION1);
-				}
+				span.setAttribute("walkable", "true");
 			}
 		}
 	}
-	
 	
 	spawnGameObjects();
 
 	// Print first text to log.
 	printToLog(STRINGS[EVENT.WAKEUP]);
+}
+
+/* Checks whether a cell is walkable. */
+function isWalkable(cell) {
+	var cellElement = document.getElementById(cell);
+	if(cellElement.getAttribute("walkable") == "true") {
+		return true;
+	}
+	return false;
 }
 
 function spawnGameObjects() {
@@ -261,8 +274,8 @@ function checkBounds(xPos, yPos, npcs) {
 	var biDigX = getTwoDigits(xPos);
 	var biDigY = getTwoDigits(yPos);
 	
-	// Movement possible only if cell is ground.
-	if(((document.getElementById("i"+biDigY+biDigX).src.search(T_GROUND) == -1) || (document.getElementById("c"+biDigY+biDigX).getElementsByTagName("img").length > 1))) {
+	// Check if cell is walkable.
+	if(!isWalkable("c" + biDigY + biDigX)) {
 		return false;
 	}
 	return true;
