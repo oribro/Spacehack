@@ -165,12 +165,8 @@ class Player extends Character {
 		this.inventory = newInv;
 	}
 	
-
-	
-	/* On key press of matching key, examines the perimeter around the player and prints information to log.
-	*  pickup: boolean. Determines whether to pick an item from the ground or just examine.
-	*/
-	examine(pickup = false) {
+	/* On key press of matching key, examines the perimeter around the player and prints information to log. */
+	examine() {
 		var i,j;
 		for(i = -1; i <= 1; i++) {
 			for(j = -1; j <= 1; j++) {
@@ -185,44 +181,59 @@ class Player extends Character {
 					if(checkedOverTile === undefined) {
 						continue;
 					}
-					// Unpickable, examine only items.
-					if (!pickup) {
-						if(checkedOverTile.src.search("ship") != -1) {
-							printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
-							return;
-						}
-						if(checkedOverTile.src.search("debris") != -1) {
-							printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
-							return;
-						}
+					if(checkedOverTile.src.search("ship") != -1) {
+						printToLog(STRINGS[EVENT.EXAMINE_SHIP]);
+						return;
 					}
-					// Pickable items
-					// TODO: Make this function extendable and generalize for multiple item cases.
+					if(checkedOverTile.src.search("debris") != -1) {
+						printToLog(STRINGS[EVENT.EXAMINE_DEBRIS]);
+						return;
+					}
 					if(checkedOverTile.src.search("coins") != -1) {
-						if (pickup){
-							if (confirm(`Do you want to pick coins?`)) {
-								let coins = new Item(
-									"Coins", 
-									"Currency", 
-									MAX_PILE_COINS
-								);
-								this.inventory = [...this.inventory, coins];
-								// Stack all coins together
-								this.inventory = coinStack(this.inventory);
-								this.setInventory(this.inventory);
-								removeTileOnTop("c" + biDigY + biDigX);
-								repopInv(this);
-							}
-						}
-						else
-							printToLog(STRINGS[EVENT.EXAMINE_COINS]);
+						printToLog(STRINGS[EVENT.EXAMINE_COINS]);
 						return;
 					}
 				}
 			}
 		}
-		if (!pickup)
-			printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+		printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+	}
+	
+	/* On key press of matching key, prompts the player whether to pick up an item around him and picks up the item if player decides to. */
+	pickup() {
+		var i,j;
+		for(i = -1; i <= 1; i++) {
+			for(j = -1; j <= 1; j++) {
+				if(i == 0 && j == 0) {
+					continue;
+				}
+				if((this.xPos + i) >= 0 && (this.xPos + i) < WIDTH && 
+					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
+					var biDigX = getTwoDigits(this.xPos + i);
+					var biDigY = getTwoDigits(this.yPos + j);
+					var checkedOverTile = getTileOnTop("c" + biDigY + biDigX);
+					if(checkedOverTile === undefined) {
+						continue;
+					}
+					if(checkedOverTile.src.search("coins") != -1) {
+						if (confirm(`Do you want to pick coins?`)) {
+							let coins = new Item(
+								"Coins", 
+								"Currency", 
+								MAX_PILE_COINS
+							);
+							this.inventory = [...this.inventory, coins];
+							// Stack all coins together
+							this.inventory = coinStack(this.inventory);
+							this.setInventory(this.inventory);
+							removeTileOnTop("c" + biDigY + biDigX);
+							repopInv(this);
+						}
+						return;
+					}
+				}
+			}
+		}
 	}
 	
 	/* Prompts the player for an item number and returns the input. */

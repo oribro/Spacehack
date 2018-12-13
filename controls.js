@@ -50,7 +50,7 @@ function control(event, player) {
 			player.use();
 			break;
 		case PICKUP:
-			player.examine(true);
+			player.pickup();
 			break;
 		case CONTROLS:
 			toggleControls();
