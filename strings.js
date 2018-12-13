@@ -17,6 +17,8 @@ const STRINGS = {
 	"examine_debris": "\"Debris from the ship.\"",
 
 	"examine_coins": "\"It's a pile of coins.\"",
+
+	"examine_ration": "\"It should help me ease my hunger.\"",
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	

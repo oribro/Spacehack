@@ -1,10 +1,11 @@
 // Constant item values.
-const MAX_PILE_COINS = 10;
+const DEFAULT_COINS_VALUE = 10;
+const DEFAULT_RATION_VALUE = 100;
 
 // Item list. 
 const ITEMS = {
-		"Ration": "Ration;Food;100",
-		"Coins":  "Coins;Currency;10"
+		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE}`,
+		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE}`
 	};
 
 /*
@@ -26,11 +27,14 @@ class Item {
 			this.itemType = ITEMS[name].slice(itemTypeFirstIndex, itemTypeLastIndex);
 			this.itemValue = ITEMS[name].slice(itemValueFirstIndex);
 			this.itemTile = eval("T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase());
+			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
+
 		} else {
 			this.itemName = name;
 			this.itemType = type;
 			this.itemValue = value;
 			this.itemTile = eval("T_" + name.toUpperCase());
+			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 		}
 	}
 	
@@ -45,6 +49,9 @@ class Item {
 	}
 	get tile() {
 		return this.itemTile;
+	}
+	get description() {
+		return this.itemDescription;
 	}
 	set name(newName) {
 		this.itemName = newName;

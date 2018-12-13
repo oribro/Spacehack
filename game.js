@@ -120,7 +120,15 @@ function boardInit() {
 			setCell("c"+biDigI+biDigJ, T_GROUND, GROUND, C_GROUND);
 		}
 	}
-	
+
+	spawnGameObjects();
+
+	// Print first text to log.
+	printToLog(STRINGS[EVENT.WAKEUP]);
+}
+
+function spawnGameObjects() {
+
 	// Ship.
 	setTileOnTop("c0505", T_SHIP2);
 	setTileOnTop("c0605", T_SHIP3);
