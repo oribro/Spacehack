@@ -33,23 +33,8 @@ const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
 const T_FIRE1 = ASSETS + TILESET + "fire1.png";
 const T_BUCKET = ASSETS + TILESET + "bucket.png";
 
-/* Game environment ASCII symbols */
-const PLAYER = '@';
-const GROUND 	= '#';
-const NON_PLAYER = '*';
-const SHIP = '^';
-
-/* Symbol colors */
-const C_PLAYER = "white";
-const C_GROUND = "orange";
-const C_NPC = "red";
-const C_SHIP = "purple";
-
 /* Character traits */
 const DEFAULT_HP = 20;
-
-/* Use tileset or ASCII */
-const useTileset = true;
 
 'use strict';
 
@@ -125,7 +110,7 @@ function boardInit() {
 			var span = document.createElement("span");
 			span.setAttribute("id","c"+biDigI+biDigJ);
 			document.getElementById("r"+biDigI).appendChild(span);
-			setCell("c"+biDigI+biDigJ, T_GROUND, GROUND, C_GROUND);
+			setCell("c"+biDigI+biDigJ, T_GROUND);
 		}
 	}
 
@@ -261,10 +246,7 @@ function checkBounds(xPos, yPos, npcs) {
 	var biDigY = getTwoDigits(yPos);
 	
 	// Movement possible only if cell is ground.
-	if((!useTileset && (document.getElementById("c"+biDigY+biDigX).innerText != GROUND))) {
-		return false;
-	}
-	if(useTileset && ((document.getElementById("i"+biDigY+biDigX).src.search(T_GROUND) == -1) || (document.getElementById("c"+biDigY+biDigX).getElementsByTagName("img").length > 1))) {
+	if(((document.getElementById("i"+biDigY+biDigX).src.search(T_GROUND) == -1) || (document.getElementById("c"+biDigY+biDigX).getElementsByTagName("img").length > 1))) {
 		return false;
 	}
 	return true;
@@ -318,22 +300,17 @@ function plot(index, length, player) {
 	promptContinue(player);
 }
 
-/* Sets a symbol and color to a cell */
-function setCell(cell, tile, symbol, color) {
+/* Sets a tile to a cell */
+function setCell(cell, tile) {
 	var element = document.getElementById(cell);
-	if(useTileset) {
-		var imgElement = element.getElementsByTagName("img").length
-		if(imgElement < 1) {
-			var img = document.createElement("img");
-			document.getElementById(cell).appendChild(img);
-			img.setAttribute("id", cell.replace('c','i'));
-			img.setAttribute("src", tile);
-		} else {
-			element.getElementsByTagName("img")[0].setAttribute("src", tile);
-		}
+	var imgElement = element.getElementsByTagName("img").length
+	if(imgElement < 1) {
+		var img = document.createElement("img");
+		document.getElementById(cell).appendChild(img);
+		img.setAttribute("id", cell.replace('c','i'));
+		img.setAttribute("src", tile);
 	} else {
-		element.innerHTML = symbol;
-		element.style.color = color;
+		element.getElementsByTagName("img")[0].setAttribute("src", tile);
 	}
 }
 
