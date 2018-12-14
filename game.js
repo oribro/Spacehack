@@ -6,40 +6,6 @@ const HEIGHT 		= Y_ASPECT * ASPECT_MUL;
 const WIDTH 		= X_ASPECT * ASPECT_MUL;
 const MAX_FIRE_RANGE = 11;
 
-/* Assets directory */
-const ASSETS = "assets/";
-
-/* Game tileset */
-const TILESET = "tileset/"
-const T_PLAYER = ASSETS + TILESET + "player1.png";
-const T_GROUND 	= ASSETS + TILESET + "ground1.png";
-const T_NON_PLAYER = ASSETS + TILESET + "npc1.png";
-const T_SHIP1 = ASSETS + TILESET + "ship1.png";
-const T_SHIP2 = ASSETS + TILESET + "ship2.png";
-const T_SHIP3 = ASSETS + TILESET + "ship3.png";
-const T_SHIP4 = ASSETS + TILESET + "ship4.png";
-const T_SHIP5 = ASSETS + TILESET + "ship5.png";
-const T_SHIP6 = ASSETS + TILESET + "ship6.png";
-const T_SHIP7 = ASSETS + TILESET + "ship7.png";
-const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
-const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
-const T_COINS = ASSETS + TILESET + "coins.png";
-const T_RATION = ASSETS + TILESET + "ration.png";
-const T_VEGETATION1 = ASSETS + TILESET + "vegetation1.png";
-const T_VEGETATION2 = ASSETS + TILESET + "vegetation2.png";
-const T_SAND_G = ASSETS + TILESET + "sand_g.png";
-const T_BEACH1 = ASSETS + TILESET + "beach1.png";
-const T_WATER1 = ASSETS + TILESET + "water1.png";
-const T_BOULDER1 = ASSETS + TILESET + "boulder1.png";
-const T_BOULDER2 = ASSETS + TILESET + "boulder2.png";
-const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
-const T_FIRE1 = ASSETS + TILESET + "fire1.png";
-const T_BUCKET = ASSETS + TILESET + "bucket.png";
-
-/* Game sounds */
-const SOUNDS = "sounds/"
-const FIRE_SOUND = ASSETS + SOUNDS + "fire.mp3";
-
 /* Character traits */
 const DEFAULT_HP = 20;
 
@@ -396,14 +362,18 @@ function setCell(cell, tile) {
 /* Sets a tile on top of the tile already in the cell. */
 function setTileOnTop(cell, tile) {
 	var img = document.createElement("img");
-	document.getElementById(cell).appendChild(img);
-	document.getElementById(cell).style.position = "relative";
+	var cellElement = document.getElementById(cell);
+	cellElement.appendChild(img);
+	cellElement.style.position = "relative";
 	img.setAttribute("id", cell.replace('c', 'o'));
 	img.setAttribute("src", tile);
 	img.style.position = "absolute";
 	img.style.top = "0";
 	img.style.left = "0";
-	document.getElementById(cell).setAttribute("walkable", "false");
+	cellElement.setAttribute("walkable", "false");
+	var env = tile.slice(15).toLowerCase();
+	env = env.slice(0, -4);
+	cellElement.setAttribute("env", env);
 }
 
 /* Returns the tile on top of the tile already in the cell. */

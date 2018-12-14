@@ -20,6 +20,16 @@ const STRINGS = {
 
 	"examine_ration": "\"It should help me ease my hunger.\"",
 	
+	"examine_ship_fire": "\"Ship caught fire. I should put it out.\"",
+	
+	"examine_vegetation": "\"Looks like vegetation. Means that this planet can support life. But are there complex life forms as well?\"",
+	
+	"examine_sand": "\"It's sand. what's more to say?",
+	
+	"examine_beach": "\"Ok so there's water on this planet, maybe life too?\"",
+	
+	"examine_ground": "\"The ground here is rocky.\"",
+	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
 	"hungry1": "You are getting hungry.",
