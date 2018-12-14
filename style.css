@@ -115,19 +115,20 @@ h2 {
 }
 
 .water {
-	animation-name: sparkle;
-  	animation-duration:0.4s;
+	animation-name: tide;
+  	animation-duration:0.7s;
   	animation-timing-function: linear;
   	animation-iteration-count: infinite;
   	animation-direction: alternate;
+  	transform-origin: center left;
 }
 
-@keyframes sparkle {
+@keyframes tide {
 	from {
 		transform: scale(1, 1);
 	}
 	to {
-		transform: scale(1.15, 1.1);
+		transform: scale(1.5, 1);
 	}
 }
 
