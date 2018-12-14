@@ -123,9 +123,11 @@ function boardInit() {
 			if(j == 0) {
 				setCell("c"+biDigI+biDigJ, T_WATER1);
 				span.setAttribute("walkable", "false");
+				span.lastElementChild.setAttribute("class", "water");
 			} else if (j == 1) {
 				setCell("c"+biDigI+biDigJ, T_BEACH1);
 				span.setAttribute("walkable", "false");
+				span.lastElementChild.setAttribute("class", "water");
 			} else if (j == 2) {
 				setCell("c"+biDigI+biDigJ, T_SAND_G);
 				span.setAttribute("walkable", "true");
