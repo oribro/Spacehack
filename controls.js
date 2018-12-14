@@ -27,18 +27,36 @@ function control(event, player) {
 	var key = event.key;
 	switch (key) {
 		case MOVE_RIGHT:
-			player.move(event);
+			if(movement == false) {
+				player.examine(MOVE_RIGHT);
+				movement = true;
+			} else {
+				player.move(event);
+			}
 			break;
 		case MOVE_LEFT:
-			player.move(event);
+			if(movement == false) {
+				player.examine(MOVE_LEFT);
+				movement = true;
+			} else {
+				player.move(event);
+			}
 			break;
 		case MOVE_UP:
-			event.preventDefault();
-			player.move(event);
+			if(movement == false) {
+				player.examine(MOVE_UP);
+				movement = true;
+			} else {
+				player.move(event);
+			}
 			break;
 		case MOVE_DOWN:
-			event.preventDefault();
-			player.move(event);
+			if(movement == false) {
+				player.examine(MOVE_DOWN);
+				movement = true;
+			} else {
+				player.move(event);
+			}
 			break;
 		case EXAMINE:
 			player.examine();

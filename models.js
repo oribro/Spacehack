@@ -157,8 +157,52 @@ class Player extends Character {
 		this.inventory = newInv;
 	}
 	
+	/* Returns the cell in the direction given */
+	getCellFromDirection(direction) {		
+		switch (direction) {
+			case MOVE_RIGHT:
+				var biDigCurX = getTwoDigits(this.xPos + 1);
+				var biDigCurY = getTwoDigits(this.yPos);
+				return "c" + biDigCurY + biDigCurX;
+			case MOVE_UP:
+				var biDigCurX = getTwoDigits(this.xPos);
+				var biDigCurY = getTwoDigits(this.yPos - 1);
+				return "c" + biDigCurY + biDigCurX;
+			case MOVE_LEFT:
+				var biDigCurX = getTwoDigits(this.xPos - 1);
+				var biDigCurY = getTwoDigits(this.yPos);
+				return "c" + biDigCurY + biDigCurX;
+			case MOVE_DOWN:
+				var biDigCurX = getTwoDigits(this.xPos);
+				var biDigCurY = getTwoDigits(this.yPos + 1);
+				return "c" + biDigCurY + biDigCurX;
+		}
+	}
+	
+	/* Stops movement and prompts the user to input a direction for the action */
+	promptDirection(action) {
+		movement = false;
+		printToLog("In what direction do you want to " + action +"?");
+	}
+	
 	/* On key press of matching key, examines the perimeter around the player and prints information to log. */
-	examine() {
+	examine(direction) {
+		if(direction === undefined) {
+			this.promptDirection("examine");
+		} else {
+			var cell = this.getCellFromDirection(direction);
+			// Check if the cell has item in it.
+			var item = createItemFromCell(cell);
+			if (item) {
+				printToLog(item.description);
+				return;
+			// TODO: Examine non-items!
+			// The cell does not contain item. What if it contains a background element?
+			} else {
+				printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+			}
+		}
+		/*
 		var i,j;
 		for(i = -1; i <= 1; i++) {
 			for(j = -1; j <= 1; j++) {
@@ -181,8 +225,7 @@ class Player extends Character {
 						continue;
 				}
 			}
-		}
-		printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
+		}*/
 	}
 	
 	/* On key press of matching key, prompts the player whether to pick up an item around him and picks up the item if player decides to. */

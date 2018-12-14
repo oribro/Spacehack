@@ -101,7 +101,7 @@ var log = "";
 var stringIndex = 1;
 
 /* Enable/disable movement */
-var movement = false;
+var movement = true;
 
 /* Sound of fire burning */
 var fireSound = new sound(FIRE_SOUND);
@@ -304,7 +304,6 @@ function exitShip(player) {
 
 /* Prompts the player to press a key */
 function promptContinue(player) {
-	movement = false;
 	printToLog(CONTINUE_PROMPT);
 	document.body.onkeydown = function(event) {exitShip(player)};
 }
