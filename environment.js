@@ -33,27 +33,27 @@ const SOUNDS = "sounds/"
 const FIRE_SOUND = ASSETS + SOUNDS + "fire.mp3";
 
 const ENV = {
-		"ship1": "T_SHIP1;STRINGS[`examine_ship`]",
-		"ship2": "T_SHIP2;STRINGS[`examine_ship`]",
-		"ship3": "T_SHIP3;STRINGS[`examine_ship`]",
-		"ship4": "T_SHIP4;STRINGS[`examine_ship`]",
-		"ship5": "T_SHIP5;STRINGS[`examine_ship`]",
-		"ship6": "T_SHIP6;STRINGS[`examine_ship`]",
-		"ship7": "T_SHIP7;STRINGS[`examine_ship`]",
+		"ship1": `T_SHIP1;${STRINGS["examine_ship"]}`,
+		"ship2": `T_SHIP2;${STRINGS["examine_ship"]}`,
+		"ship3": `T_SHIP3;${STRINGS["examine_ship"]}`,
+		"ship4": `T_SHIP4;${STRINGS["examine_ship"]}`,
+		"ship5": `T_SHIP5;${STRINGS["examine_ship"]}`,
+		"ship6": `T_SHIP6;${STRINGS["examine_ship"]}`,
+		"ship7": `T_SHIP7;${STRINGS["examine_ship"]}`,
 		
-		"debris1": "T_DEBRIS1;STRINGS[`examine_debris`]",
-		"debris2": "T_DEBRIS2;STRINGS[`examine_debris`]",
+		"debris1": `T_DEBRIS1;${STRINGS["examine_debris"]}`,
+		"debris2": `T_DEBRIS2;${STRINGS["examine_debris"]}`,
 		
-		"ship_fire": "T_FIRE1;STRINGS[`examine_ship_fire`]",
+		"ship_fire": `T_FIRE1;${STRINGS["examine_ship_fire"]}`,
 		
-		"vegetation1": "T_VEGETATION1;STRINGS[`examine_vegetation`]",
-		"vegetation2": "T_VEGETATION2;STRINGS[`examine_vegetation`]",
+		"vegetation1": `T_VEGETATION1;${STRINGS["examine_vegetation"]}`,
+		"vegetation2": `T_VEGETATION2;${STRINGS["examine_vegetation"]}`,
 		
-		"sand_g": "T_SAND_G;STRINGS[`examine_sand`]",
+		"sand_g": `T_SAND_G;${STRINGS["examine_sand"]}`,
 		
-		"beach1": "T_BEACH1;STRINGS[`examine_beach`]",
+		"beach1": `T_BEACH1;${STRINGS["examine_beach"]}`,
 		
-		"ground": "T_GROUND;STRINGS[`examine_ground`]"
+		"ground": `T_GROUND;${STRINGS["examine_ground"]}`
 }
 
 /* Returns the description of the environment element */
