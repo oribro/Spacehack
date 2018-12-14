@@ -191,6 +191,7 @@ class Player extends Character {
 			this.promptDirection("examine");
 		} else {
 			var cell = this.getCellFromDirection(direction);
+			var cellElement = document.getElementById(cell);
 			// Check if the cell has item in it.
 			var item = createItemFromCell(cell);
 			if (item) {
@@ -198,6 +199,8 @@ class Player extends Character {
 				return;
 			// TODO: Examine non-items!
 			// The cell does not contain item. What if it contains a background element?
+			} else if(cellElement.getAttribute("env") != undefined ) {
+				printToLog(getDescription(cellElement.getAttribute("env")));
 			} else {
 				printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 			}
