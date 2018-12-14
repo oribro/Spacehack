@@ -4,6 +4,7 @@ const Y_ASPECT 		= 9;
 const ASPECT_MUL 	= 2;
 const HEIGHT 		= Y_ASPECT * ASPECT_MUL;
 const WIDTH 		= X_ASPECT * ASPECT_MUL;
+const MAX_FIRE_RANGE = 11;
 
 /* Assets directory */
 const ASSETS = "assets/";
@@ -34,6 +35,10 @@ const T_BOULDER2 = ASSETS + TILESET + "boulder2.png";
 const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
 const T_FIRE1 = ASSETS + TILESET + "fire1.png";
 const T_BUCKET = ASSETS + TILESET + "bucket.png";
+
+/* Game sounds */
+const SOUNDS = "sounds/"
+const FIRE_SOUND = ASSETS + SOUNDS + "fire.mp3";
 
 /* Character traits */
 const DEFAULT_HP = 20;
@@ -98,6 +103,9 @@ var stringIndex = 1;
 /* Enable/disable movement */
 var movement = false;
 
+/* Sound of fire burning */
+var fireSound = new sound(FIRE_SOUND);
+
 /* Create the board and fill environment */
 function boardInit() {
 	var i, j, biDigI, biDigJ;
@@ -160,10 +168,14 @@ function spawnGameObjects() {
 	setTileOnTop("c0805", T_SHIP7);
 	
 	// Fire on ship.
-	setTileOnTop("c0604", T_FIRE1);
-	setTileOnTop("c0705", T_FIRE1);
-	setTileOnTop("c0805", T_FIRE1);
-	
+	["c0604", "c0705", "c0805"].forEach(
+		cell => {
+			setTileOnTop(cell, T_FIRE1);
+			// Important: assuming fire is on top of the other tile layers.
+			// We use here the fact that setTileOnTop sets the fire as the last child element.
+			document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
+		});
+
 	// Ship debris.
 	setTileOnTop("c0318", T_DEBRIS1);
 	setTileOnTop("c0512", T_DEBRIS2);
@@ -241,6 +253,37 @@ function removeItemFromCell(cell) {
 	}
 }
 
+/* Function for adding sound files to the game.
+*  path: string. The path for the sound file.
+*/
+function sound(path) {
+    this.sound = document.createElement("audio");
+    this.sound.src = path;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.setAttribute("loop", "true");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }    
+}
+
+/* Plays fire sound as long as the player is close enough */
+function shouldFirePlay(fireSound, player) {
+	let fire = document.getElementsByClassName("fire")[0];
+	// Fire still burning and player is out of range then he can't hear the sound.
+	if (fire.getAttribute("display") !== "none") {
+		if (player.xPos > MAX_FIRE_RANGE || player.yPos > MAX_FIRE_RANGE) {
+			fireSound.stop();
+		}
+		else
+			fireSound.play();
+	}
+}
 
 /* Deletes the prompt message and prints next string */
 function exitShip(player) {
@@ -248,7 +291,14 @@ function exitShip(player) {
 	player.draw(...playerPos);
 	log = log.slice(0, log.lastIndexOf("\n") - 1);
 	printToLog(STRINGS[EVENT.EXIT_SHIP]);
-	document.body.onkeydown = function(event) {control(event, player)};
+	fireSound.play();
+	document.body.onkeydown = function(event) {
+		control(event, player);
+		// Check if the player is within a reasonable distance from the fire
+		// such that he can still hear it burning.
+		shouldFirePlay(fireSound, player);
+	};
+	
 }
 
 /* Prompts the player to press a key */
