@@ -475,11 +475,13 @@ function repopInv(player) {
 	
 }
 
-/* Stacks all items in the inventory of the given item into one pile of items.
-*  Return the inventory with all items that are similar to the given item
-*  stacked as one item.
+/* If given item is stackable, stacks all items in the inventory of the given item into one pile of items.
+*  Return the inventory with all items that are similar to the given item stacked as one item.
 */
 function itemStack(inventory, sampleItem) {
+	if(isNaN(sampleItem.value)) {
+		return inventory;
+	}
 	return inventory.filter(
 		item => item.name !== sampleItem.name
 	).concat(

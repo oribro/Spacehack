@@ -20,6 +20,8 @@ const STRINGS = {
 
 	"examine_ration": "\"It should help me ease my hunger.\"",
 	
+	"examine_bucket": "\"A standard bucket. I can use it to carry liquids.\"",
+	
 	"examine_ship_fire": "\"Ship caught fire. I should put it out.\"",
 	
 	"examine_vegetation": "\"Looks like vegetation. Means that this planet can support life. But are there complex life forms as well?\"",

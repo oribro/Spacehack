@@ -5,7 +5,8 @@ const DEFAULT_RATION_VALUE = 100;
 // Item list. 
 const ITEMS = {
 		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE}`,
-		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE}`
+		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE}`,
+		"Bucket": `Bucket;Utility;Empty`
 	};
 
 /*
@@ -25,7 +26,11 @@ class Item {
 
 			this.itemName = ITEMS[name].slice(0, itemNameLastIndex);
 			this.itemType = ITEMS[name].slice(itemTypeFirstIndex, itemTypeLastIndex);
-			this.itemValue = parseInt(ITEMS[name].slice(itemValueFirstIndex));
+			if(isNaN(ITEMS[name].slice(itemValueFirstIndex))) {
+				this.itemValue = ITEMS[name].slice(itemValueFirstIndex);
+			} else {
+				this.itemValue = parseInt(ITEMS[name].slice(itemValueFirstIndex));
+			}
 			this.itemTile = eval("T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase());
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 

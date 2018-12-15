@@ -67,7 +67,9 @@ class Player extends Character {
 		// die is defined at WINDOW (global) scope.  
 		this.die = this.die.bind(this);
 		this.inventory = [new Item("Ration"),
-						  new Item("Ration")];
+						  new Item("Ration"),
+						  new Item("Bucket")
+						 ];
 	}
 
 	move(event) {
