@@ -16,8 +16,11 @@ const DEFAULT_HP = 20;
 */
 window.onload = () => {
 
-	// Create the board.
-	boardInit();
+	// Create the board and fill environment.
+	spawnGameObjects();
+
+	// Print first text to log.
+	printToLog(STRINGS[EVENT.WAKEUP]);
 
 	// Create a new player character.
 	// Places the character at the top left.
@@ -74,45 +77,9 @@ var fireSound = new sound(FIRE_SOUND);
 
 /* Create the board and fill environment */
 function boardInit() {
-	var i, j, biDigI, biDigJ;
-	for(i = 0; i < HEIGHT; i++) {
-		biDigI = getTwoDigits(i);
-		var div = document.createElement("div");
-		div.setAttribute("id", "r"+biDigI);
-		div.setAttribute("class", "tileline");
-		document.getElementById("game-board").appendChild(div);
-		for(j = 0; j < WIDTH; j++) {
-			biDigJ = getTwoDigits(j);
-			var span = document.createElement("span");
-			span.setAttribute("id","c"+biDigI+biDigJ);
-			document.getElementById("r"+biDigI).appendChild(span);
-			if(j == 0) {
-				setCell("c"+biDigI+biDigJ, T_WATER1);
-				span.setAttribute("walkable", "false");
-			} else if (j == 1) {
-				setCell("c"+biDigI+biDigJ, T_BEACH1);
-				span.setAttribute("walkable", "false");
-				span.lastElementChild.setAttribute("class", "water");
-			} else if (j == 2) {
-				setCell("c"+biDigI+biDigJ, T_SAND_G);
-				span.setAttribute("walkable", "true");
-			} else if(j == WIDTH - 5) {
-				setCell("c"+biDigI+biDigJ, T_VEGETATION2);
-				span.setAttribute("walkable", "true");
-			} else if(j >= WIDTH - 4) {
-				setCell("c"+biDigI+biDigJ, T_VEGETATION1);
-				span.setAttribute("walkable", "true");
-			} else {
-				setCell("c"+biDigI+biDigJ, T_GROUND);
-				span.setAttribute("walkable", "true");
-			}
-		}
-	}
-	
-	spawnGameObjects();
 
-	// Print first text to log.
-	printToLog(STRINGS[EVENT.WAKEUP]);
+	
+
 }
 
 /* Checks whether a cell is walkable. */
@@ -126,30 +93,81 @@ function isWalkable(cell) {
 
 function spawnGameObjects() {
 
+	// Spawn terrain environment elements.
+	var i, j, biDigI, biDigJ;
+	for(i = 0; i < HEIGHT; i++) {
+		biDigI = getTwoDigits(i);
+		var div = document.createElement("div");
+		div.setAttribute("id", "r"+biDigI);
+		div.setAttribute("class", "tileline");
+		document.getElementById("game-board").appendChild(div);
+		for(j = 0; j < WIDTH; j++) {
+			biDigJ = getTwoDigits(j);
+			let cell = "c"+biDigI+biDigJ
+			var span = document.createElement("span");
+			span.setAttribute("id", cell);
+			document.getElementById("r"+biDigI).appendChild(span);
+			if(j == 0) {
+				setCell(cell, T_WATER1, "false");
+				setEnv(cell, T_WATER1);
+			} else if (j == 1) {
+				setCell(cell, T_BEACH1, "false");
+				setEnv(cell, T_BEACH1);
+				span.lastElementChild.setAttribute("class", "water");
+			} else if (j == 2) {
+				setCell(cell, T_SAND_G, "true");
+				setEnv(cell, T_SAND_G);
+			} else if(j == WIDTH - 5) {
+				setCell(cell, T_VEGETATION2, "true");
+				setEnv(cell, T_VEGETATION2);
+			} else if(j >= WIDTH - 4) {
+				setCell(cell, T_VEGETATION1, "true");
+				setEnv(cell, T_VEGETATION1);
+			} else {
+				setCell(cell, T_GROUND, "true");
+				setEnv(cell, T_GROUND);
+			}
+		}
+	}
+
+	// Spawn game objects above the terrain.
 	// Ship.
-	setTileOnTop("c0505", T_SHIP2);
-	setTileOnTop("c0605", T_SHIP3);
-	setTileOnTop("c0606", T_SHIP4);
-	setTileOnTop("c0604", T_SHIP5);
-	setTileOnTop("c0705", T_SHIP6);
-	setTileOnTop("c0805", T_SHIP7);
-	
+	setTileOnTop("c0505", T_SHIP2, "false");
+	setTileOnTop("c0605", T_SHIP3, "false");
+	setTileOnTop("c0606", T_SHIP4, "false");
+	setTileOnTop("c0604", T_SHIP5, "false");
+	setTileOnTop("c0705", T_SHIP6, "false");
+	setTileOnTop("c0805", T_SHIP7, "false");
+	setEnv("c0505", T_SHIP2);
+	setEnv("c0605", T_SHIP3);
+	setEnv("c0606", T_SHIP4);
+	setEnv("c0604", T_SHIP5);
+	setEnv("c0705", T_SHIP6);
+	setEnv("c0805", T_SHIP7);
+
 	// Fire on ship.
 	["c0604", "c0705", "c0805"].forEach(
 		cell => {
-			setTileOnTop(cell, T_FIRE1);
+			setTileOnTop(cell, T_FIRE1, "false");
+			setEnv(cell, T_FIRE1);
 			// Important: assuming fire is on top of the other tile layers.
 			// We use here the fact that setTileOnTop sets the fire as the last child element.
 			document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
 		});
 
 	// Ship debris.
-	setTileOnTop("c0318", T_DEBRIS1);
-	setTileOnTop("c0512", T_DEBRIS2);
-	setTileOnTop("c1205", T_DEBRIS1);
-	setTileOnTop("c1619", T_DEBRIS2);
-	setTileOnTop("c1018", T_DEBRIS1);
-	setTileOnTop("c1704", T_DEBRIS2);
+	setTileOnTop("c0318", T_DEBRIS1, "false");
+	setTileOnTop("c0512", T_DEBRIS2, "false");
+	setTileOnTop("c1205", T_DEBRIS1, "false");
+	setTileOnTop("c1619", T_DEBRIS2, "false");
+	setTileOnTop("c1018", T_DEBRIS1, "false");
+	setTileOnTop("c1704", T_DEBRIS2, "false");
+	setEnv("c0318", T_DEBRIS1);
+	setEnv("c0512", T_DEBRIS2);
+	setEnv("c1205", T_DEBRIS1);
+	setEnv("c1619", T_DEBRIS2);
+	setEnv("c1018", T_DEBRIS1);
+	setEnv("c1704", T_DEBRIS2);
 
 	// Item spawn
 	spawnItem(
@@ -179,7 +197,7 @@ function spawnGameObjects() {
 */
 function spawnItem(cell, tile, item) {
 	// Spawn item image
-	setTileOnTop(cell, tile);
+	setTileOnTop(cell, tile, "false");
 	document.getElementById(cell).setAttribute("item", item);
 }
 
@@ -206,7 +224,7 @@ function createItemFromCell(cell) {
 
 /* Sets the given item on the given cell */
 function setItemOntoCell(cell, item) {
-	setTileOnTop(cell, item.tile);
+	setTileOnTop(cell, item.tile, "false");
 	let cellElement = document.getElementById(cell);
 	cellElement.setAttribute("item", item.toString());
 }
@@ -217,6 +235,7 @@ function removeItemFromCell(cell) {
 	if (cellElement.hasAttribute("item")) {
 		cellElement.removeAttribute("item");
 		removeTileOnTop(cell);
+		cellElement.setAttribute("walkable", "true");
 	}
 }
 
@@ -347,11 +366,8 @@ function plot(index, length, player) {
 }
 
 /* Sets a tile to a cell */
-function setCell(cell, tile) {
+function setCell(cell, tile, walkable) {
 	var element = document.getElementById(cell);
-	var env = tile.slice(15).toLowerCase();
-	env = env.slice(0, -4);
-	element.setAttribute("env", env);
 	var imgElement = element.getElementsByTagName("img").length
 	if(imgElement < 1) {
 		var img = document.createElement("img");
@@ -361,10 +377,19 @@ function setCell(cell, tile) {
 	} else {
 		element.getElementsByTagName("img")[0].setAttribute("src", tile);
 	}
+	element.setAttribute("walkable", walkable.toString());
+}
+
+/* Sets the cell to an environment game object */
+function setEnv(cell, tile) {
+	var cellElement = document.getElementById(cell);
+	var env = tile.slice(15).toLowerCase();
+	env = env.slice(0, -4);
+	cellElement.setAttribute("env", env);
 }
 
 /* Sets a tile on top of the tile already in the cell. */
-function setTileOnTop(cell, tile) {
+function setTileOnTop(cell, tile, walkable) {
 	var img = document.createElement("img");
 	var cellElement = document.getElementById(cell);
 	cellElement.appendChild(img);
@@ -374,10 +399,7 @@ function setTileOnTop(cell, tile) {
 	img.style.position = "absolute";
 	img.style.top = "0";
 	img.style.left = "0";
-	cellElement.setAttribute("walkable", "false");
-	var env = tile.slice(15).toLowerCase();
-	env = env.slice(0, -4);
-	cellElement.setAttribute("env", env);
+	cellElement.setAttribute("walkable", walkable.toString());
 }
 
 /* Returns the tile on top of the tile already in the cell. */
@@ -392,7 +414,7 @@ function getTileOnTop(cell) {
 function removeTileOnTop(cell) {
 	var overTile = document.getElementById(cell.replace('c','o'));
 	document.getElementById(cell).removeChild(overTile);
-	document.getElementById(cell).setAttribute("walkable", "true");
+	//document.getElementById(cell).setAttribute("walkable", "true");
 }
 
 /*

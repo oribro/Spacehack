@@ -45,7 +45,7 @@ const ENV = {
 		"debris1": `T_DEBRIS1;${STRINGS["examine_debris"]}`,
 		"debris2": `T_DEBRIS2;${STRINGS["examine_debris"]}`,
 		
-		"ship_fire": `T_FIRE1;${STRINGS["examine_ship_fire"]}`,
+		"fire1": `T_FIRE1;${STRINGS["examine_ship_fire"]}`,
 		
 		"vegetation1": `T_VEGETATION1;${STRINGS["examine_vegetation"]}`,
 		"vegetation2": `T_VEGETATION2;${STRINGS["examine_vegetation"]}`,
@@ -59,6 +59,5 @@ const ENV = {
 
 /* Returns the description of the environment element */
 function getDescription(env) {
-	console.log(env);
 	return ENV[env].slice(ENV[env].indexOf(";") + 1);
 }

@@ -111,7 +111,7 @@ class Player extends Character {
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
-		setTileOnTop("c"+biDigY+biDigX, T_PLAYER);
+		setTileOnTop("c"+biDigY+biDigX, T_PLAYER, "true");
 	}
 	
 	/*
@@ -312,6 +312,7 @@ class Player extends Character {
 		const biDigX = getTwoDigits(this.xPos);
 		const biDigY = getTwoDigits(this.yPos);
 		setItemOntoCell("c" + biDigY + biDigX, item);
+		document.getElementById("c" + biDigY + biDigX).setAttribute("walkable", "false");
 		printToLog("You dropped " + item.name + " on the ground.");
 		this.getInventory().splice(itemSel-1, 1);
 		repopInv(this);
@@ -367,7 +368,7 @@ class NPC extends Character{
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
 		if(useTileset) {
-			setTileOnTop("c"+biDigY+biDigX, T_NPC);
+			setTileOnTop("c"+biDigY+biDigX, T_NPC, "false");
 		} else {
 		setCell("c"+biDigY+biDigX, T_NPC, NON_PLAYER, C_NPC);
 		}
