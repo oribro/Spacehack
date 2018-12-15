@@ -236,20 +236,21 @@ function sound(path) {
     }
     this.stop = function(){
         this.sound.pause();
-    }    
+    }
+	this.volume = function(vol) {
+		this.sound.volume = vol;
+	}
 }
 
-/* Plays fire sound as long as the player is close enough */
-function shouldFirePlay(fireSound, player) {
+/* Plays fire sound in a volume according to player position */
+function shouldFirePlay(fireSound, player, fireXPos, fireYPos) {
 	let fire = document.getElementsByClassName("fire")[0];
-	// Fire still burning and player is out of range then he can't hear the sound.
-	if (fire.getAttribute("display") !== "none") {
-		if (player.xPos > MAX_FIRE_RANGE || player.yPos > MAX_FIRE_RANGE) {
-			fireSound.stop();
-		}
-		else
-			fireSound.play();
-	}
+	// Distance between player and source of fire.
+	var distance = Math.sqrt(Math.pow((player.xPos - fireXPos), 2) + Math.pow((player.yPos - fireYPos), 2));
+	// Volume to reduce.
+	var distVolOffset = distance/10;
+	// Reduce volume by distVolOffset+FIRE_DIST_OFFSET but stay within 0 and 1.
+	fireSound.volume(Math.max(Math.min(1, 1-distVolOffset+FIRE_DIST_OFFSET), 0));
 }
 
 /* Deletes the prompt message and prints next string */
@@ -263,7 +264,7 @@ function exitShip(player) {
 		control(event, player);
 		// Check if the player is within a reasonable distance from the fire
 		// such that he can still hear it burning.
-		shouldFirePlay(fireSound, player);
+		shouldFirePlay(fireSound, player, 5, 7);
 	};
 	
 }
