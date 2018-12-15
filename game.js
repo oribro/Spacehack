@@ -348,6 +348,9 @@ function plot(index, length, player) {
 /* Sets a tile to a cell */
 function setCell(cell, tile) {
 	var element = document.getElementById(cell);
+	var env = tile.slice(15).toLowerCase();
+	env = env.slice(0, -4);
+	element.setAttribute("env", env);
 	var imgElement = element.getElementsByTagName("img").length
 	if(imgElement < 1) {
 		var img = document.createElement("img");

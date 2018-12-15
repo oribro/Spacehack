@@ -53,10 +53,11 @@ const ENV = {
 		
 		"beach1": `T_BEACH1;${STRINGS["examine_beach"]}`,
 		
-		"ground": `T_GROUND;${STRINGS["examine_ground"]}`
+		"ground1": `T_GROUND;${STRINGS["examine_ground"]}`
 }
 
 /* Returns the description of the environment element */
 function getDescription(env) {
+	console.log(env);
 	return ENV[env].slice(ENV[env].indexOf(";") + 1);
 }
