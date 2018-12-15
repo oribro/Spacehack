@@ -207,30 +207,6 @@ class Player extends Character {
 				printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 			}
 		}
-		/*
-		var i,j;
-		for(i = -1; i <= 1; i++) {
-			for(j = -1; j <= 1; j++) {
-				if(i == 0 && j == 0) {
-					continue;
-				}
-				if((this.xPos + i) >= 0 && (this.xPos + i) < WIDTH && 
-					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
-					var biDigX = getTwoDigits(this.xPos + i);
-					var biDigY = getTwoDigits(this.yPos + j);
-					// Check if the cell has item in it.
-					var item = createItemFromCell("c" + biDigY + biDigX);
-					if (item) {
-						printToLog(item.description);
-						return;
-					}
-					// TODO: Examine non-items!
-					// The cell does not contain item. What if it contains a background element?
-					else
-						continue;
-				}
-			}
-		}*/
 	}
 	
 	/* On key press of matching key, prompts the player whether to pick up an item around him and picks up the item if player decides to. */
