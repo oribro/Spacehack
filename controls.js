@@ -22,13 +22,28 @@ document.getElementById("pickup-key").innerHTML = "'"+PICKUP+"'";
 document.getElementById("controls-key").innerHTML = "'"+CONTROLS+"'";
 document.getElementById("drop-key").innerHTML = "'"+DROP+"'";
 
+/* Holds the current action so control() will know what to do */
+var actionExecuted;
+
+/* Passes the direction pressed to the requesting function */
+function passToAction(direction, player) {
+	switch(actionExecuted) {
+		case "examine":
+			player.examine(direction);
+			break;
+		case "utilItem":
+			utilItem(itemHolder, player, direction);
+			break;
+	}
+}
+
 /* Passes the keydown event to the suitable function */
 function control(event, player) {
 	var key = event.key;
 	switch (key) {
 		case MOVE_RIGHT:
 			if(movement == false) {
-				player.examine(MOVE_RIGHT);
+				passToAction(MOVE_RIGHT, player);
 				movement = true;
 			} else {
 				player.move(event);
@@ -36,7 +51,7 @@ function control(event, player) {
 			break;
 		case MOVE_LEFT:
 			if(movement == false) {
-				player.examine(MOVE_LEFT);
+				passToAction(MOVE_LEFT, player);
 				movement = true;
 			} else {
 				player.move(event);
@@ -44,7 +59,7 @@ function control(event, player) {
 			break;
 		case MOVE_UP:
 			if(movement == false) {
-				player.examine(MOVE_UP);
+				passToAction(MOVE_UP, player);
 				movement = true;
 			} else {
 				player.move(event);
@@ -52,7 +67,7 @@ function control(event, player) {
 			break;
 		case MOVE_DOWN:
 			if(movement == false) {
-				player.examine(MOVE_DOWN);
+				passToAction(MOVE_DOWN, player);
 				movement = true;
 			} else {
 				player.move(event);

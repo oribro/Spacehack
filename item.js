@@ -77,3 +77,48 @@ class Item {
 	}
 }
 
+/* Holds the item passed to utilItem while prompting direction */
+var itemHolder;
+
+function utilItem(item, player, direction) {
+	switch (item.name) {
+		case "Bucket":
+			if(direction === undefined) {
+				itemHolder = item;
+				promptDirection("utilItem");
+			} else {
+				var cell = player.getCellFromDirection(direction);
+				var cellElement = document.getElementById(cell);
+				var env = cellElement.getAttribute("env");
+				if(env == "beach1" && item.value == "Empty") {
+					printToLog("You fill the bucket with water.");
+					item.value = "Water";
+					repopInv(player);
+				} else if(env == "beach1" && item.value != "Empty") {
+					printToLog("\"But my bucket is already full!\"");
+				} else if(env != "beach1" && env != "fire1" && item.value != "Empty") {
+					printToLog("You pour all the " + item.value.toLowerCase() + " on the ground. Bucket is now empty.");
+					item.value = "Empty";
+					repopInv(player);
+				} else if(env == "fire1" && item.value == "Water") {
+					printToLog("You pour the water on the fire and it dies out. \"One step closer to getting home.\"");
+					var cell = player.getCellFromDirection(direction);
+					var fireElements = document.getElementsByClassName("fire");
+					Array.prototype.forEach.call(fireElements, element => {
+						element.parentNode.removeChild(element)
+					});
+					fireElements = document.getElementsByClassName("fire");
+					fireElements[0].parentNode.removeChild(fireElements[0]);
+					fireSound.stop();
+					setEnv("c0604", "ship5");
+					setEnv("c0705", "ship6");
+					setEnv("c0805", "ship7");					
+					item.value = "Empty";
+					repopInv(player);
+				} else {
+					printToLog("\"How can I use the bucket with that?\"");
+				}
+			}
+	}
+}
+

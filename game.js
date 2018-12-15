@@ -500,3 +500,10 @@ function itemStack(inventory, sampleItem) {
 	);
 }
 
+/* Stops movement and prompts the user to input a direction for the action */
+	function promptDirection(action) {
+		movement = false;
+		actionExecuted = action;
+		printToLog("In what direction do you want to perform the action?");
+	}
+

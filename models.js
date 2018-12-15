@@ -181,16 +181,10 @@ class Player extends Character {
 		}
 	}
 	
-	/* Stops movement and prompts the user to input a direction for the action */
-	promptDirection(action) {
-		movement = false;
-		printToLog("In what direction do you want to " + action +"?");
-	}
-	
 	/* On key press of matching key, examines the perimeter around the player and prints information to log. */
 	examine(direction) {
 		if(direction === undefined) {
-			this.promptDirection("examine");
+			promptDirection("examine");
 		} else {
 			var cell = this.getCellFromDirection(direction);
 			var cellElement = document.getElementById(cell);
@@ -278,6 +272,9 @@ class Player extends Character {
 				break;
 			case "Currency":
 				// TODO: Implement usage of coins i.e for buying items at a shop
+			case "Utility":
+				utilItem(item, this);
+				break;
 			default:
 				printToLog(STRINGS["not_implemented_err"]);
 		}
