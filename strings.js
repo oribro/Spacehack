@@ -19,6 +19,8 @@ const STRINGS = {
 	"examine_coins": "\"It's a pile of coins.\"",
 
 	"examine_ration": "\"It should help me ease my hunger.\"",
+
+	"examine_firstaid": "\"I can use it to heal my wounds.\"",	
 	
 	"examine_bucket": "\"A standard bucket. I can use it to carry liquids.\"",
 	

@@ -27,6 +27,7 @@ const T_BOULDER2 = ASSETS + TILESET + "boulder2.png";
 const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
 const T_FIRE1 = ASSETS + TILESET + "fire1.png";
 const T_BUCKET = ASSETS + TILESET + "bucket.png";
+const T_FIRSTAID = ASSETS + TILESET + "first_aid.png";
 
 /* Game sounds */
 const SOUNDS = "sounds/"

@@ -6,9 +6,6 @@ const HEIGHT 		= Y_ASPECT * ASPECT_MUL;
 const WIDTH 		= X_ASPECT * ASPECT_MUL;
 const MAX_FIRE_RANGE = 11;
 
-/* Character traits */
-const DEFAULT_HP = 20;
-
 'use strict';
 
 /*
@@ -178,9 +175,14 @@ function spawnGameObjects() {
 		T_COINS, 
 		ITEMS["Coins"]
 	);
+	spawnItem(
+		"c1310", 
+		T_FIRSTAID, 
+		ITEMS["FirstAid"]
+	)
 
 	document.getElementById("turn-value").innerHTML = turn;
-	document.getElementById("hp-value").innerHTML = DEFAULT_HP;
+	document.getElementById("hp-value").innerHTML = MAX_HP;
 }
 
 /* Spawns a game item at the given cell with the given item parameters.

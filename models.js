@@ -1,3 +1,6 @@
+/* Character traits */
+const MAX_HP = 20;
+
 /*
 *	Class for a game character
 */
@@ -6,7 +9,7 @@ class Character {
 	constructor(x=0, y=0){
 		this.x = x;
 		this.y = y;
-		this.hp = DEFAULT_HP;
+		this.hp = MAX_HP;
 	}
 
 	get xPos() {
@@ -270,6 +273,17 @@ class Player extends Character {
 				this.getInventory().splice(itemSel-1, 1);
 				repopInv(this);
 				break;
+			case "Health":
+				// Check if the first aid is needed.
+				if (this.hp === MAX_HP) {
+					printToLog("You're already healthy as a horse.");
+					break;
+				}
+				this.incHealth = item.value;
+				printToLog("You use the " + item.name + ". You feel healthier.");
+				this.getInventory().splice(itemSel-1, 1);
+				repopInv(this);
+				break;
 			case "Currency":
 				// TODO: Implement usage of coins i.e for buying items at a shop
 			case "Utility":
@@ -323,6 +337,11 @@ class Player extends Character {
 	}
 	set incHunger(addHunger) {
 		this.hunger += addHunger;
+	}
+	// Increase player health without exceeding max possible health.
+	set incHealth(addHp) {
+		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
+		document.getElementById("hp-value").innerHTML = this.hp;
 	}
 }
 
