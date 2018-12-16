@@ -75,13 +75,6 @@ var movement = true;
 /* Sound of fire burning */
 var fireSound = new sound(FIRE_SOUND);
 
-/* Create the board and fill environment */
-function boardInit() {
-
-	
-
-}
-
 /* Checks whether a cell is walkable. */
 function isWalkable(cell) {
 	var cellElement = document.getElementById(cell);
@@ -258,6 +251,9 @@ function sound(path) {
     }
 	this.volume = function(vol) {
 		this.sound.volume = vol;
+	}
+	this.loop = function(shouldLoop) {
+		this.sound.loop = shouldLoop;
 	}
 }
 

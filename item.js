@@ -90,6 +90,11 @@ function utilItem(item, player, direction) {
 				var cell = player.getCellFromDirection(direction);
 				var cellElement = document.getElementById(cell);
 				var env = cellElement.getAttribute("env");
+				/* Sound of water splashing */
+				var waterSplash = new sound(WATER_SPLASH);
+				// Only one water splash per bucket pour.
+				waterSplash.loop(false);
+
 				if(env == "beach1" && item.value == "Empty") {
 					printToLog("You fill the bucket with water.");
 					item.value = "Water";
@@ -98,10 +103,12 @@ function utilItem(item, player, direction) {
 					printToLog("\"But my bucket is already full!\"");
 				} else if(env != "beach1" && env != "fire1" && item.value != "Empty") {
 					printToLog("You pour all the " + item.value.toLowerCase() + " on the ground. Bucket is now empty.");
+					waterSplash.play();
 					item.value = "Empty";
 					repopInv(player);
 				} else if(env == "fire1" && item.value == "Water") {
 					printToLog("You pour the water on the fire and it dies out. \"One step closer to getting home.\"");
+					waterSplash.play();
 					var cell = player.getCellFromDirection(direction);
 					var fireElements = document.getElementsByClassName("fire");
 					Array.prototype.forEach.call(fireElements, element => {
