@@ -1,5 +1,6 @@
 /* Character traits */
-const MAX_HP = 20;
+const MAX_HP = 100;
+const SPAWN_HP = 20;
 
 /*
 *	Class for a game character
@@ -9,7 +10,7 @@ class Character {
 	constructor(x=0, y=0){
 		this.x = x;
 		this.y = y;
-		this.hp = MAX_HP;
+		this.hp = SPAWN_HP;
 	}
 
 	get xPos() {
@@ -313,6 +314,9 @@ class Player extends Character {
 	*/
 	async die(cause) {
 		await sleep(700);
+		var sadTrombone = new sound(SAD_TROMBONE);
+		sadTrombone.loop(false);
+		sadTrombone.play();
 		const turn = document.getElementById("turn-value").innerText;
 		let image = document.getElementById(this.getImage());
 		document.getElementById("log").style.display = "none";

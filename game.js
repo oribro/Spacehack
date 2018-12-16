@@ -182,7 +182,7 @@ function spawnGameObjects() {
 	)
 
 	document.getElementById("turn-value").innerHTML = turn;
-	document.getElementById("hp-value").innerHTML = MAX_HP;
+	document.getElementById("hp-value").innerHTML = SPAWN_HP;
 }
 
 /* Spawns a game item at the given cell with the given item parameters.

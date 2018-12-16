@@ -34,6 +34,7 @@ const SOUNDS = "sounds/"
 const FIRE_SOUND = ASSETS + SOUNDS + "fire.mp3";
 const FIRE_DIST_OFFSET = 0.4;
 const WATER_SPLASH = ASSETS + SOUNDS + "water-pouring.wav";
+const SAD_TROMBONE = ASSETS + SOUNDS + "sad-trombone.wav";
 
 const ENV = {
 		"ship1": `T_SHIP1;${STRINGS["examine_ship"]}`,
