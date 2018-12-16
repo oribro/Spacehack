@@ -17,6 +17,7 @@ const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
 const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 const T_COINS = ASSETS + TILESET + "coins.png";
 const T_RATION = ASSETS + TILESET + "ration.png";
+const T_CONTAINER = ASSETS + TILESET + "container1.png";
 const T_VEGETATION1 = ASSETS + TILESET + "vegetation1.png";
 const T_VEGETATION2 = ASSETS + TILESET + "vegetation2.png";
 const T_SAND_G = ASSETS + TILESET + "sand_g.png";
@@ -57,10 +58,13 @@ const ENV = {
 		
 		"beach1": `T_BEACH1;${STRINGS["examine_beach"]}`,
 		
-		"ground1": `T_GROUND;${STRINGS["examine_ground"]}`
+		"ground1": `T_GROUND;${STRINGS["examine_ground"]}`,
+		
+		"container1": `T_CONTAINER;${STRINGS["examine_container"]}`
 }
 
 /* Returns the description of the environment element */
 function getDescription(env) {
+	console.log(env);
 	return ENV[env].slice(ENV[env].indexOf(";") + 1);
 }

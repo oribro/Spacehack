@@ -81,6 +81,16 @@ function isWalkable(cell) {
 	return false;
 }
 
+function hideTile(cell, tile) {
+	var cellImgElements = document.getElementsByTagName("img");
+	let i;
+	for(i = 0; i < cellImgElements.length; i++) {
+		if(cellImgElements[i].getAttribute("src").search(tile) != -1) {
+			cellImgElements[i].style.visibility = "hidden";
+		}
+	}
+}
+
 function spawnGameObjects() {
 
 	// Spawn terrain environment elements.
@@ -158,6 +168,16 @@ function spawnGameObjects() {
 	setEnv("c1619", T_DEBRIS2);
 	setEnv("c1018", T_DEBRIS1);
 	setEnv("c1704", T_DEBRIS2);
+	
+	// Container
+	containers.push(new Container([new Item("FirstAid"),
+								   new Item("Ration"),
+								   new Item("Bucket")],
+								  "c1423"));
+
+	//hideTile("c1423", T_FIRSTAID);
+	//setTileOnTop("c1423", T_CONTAINER, "false");
+	//setEnv("c1423", T_CONTAINER);
 
 	// Item spawn
 	spawnItem(
@@ -179,8 +199,8 @@ function spawnGameObjects() {
 		"c1310", 
 		T_FIRSTAID, 
 		ITEMS["FirstAid"]
-	)
-
+	);
+	
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = SPAWN_HP;
 }
@@ -384,6 +404,15 @@ function setEnv(cell, tile) {
 	var env = tile.slice(15).toLowerCase();
 	env = env.slice(0, -4);
 	cellElement.setAttribute("env", env);
+}
+
+/* Takes a cell and returns its env attribute, or null if it doesn't have it */
+function getEnv(cell) {
+	var cellElement = document.getElementById(cell);
+	if(cellElement.hasAttribute("env")) {
+		return cellElement.getAttribute("env");
+	}
+	return null;
 }
 
 /* Sets a tile on top of the tile already in the cell. */

@@ -34,6 +34,8 @@ const STRINGS = {
 	
 	"examine_ground": "\"The ground here is rocky.\"",
 	
+	"examine_container": "\"It's the container from the ship! It must have fallen while we crashed. There should be useful things inside.\"",
+	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
 	"hungry1": "You are getting hungry.",

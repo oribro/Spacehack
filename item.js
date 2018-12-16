@@ -10,6 +10,8 @@ const ITEMS = {
 		"Bucket": `Bucket;Utility;Empty`,
 		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE}`
 	};
+	
+var containers = [];
 
 /*
  *	Class for game items.
@@ -76,6 +78,34 @@ class Item {
 	/* Returns a string representation of the item similar to ITEMS values */
 	toString() {
 		return `${this.name};${this.type};${this.value}`;
+	}
+}
+
+/* Class for item containers. Containers should be constructed inside the containers[] array. */
+class Container {
+	/* A container is constructed by a list of items and a cell where the container will spawn */
+	constructor(itemList, cell) {
+		this.itemList = itemList;
+		this.cellString = cell
+		setTileOnTop(this.cellString, T_CONTAINER, "false");
+		setEnv(this.cellString, T_CONTAINER);
+	}
+	get content() {
+		return this.itemList;
+	}
+	get cell() {
+		return this.cellString;
+	}
+	// Takes an item name and returns an item object if it's in the container.
+	item(itemName) {
+		Array.find(function(item) {
+			return item.name == itemName;
+		});
+	}
+	// Takes an item object and removes this item from the container.
+	popItem(contItem) {
+		let item = contItem;
+		this.itemList.splice(this.itemList.indexOf(item), 1);
 	}
 }
 

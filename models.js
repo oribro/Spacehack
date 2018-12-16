@@ -71,8 +71,7 @@ class Player extends Character {
 		// die is defined at WINDOW (global) scope.  
 		this.die = this.die.bind(this);
 		this.inventory = [new Item("Ration"),
-						  new Item("Ration"),
-						  new Item("Bucket")
+						  new Item("Ration")
 						 ];
 	}
 
@@ -238,6 +237,26 @@ class Player extends Character {
 							repopInv(this);
 						}
 						return;
+					}
+					if(getEnv(cell) == "container1") {
+						var container;
+						let i;
+						for(i = 0; i < containers.length; i++) {
+							if(containers[i].cell == cell) {
+								container = containers[i]
+							}
+						}
+						for(i = 0; i < container.content.length; i++) {
+							if (confirm(`Do you want to pick-up ${container.content[i].name}?`)) {
+								this.inventory = [...this.inventory, container.content[i]];
+								container.popItem(container.content[i]);
+								
+								//this.inventory = itemStack(this.inventory, container.content[i]);
+								//this.setInventory(this.inventory);
+								repopInv(this);
+							}
+							return;
+						}
 					}
 				}
 			}
