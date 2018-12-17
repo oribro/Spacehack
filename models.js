@@ -412,7 +412,7 @@ class NPC extends Character{
 			return;
 		}
 		if(player.xPos > this.x) {
-			this.tile = this.tile.replace(this.type + "_r", this.type + "_l");
+			this.tile = this.tile.replace(this.type.toLowerCase() + "_l", this.type.toLowerCase() + "_r");
 			if(xDist > yDist) {
 				xDest = this.x +1;
 				yDest = this.y;
@@ -426,7 +426,7 @@ class NPC extends Character{
 				}
 			}
 		} else {
-			this.tile = this.tile.replace(this.type + "_l", this.type + "_r");
+			this.tile = this.tile.replace(this.type.toLowerCase() + "_r", this.type.toLowerCase() + "_l");
 			if(xDist > yDist) {
 				xDest = this.x - 1;
 				yDest = this.y;
