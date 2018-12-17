@@ -407,33 +407,45 @@ class NPC extends Character{
 	move(player) {
 		let xDist = Math.abs(player.xPos - this.x);
 		let yDist = Math.abs(player.yPos - this.y);
+		let xDest, yDest;
 		if(xDist < 2 && yDist < 2) {
 			return;
 		}
 		if(player.xPos > this.x) {
 			this.tile = this.tile.replace(this.type + "_r", this.type + "_l");
 			if(xDist > yDist) {
-				this.moveChar(this.x + 1, this.y);
+				xDest = this.x +1;
+				yDest = this.y;
 			} else {
 				if(player.yPos > this.y) {
-					this.moveChar(this.x, this.y + 1);
+					xDest = this.x;
+					yDest = this.y + 1;
 				} else {
-					this.moveChar(this.x, this.y - 1);
+					xDest = this.x;
+					yDest = this.y - 1;
 				}
 			}
 		} else {
 			this.tile = this.tile.replace(this.type + "_l", this.type + "_r");
 			if(xDist > yDist) {
-				this.moveChar(this.x - 1, this.y);
+				xDest = this.x - 1;
+				yDest = this.y;
 			} else {
 				if(player.yPos > this.y) {
-					this.moveChar(this.x, this.y + 1);
+					xDest = this.x;
+					yDest = this.y + 1;
 				} else {
-					this.moveChar(this.x, this.y - 1);
+					xDest = this.x;
+					yDest = this.y - 1;
 				}
 			}
 		}
-		this.draw(this.x, this.y);
+		let biDigXDest = getTwoDigits(xDest);
+		let biDigYDest = getTwoDigits(yDest);
+		if(isWalkable("c" + biDigYDest + biDigXDest)) {
+			this.moveChar(xDest, yDest);
+			this.draw(this.x, this.y);
+		}
 	}
 	
 }
