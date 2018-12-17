@@ -441,11 +441,18 @@ function getTileOnTop(cell) {
 	}
 }
 
-/* Removes the tile that covers another tile */
-function removeTileOnTop(cell) {
+/* Removes the tile that covers another tile
+ * walkable: boolean. optional parameter to set the walkable attribute of the cell */
+function removeTileOnTop(cell, walkable) {
 	var overTile = document.getElementById(cell.replace('c','o'));
 	document.getElementById(cell).removeChild(overTile);
-	//document.getElementById(cell).setAttribute("walkable", "true");
+	if(walkable != undefined) {
+		if(walkable == true) {
+			document.getElementById(cell).setAttribute("walkable", "true");
+		} else {
+			document.getElementById(cell).setAttribute("walkable", "false");
+		}
+	}	
 }
 
 /*

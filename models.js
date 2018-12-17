@@ -46,7 +46,7 @@ class Character {
 		var biDigCurY = getTwoDigits(this.yPos);
 		
 		// Set current character cell to ground.
-		removeTileOnTop("c"+biDigCurY+biDigCurX);
+		removeTileOnTop("c"+biDigCurY+biDigCurX, true);
 		
 		// Set character position properties to new position.
 		this.xPos = xPos;
