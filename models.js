@@ -211,6 +211,92 @@ class Player extends Character {
 		}
 	}
 	
+	/* Attempt to pickup items from a container */
+	loot(cell) {
+		if(getEnv(cell) == "container1") {
+			var container;
+			let i;
+			for(i = 0; i < containers.length; i++) {
+				if(containers[i].cell == cell) {
+					container = containers[i]
+				}
+			}
+
+			// TODO: If the container is empty we can remove it from the cell.
+			// No need to keep an empty container.
+
+			if (container.content.length === 0) {
+				printToLog("The container is empty. Nothing to do here");
+				return;
+			}
+
+			let lootText = "These are the items inside the container:\n";
+			for (let itemEntry of container.content.entries()) {
+				let number = itemEntry[0];
+				let item = itemEntry[1];
+				lootText += number + 1 + "." + item.name + " (" + 
+				item.type + ", " + item.value + 
+				")\n";
+			}
+			lootText += `\nPlease pick the item(s) you wish to take.\n` +
+						`Enter item numbers seperated by comma (,)\n` +
+						`or two numbers seperated by dash (-) for a range of items.\n` +
+						`If you want to take all of them, enter the word: ALL\n` +
+						`Examples of item choices:\n` + 
+						`1,2,3\n` +
+						`2-5\n` + 
+						`ALL`;  
+			let choice = prompt(lootText);
+
+			// TODO: Update container contents after successful loot.
+
+			// Check for legal input
+			if (choice) {
+				// Regex patterns to check if the user entered valid input.
+				const individuals = /^[0-9]+(,[0-9]+)*$/;
+				const range = /^[0-9]+-[0-9]+$/
+				const all = "ALL";
+
+				if (individuals.test(choice)) {
+
+					// TODO: Check for ilegal cases where numbers not in range
+
+					// let ilegalIndices = choice.split(",").filter(
+					// 	index => parseInt(index) < 1 || parseInt(index) > container.content.length
+					// );
+					// while (ilegalIndices) {
+					// 	alert("Please read the instructions again");
+					// 	choice = prompt(lootText);
+					// 	if (!choice)
+					// 		return;
+					// }
+
+					return choice.split(",").map(
+						index => container.content[parseInt(index) - 1]
+					);
+				}
+				else if (range.test(choice)) {
+					let [start, end] = choice.split("-");
+
+					// TODO: Check for ilegal cases where numbers not in range
+					// OR/AND start >= end
+
+					return container.content.slice(parseInt(start) - 1, parseInt(end));
+				}
+				else if (choice === all) {
+					return container.content;
+				}
+				// No match -> ilegal input
+				else {
+					return null;
+				}
+
+			}
+		}
+		else
+			return null;
+	}
+
 	/* On key press of matching key, prompts the player whether to pick up an item around him and picks up the item if player decides to. */
 	pickup() {
 		var i,j;
@@ -243,25 +329,21 @@ class Player extends Character {
 						}
 						return;
 					}
-					if(getEnv(cell) == "container1") {
-						var container;
-						let i;
-						for(i = 0; i < containers.length; i++) {
-							if(containers[i].cell == cell) {
-								container = containers[i]
-							}
-						}
-						for(i = 0; i < container.content.length; i++) {
-							if (confirm(`Do you want to pick-up ${container.content[i].name}?`)) {
-								this.inventory = [...this.inventory, container.content[i]];
-								container.popItem(container.content[i]);
-								
-								//this.inventory = itemStack(this.inventory, container.content[i]);
-								//this.setInventory(this.inventory);
-								repopInv(this);
-							}
-							return;
-						}
+
+					// Try to loot a container.
+					let loot = this.loot(cell);
+					if (loot) {
+						this.inventory = [...this.inventory, ...loot];
+
+						// TODO: Do the item stack for each stackable item!
+						
+						//if (item.isStackable) {
+						// this.inventory = itemStack(this.inventory, item);
+						// this.setInventory(this.inventory);
+						//}
+
+						repopInv(this);
+						return;
 					}
 				}
 			}
