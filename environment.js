@@ -29,6 +29,8 @@ const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
 const T_FIRE1 = ASSETS + TILESET + "fire1.png";
 const T_BUCKET = ASSETS + TILESET + "bucket.png";
 const T_FIRSTAID = ASSETS + TILESET + "first_aid.png";
+const T_DOGFISH_R = ASSETS + TILESET + "dogfish_r.png";
+const T_DOGFISH_L = ASSETS + TILESET + "dogfish_l.png";
 
 /* Game sounds */
 const SOUNDS = "sounds/"
@@ -60,11 +62,13 @@ const ENV = {
 		
 		"ground1": `T_GROUND;${STRINGS["examine_ground"]}`,
 		
-		"container1": `T_CONTAINER;${STRINGS["examine_container"]}`
+		"container1": `T_CONTAINER;${STRINGS["examine_container"]}`,
+		
+		"dogfish_r": `T_DOGFISH;${STRINGS["examine_dogfish_r"]}`,
+		"dogfish_l": `T_DOGFISH;${STRINGS["examine_dogfish_l"]}`
 }
 
 /* Returns the description of the environment element */
 function getDescription(env) {
-	console.log(env);
 	return ENV[env].slice(ENV[env].indexOf(";") + 1);
 }

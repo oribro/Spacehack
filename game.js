@@ -22,6 +22,7 @@ window.onload = () => {
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(6, 5);
+	var dogfish = new NPC(24, 7, "Dogfish", "enemy");
 	
 	// Create an event system and make it accessible to all files.
 	var eventSys = new EventSystem();

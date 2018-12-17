@@ -2,6 +2,10 @@
 const MAX_HP = 100;
 const SPAWN_HP = 20;
 
+const NPC_LIST = {
+				"Dogfish": T_DOGFISH_R + ";50"
+				 };
+
 /*
 *	Class for a game character
 */
@@ -45,9 +49,6 @@ class Character {
 		// Set character position properties to new position.
 		this.xPos = xPos;
 		this.yPos = yPos;
-		
-		// Increment the turn counter.
-		incrementTurnCounter();
 
 		return [
 			xPos,
@@ -107,6 +108,8 @@ class Player extends Character {
 			// Draw the character symbol at the updated location.
 			this.draw(...newBiDig);
 			this.getHungrier();
+			// Increment the turn counter.
+			incrementTurnCounter();
 		}
 	}
 
@@ -369,12 +372,22 @@ class Player extends Character {
 }
 
 /*
-* Class for a Non Playable Character.
+* Class for a Non Player Character.
 */
 class NPC extends Character{
 
-	constructor(x, y){
+	/** Constructor for NPC.
+	 *	x: x position to spawn the NPC.
+	 *	y: y position to spawn the NPC.
+	 *	type: NPC type as specified in NPC_LIST.
+	 *	status: string, "friend" or "enemy".
+	 **/
+	constructor(x, y, type, status){
 		super(x, y);
+		this.type = type;
+		this.tile = NPC_LIST[type].slice(0, NPC_LIST[type].indexOf(";"));
+		this.hp = NPC_LIST[type].slice(NPC_LIST[type].indexOf(";") + 1);
+		this.status = status;
 		this.draw(x, y);
 	}
 
@@ -384,12 +397,13 @@ class NPC extends Character{
 	draw(xPos, yPos){
 		const biDigX = getTwoDigits(xPos);
 		const biDigY = getTwoDigits(yPos);
-		if(useTileset) {
-			setTileOnTop("c"+biDigY+biDigX, T_NPC, "false");
-		} else {
-		setCell("c"+biDigY+biDigX, T_NPC, NON_PLAYER, C_NPC);
-		}
+		setTileOnTop("c"+biDigY+biDigX, this.tile, "false");
+		setEnv("c"+biDigY+biDigX, this.tile);
 	}
-
+	
+	/* Moves the NPC to a cell in the direction of the player. */
+	move(player) {
+		
+	}
+	
 }
-
