@@ -5,6 +5,8 @@ const SPAWN_HP = 20;
 const NPC_LIST = {
 				"Dogfish": T_DOGFISH_R + ";50"
 				 };
+				 
+var npcs = [];
 
 /*
 *	Class for a game character
@@ -109,7 +111,7 @@ class Player extends Character {
 			this.draw(...newBiDig);
 			this.getHungrier();
 			// Increment the turn counter.
-			incrementTurnCounter();
+			incrementTurnCounter(this);
 		}
 	}
 
@@ -403,7 +405,35 @@ class NPC extends Character{
 	
 	/* Moves the NPC to a cell in the direction of the player. */
 	move(player) {
-		
+		let xDist = Math.abs(player.xPos - this.x);
+		let yDist = Math.abs(player.yPos - this.y);
+		if(xDist < 2 && yDist < 2) {
+			return;
+		}
+		if(player.xPos > this.x) {
+			this.tile = this.tile.replace(this.type + "_r", this.type + "_l");
+			if(xDist > yDist) {
+				this.moveChar(this.x + 1, this.y);
+			} else {
+				if(player.yPos > this.y) {
+					this.moveChar(this.x, this.y + 1);
+				} else {
+					this.moveChar(this.x, this.y - 1);
+				}
+			}
+		} else {
+			this.tile = this.tile.replace(this.type + "_l", this.type + "_r");
+			if(xDist > yDist) {
+				this.moveChar(this.x - 1, this.y);
+			} else {
+				if(player.yPos > this.y) {
+					this.moveChar(this.x, this.y + 1);
+				} else {
+					this.moveChar(this.x, this.y - 1);
+				}
+			}
+		}
+		this.draw(this.x, this.y);
 	}
 	
 }
