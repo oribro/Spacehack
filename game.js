@@ -359,7 +359,10 @@ function incrementTurnCounter(player) {
 	turn++;
 	document.getElementById("turn-value").innerHTML = turn;
 	npcs.forEach(function(npc) {
-		npc.move(player);
+		if(npc.status == "enemy") {
+			npc.attack(player);
+			npc.move(player);
+		}
 	});
 }
 

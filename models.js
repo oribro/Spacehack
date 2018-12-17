@@ -3,7 +3,7 @@ const MAX_HP = 100;
 const SPAWN_HP = 20;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_R + ";50"
+				"Dogfish": T_DOGFISH_R + ";50;1"
 				 };
 				 
 var npcs = [];
@@ -470,9 +470,14 @@ class NPC extends Character{
 		super(x, y);
 		this.type = type;
 		this.tile = NPC_LIST[type].slice(0, NPC_LIST[type].indexOf(";"));
-		this.hp = NPC_LIST[type].slice(NPC_LIST[type].indexOf(";") + 1);
-		this.status = status;
+		this.hp = parseInt(NPC_LIST[type].slice(NPC_LIST[type].indexOf(";") + 1, NPC_LIST[type].lastIndexOf(";")));
+		this.dmg = parseInt(NPC_LIST[type].slice(NPC_LIST[type].lastIndexOf(";") + 1));
+		this.friendStatus = status;
 		this.draw(x, y);
+	}
+	
+	get status() {
+		return this.friendStatus;
 	}
 
 	/*
@@ -527,7 +532,39 @@ class NPC extends Character{
 		if(isWalkable("c" + biDigYDest + biDigXDest)) {
 			this.moveChar(xDest, yDest);
 			this.draw(this.x, this.y);
+		} /*else {
+			biDigXDest = getTwoDigits(xDest + 1);
+			biDigYDest = getTwoDigits(yDest - 1);
+			if(isWalkable("c" + biDigYDest + biDigXDest)) {
+				xDest += 1;
+				yDest -= 1;
+				this.moveChar(xDest, yDest);
+				this.draw(this.x, this.y);
+				console.log("x="+xDest+" , y="+yDest);
+				return;
+			}
+			biDigXDest = getTwoDigits(xDest - 1);
+			biDigYDest = getTwoDigits(yDest + 1);
+			if(isWalkable("c" + biDigYDest + biDigXDest)) {
+				yDest += 1;
+				this.moveChar(xDest, yDest);
+				this.draw(this.x, this.y);
+				console.log("x="+xDest+" , y="+yDest);
+				return;
+			}
 		}
+		console.log("x="+xDest+" , y="+yDest);*/		
+	}
+	
+	attack(player) {
+		let xDist = Math.abs(player.xPos - this.x);
+		let yDist = Math.abs(player.yPos - this.y);
+		if(xDist < 2 && yDist < 2) {
+			player.health = player.health - this.dmg;
+			document.getElementById("hp-value").innerHTML = player.health;
+			printToLog("The " + this.type.toLowerCase() + " attacks!");
+		}
+		return;
 	}
 	
 }
