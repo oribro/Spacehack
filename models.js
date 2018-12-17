@@ -4,7 +4,7 @@ const SPAWN_HP = 20;
 const SPAWN_DMG = 5;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_R + ";50;1"
+				"Dogfish": T_DOGFISH_R + ";20;1"
 				 };
 				 
 var npcs = [];
@@ -415,7 +415,8 @@ class Player extends Character {
 		this.getInventory().splice(itemSel-1, 1);
 		repopInv(this);
 	}
-
+	
+	/* Prompts the player for a direction and if there's an NPC in that direction attacks it */
 	attack(direction) {
 		var target;
 		if(direction === undefined) {
@@ -582,6 +583,7 @@ class NPC extends Character{
 		console.log("x="+xDest+" , y="+yDest);*/		
 	}
 	
+	/* If NPC is close enough to player, attacks player */
 	attack(player) {
 		let xDist = Math.abs(player.xPos - this.x);
 		let yDist = Math.abs(player.yPos - this.y);
@@ -591,6 +593,19 @@ class NPC extends Character{
 			printToLog("The " + this.type.toLowerCase() + " attacks!");
 		}
 		return;
+	}
+	
+	/* When NPC's HP reaches zero, remove it from the game */
+	die() {
+		if(this.hp <= 0) {
+			var biDigCurX = getTwoDigits(this.x);
+			var biDigCurY = getTwoDigits(this.y);
+			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
+			npcs.splice(npcs.indexOf(this), 1);
+			printToLog("The " + this.type.toLowerCase() + " is dead!");
+			return true;
+		}
+		return false;
 	}
 	
 }

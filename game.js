@@ -354,14 +354,17 @@ function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
 	];
 }
 
-/** Increments turn counter and prints it to the stat line **/
+/** Increments turn counter and prints it to the stat line, advances NPCs **/
 function incrementTurnCounter(player) {
 	turn++;
 	document.getElementById("turn-value").innerHTML = turn;
 	npcs.forEach(function(npc) {
 		if(npc.status == "enemy") {
-			npc.attack(player);
-			npc.move(player);
+			if(!npc.die()) {
+				npc.attack(player);
+				npc.move(player);
+			}
+			return;
 		}
 	});
 }
