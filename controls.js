@@ -13,6 +13,7 @@ const USE = "u";
 const PICKUP = "p";
 const CONTROLS = "c";
 const DROP = "d";
+const ATTACK = "f";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -21,6 +22,7 @@ document.getElementById("use-key").innerHTML = "'"+USE+"'";
 document.getElementById("pickup-key").innerHTML = "'"+PICKUP+"'";
 document.getElementById("controls-key").innerHTML = "'"+CONTROLS+"'";
 document.getElementById("drop-key").innerHTML = "'"+DROP+"'";
+document.getElementById("attack-key").innerHTML = "'"+ATTACK+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -33,6 +35,9 @@ function passToAction(direction, player) {
 			break;
 		case "utilItem":
 			utilItem(itemHolder, player, direction);
+			break;
+		case "attack":
+			player.attack(direction);
 			break;
 	}
 }
@@ -90,6 +95,9 @@ function control(event, player) {
 			break;
 		case DROP:
 			player.drop();
+			break;
+		case ATTACK:
+			player.attack();
 			break;
 	}
 }

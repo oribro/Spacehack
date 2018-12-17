@@ -1,6 +1,7 @@
 /* Character traits */
 const MAX_HP = 100;
 const SPAWN_HP = 20;
+const SPAWN_DMG = 5;
 
 const NPC_LIST = {
 				"Dogfish": T_DOGFISH_R + ";50;1"
@@ -76,6 +77,7 @@ class Player extends Character {
 		this.inventory = [new Item("Ration"),
 						  new Item("Ration")
 						 ];
+		this.dmg = SPAWN_DMG;
 	}
 
 	move(event) {
@@ -414,6 +416,30 @@ class Player extends Character {
 		repopInv(this);
 	}
 
+	attack(direction) {
+		var target;
+		if(direction === undefined) {
+			promptDirection("attack");
+		} else {
+			var cell = this.getCellFromDirection(direction);
+			npcs.forEach(function(npc) {
+				var biDigTgtX = getTwoDigits(npc.xPos);
+				var biDigTgtY = getTwoDigits(npc.yPos);
+				if(cell == ("c" + biDigTgtY + biDigTgtX)) {
+					
+					target = npc;
+				}
+			});
+			if(target != undefined) {
+				target.health = target.health - this.dmg;
+				printToLog("You attack the " + target.type.toLowerCase() + ".");
+			} else {
+				printToLog("You attack the air next to you. The air is oblivious.");
+			}
+			incrementTurnCounter(this);
+		}
+	}
+	
 	/*
 	*  The tragic event of the player's health reaching zero.
 	*  cause: string. The reason why the player died.
