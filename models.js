@@ -450,6 +450,8 @@ class Player extends Character {
 	*  cause: string. The reason why the player died.
 	*/
 	async die(cause) {
+		// Disable player movement. The syntax could be improved with JQuery.
+		document.body.onkeydown = null;
 		await sleep(700);
 		var sadTrombone = new sound(SAD_TROMBONE);
 		sadTrombone.loop(false);
@@ -593,6 +595,8 @@ class NPC extends Character{
 		let yDist = Math.abs(player.yPos - this.y);
 		if(xDist < 2 && yDist < 2) {
 			player.health = player.health - this.dmg;
+			if (player.health === 0)
+				player.die(`Killed by ${this.type}`);
 			document.getElementById("hp-value").innerHTML = player.health;
 			printToLog("The " + this.type.toLowerCase() + " attacks!");
 		}
