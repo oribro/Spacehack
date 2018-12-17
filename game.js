@@ -22,7 +22,6 @@ window.onload = () => {
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(6, 5);
-	npcs.push(new NPC(24, 7, "Dogfish", "enemy"));
 	
 	// Create an event system and make it accessible to all files.
 	var eventSys = new EventSystem();
@@ -63,6 +62,9 @@ var turn = 0;
 
 /* Game log string */
 var log = "";
+
+/* Plot advancement counter */
+var plot = 0;
 
 /* Index for the strings array */
 var stringIndex = 1;
@@ -367,6 +369,14 @@ function incrementTurnCounter(player) {
 			return;
 		}
 	});
+	if(plot == 1) {
+		plot++;
+		npcs.push(new NPC(24, 7, "Dogfish", "enemy"));
+		var dogfishSnarl = new sound(DOGFISH_SNARL);
+		dogfishSnarl.loop(false);
+		dogfishSnarl.play();
+		printToLog("\"What was that?!\"");
+	}
 }
 
 

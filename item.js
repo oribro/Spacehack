@@ -154,6 +154,7 @@ function utilItem(item, player, direction) {
 					setEnv("c0805", "ship7");					
 					item.value = "Empty";
 					repopInv(player);
+					plot++;
 				} else {
 					printToLog("\"How can I use the bucket with that?\"");
 				}
