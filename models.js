@@ -153,10 +153,8 @@ class Player extends Character {
 			this.health = this.health - 1;
 			document.getElementById("hp-value").innerHTML = this.health;
 		}
-		if(this.health === 0){
-			// Disable player movement. The syntax could be improved with JQuery.
-			document.body.onkeydown = null;
-			window.eventSys.publish(EVENT.STARVATION, "Staying hungry for too long");
+		if(this.health === 0 && this.hunger < 0){
+			this.die("Staying hungry for too long");
 		}
 
 	}

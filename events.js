@@ -12,10 +12,13 @@ const EVENT = {
 	'STARVATION': 'starvation'
 };
 
-/*
+
+/* This class is deprecated until we find a better usage for it 
+
+
 * This class implements the Publish-Subscribe pattern in order
 * to manage an event system for game events.
-*/
+
 class EventSystem{
 
 	constructor(){
@@ -33,7 +36,7 @@ class EventSystem{
 	* along with the callback to be executed.
 	* event: string. Name of the event
 	* callback: function. The function to be executed when the event is called.
-	*/
+
 	subscribe(event, callback) {
 		// Check if event exists, create if not.
 		this.subscribers[event] = this.subscribers[event] || [];
@@ -45,7 +48,7 @@ class EventSystem{
 	* for the subscribers to notice.
 	* event: string. Event name to dispatch.
 	* args: array. List of arguments to call the callback function with.
-	*/
+
 	publish(event, ...args){
 		if (this.subscribers && this.subscribers[event]){
 			this.subscribers[event].forEach((callback) => {
@@ -60,7 +63,7 @@ class EventSystem{
 	/*
 	* This is the place to register all possible game events.
 	* eventSys: EventSystem. The object that keeps track of the events.
-	*/
+	
 	subscribeGameEvents(player) {
 		this.subscribe(EVENT.WAKEUP, promptContinue);
 		this.subscribe(EVENT.EXIT_SHIP, exitShip);
@@ -68,4 +71,5 @@ class EventSystem{
 	}
 }
 
+*/
 
