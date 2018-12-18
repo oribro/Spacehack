@@ -259,8 +259,6 @@ class Player extends Character {
 						`ALL`;  
 			let choice = prompt(lootText);
 
-			// TODO: Update container contents after successful loot.
-
 			// Check for legal input
 			if (choice) {
 				// Regex patterns to check if the user entered valid input.
@@ -270,17 +268,15 @@ class Player extends Character {
 
 				if (individuals.test(choice)) {
 
-					// TODO: Check for ilegal cases where numbers not in range
+					let ilegalIndices = choice.split(",").filter(
+						index => parseInt(index) < 1 || parseInt(index) > container.content.length
 
-					// let ilegalIndices = choice.split(",").filter(
-					// 	index => parseInt(index) < 1 || parseInt(index) > container.content.length
-					// );
-					// while (ilegalIndices) {
-					// 	alert("Please read the instructions again");
-					// 	choice = prompt(lootText);
-					// 	if (!choice)
-					// 		return;
-					// }
+					);
+					if (ilegalIndices.length > 0) {
+						alert("Numbers are not in range. Please enter numbers from the specified list.");
+						return null;
+					}
+
 					let result = choice.split(",").map(
 						index => container.content[parseInt(index) - 1]
 					);
@@ -293,14 +289,22 @@ class Player extends Character {
 				}
 				else if (range.test(choice)) {
 					let [start, end] = choice.split("-");
+
+					// Check for ilegal range
+					if (parseInt(start) >= parseInt(end) || 
+						parseInt(start) < 1 || 
+						parseInt(end) > container.content.length
+					) {
+						alert("The range you've entered is invalid. " +
+							"Please select numbers from the list and try again.");
+						return null;
+					}
+
 					const chosenItems = container.content.slice(parseInt(start) - 1, parseInt(end));
 					
 					chosenItems.forEach(function(chosenItem) {
 						container.popItem(chosenItem);
 					});
-					
-					// TODO: Check for ilegal cases where numbers not in range
-					// OR/AND start >= end
 
 					return chosenItems;
 				}
@@ -311,6 +315,7 @@ class Player extends Character {
 				}
 				// No match -> ilegal input
 				else {
+					alert("Ilegal choice. Please follow the instructions and try again");
 					return null;
 				}
 
@@ -359,11 +364,15 @@ class Player extends Character {
 						this.inventory = [...this.inventory, ...loot];
 
 						// TODO: Do the item stack for each stackable item!
+						this.inventory.forEach(
+							item => {
+								//if (item.isStackable) {
+								this.inventory = itemStack(this.inventory, item);
+								this.setInventory(this.inventory);
+								//}
+							}
+						)
 						
-						//if (item.isStackable) {
-						// this.inventory = itemStack(this.inventory, item);
-						// this.setInventory(this.inventory);
-						//}
 
 						repopInv(this);
 						return;
