@@ -159,6 +159,16 @@ class Player extends Character {
 
 	}
 	
+	/* Reduces dmg amount from player's hp and plays a grunting sound */
+	getHit(dmg) {
+		this.health = this.health - dmg;
+		document.getElementById("hp-value").innerHTML = this.health;
+		
+		var grunt = new sound(GRUNT);
+		grunt.loop(false);
+		grunt.play();
+	}
+	
 	getInventory() {
 		return this.inventory;
 	}
@@ -592,10 +602,10 @@ class NPC extends Character{
 		let xDist = Math.abs(player.xPos - this.x);
 		let yDist = Math.abs(player.yPos - this.y);
 		if(xDist < 2 && yDist < 2) {
-			player.health = player.health - this.dmg;
-			if (player.health === 0)
+			player.getHit(this.dmg);
+			if (player.health === 0) {
 				player.die(`Killed by ${this.type}`);
-			document.getElementById("hp-value").innerHTML = player.health;
+			}
 			printToLog("The " + this.type.toLowerCase() + " attacks!");
 		}
 		return;

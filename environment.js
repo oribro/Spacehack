@@ -40,6 +40,9 @@ const WATER_SPLASH = ASSETS + SOUNDS + "water-pouring.wav";
 const SAD_TROMBONE = ASSETS + SOUNDS + "sad-trombone.wav";
 const CONTAINER_OPEN = ASSETS + SOUNDS + "container-open.wav";
 const DOGFISH_SNARL = ASSETS + SOUNDS + "dogfish-snarl.wav";
+const DOGFISH_WHINE = ASSETS + SOUNDS + "dogfish-whine.wav";
+const PUNCH = ASSETS + SOUNDS + "punch.wav";
+const GRUNT = ASSETS + SOUNDS + "grunt.wav";
 
 const ENV = {
 		"ship1": `T_SHIP1;${STRINGS["examine_ship"]}`,
