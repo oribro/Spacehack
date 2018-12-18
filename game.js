@@ -246,9 +246,9 @@ function setItemOntoCell(cell, item) {
 	if(!cellElement.hasAttribute("item")) {
 		cellElement.setAttribute("item", item.toString());
 	} else if (!hasContainer) {
-		cellElement.removeAttribute("item");
 		var firstItem = createItemFromCell(cell);
-		containers.push(new Container([item], cell, false));
+		cellElement.removeAttribute("item");
+		containers.push(new Container([firstItem, item], cell, false));
 	} else {
 		cellContainer.push(item);
 	}
