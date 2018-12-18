@@ -281,20 +281,32 @@ class Player extends Character {
 					// 	if (!choice)
 					// 		return;
 					// }
-
-					return choice.split(",").map(
+					let result = choice.split(",").map(
 						index => container.content[parseInt(index) - 1]
 					);
+
+					container.content = [...container.content.keys()].filter(
+						index => choice.split(",").every(
+							chosenIndex => parseInt(chosenIndex) !== index
+						)
+					);
+
+					alert(JSON.stringify(result));
+					alert(JSON.stringify(container.content));
+					return result;
 				}
 				else if (range.test(choice)) {
 					let [start, end] = choice.split("-");
-
+					const chosenItems = container.content.slice(parseInt(start) - 1, parseInt(end));
+					const newContent = container.content.splice(parseInt(start) - 1, parseInt(end));
+					container.content = newContent;
 					// TODO: Check for ilegal cases where numbers not in range
 					// OR/AND start >= end
 
-					return container.content.slice(parseInt(start) - 1, parseInt(end));
+					return chosenItems;
 				}
 				else if (choice === all) {
+					container.content = [];
 					return container.content;
 				}
 				// No match -> ilegal input

@@ -99,6 +99,10 @@ class Container {
 	get cell() {
 		return this.cellString;
 	}
+	set content(newItemList) {
+		this.itemList = newItemList;
+	}
+
 	// Takes an item name and returns an item object if it's in the container.
 	item(itemName) {
 		Array.find(function(item) {
