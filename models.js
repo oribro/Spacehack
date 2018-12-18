@@ -224,12 +224,22 @@ class Player extends Character {
 	/* Attempt to pickup items from a container */
 	loot(cell) {
 		if(getEnv(cell) == "container1") {
-			var containerOpen = createSound(CONTAINER_OPEN, false);
+			var visibleContainer = false;
+			var cellElement = document.getElementById(cell);
+			var imgElements = cellElement.getElementsByTagName("img");
+			Array.from(imgElements).forEach(function(img) {
+				if(img.getAttribute("src") == T_CONTAINER)
+					visibleContainer = true;
+			});
+			if(visibleContainer) {
+				var containerOpen = createSound(CONTAINER_OPEN, false);
+			}
 			var container;
 			let i;
 			for(i = 0; i < containers.length; i++) {
 				if(containers[i].cell == cell) {
-					container = containers[i]
+					container = containers[i];
+					break;
 				}
 			}
 
@@ -240,8 +250,14 @@ class Player extends Character {
 				printToLog("The container is empty. Nothing to do here.");
 				return;
 			}
-
-			let lootText = "These are the items inside the container:\n";
+			var containerLength = container.content.length;
+			
+			let lootText;
+			if(visibleContainer) {
+				lootText = "These are the items inside the container:\n";
+			} else {
+				lootText = "There are several items here:\n";
+			}
 			for (let itemEntry of container.content.entries()) {
 				let number = itemEntry[0];
 				let item = itemEntry[1];
@@ -284,6 +300,14 @@ class Player extends Character {
 					result.forEach(function(chosenItem) {
 						container.popItem(chosenItem);
 					});
+					
+					if(container.content.length == 0 && !visibleContainer) {
+						while(containerLength != 0) {
+							removeTileOnTop(cell, true);
+							containerLength--;
+						}
+						containers.splice(i, 1);
+					}
 
 					return result;
 				}
@@ -305,12 +329,27 @@ class Player extends Character {
 					chosenItems.forEach(function(chosenItem) {
 						container.popItem(chosenItem);
 					});
+					
+					if(container.content.length == 0 && !visibleContainer) {
+						while(containerLength != 0) {
+							removeTileOnTop(cell, true);
+							containerLength--;
+						}
+						containers.splice(i, 1);
+					}
 
 					return chosenItems;
 				}
 				else if (choice === all) {
 					var chosenItems = container.content;
 					container.content = [];
+					if(!visibleContainer) {
+						while(containerLength != 0) {
+								removeTileOnTop(cell, true);
+								containerLength--;
+						}
+						containers.splice(i, 1);
+					}
 					return chosenItems;
 				}
 				// No match -> ilegal input
