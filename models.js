@@ -237,7 +237,7 @@ class Player extends Character {
 			// No need to keep an empty container.
 
 			if (container.content.length === 0) {
-				printToLog("The container is empty. Nothing to do here");
+				printToLog("The container is empty. Nothing to do here.");
 				return;
 			}
 
@@ -245,7 +245,7 @@ class Player extends Character {
 			for (let itemEntry of container.content.entries()) {
 				let number = itemEntry[0];
 				let item = itemEntry[1];
-				lootText += number + 1 + "." + item.name + " (" + 
+				lootText += number + 1 + ". " + item.name + " (" + 
 				item.type + ", " + item.value + 
 				")\n";
 			}
@@ -306,8 +306,9 @@ class Player extends Character {
 					return chosenItems;
 				}
 				else if (choice === all) {
+					var chosenItems = container.content;
 					container.content = [];
-					return container.content;
+					return chosenItems;
 				}
 				// No match -> ilegal input
 				else {
