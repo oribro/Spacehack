@@ -474,6 +474,13 @@ function sleep(duration){
 	);
 }
 
+function createSound(soundPath, isLoop) {
+	let newSound = new sound(soundPath);
+	newSound.loop(isLoop);
+	newSound.play();
+	return newSound;
+}
+
 /* Shows/hides the controls window */
 function toggleControls() {
 	var controls = document.getElementById("controls");

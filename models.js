@@ -224,10 +224,7 @@ class Player extends Character {
 	/* Attempt to pickup items from a container */
 	loot(cell) {
 		if(getEnv(cell) == "container1") {
-			var containerOpen = new sound(CONTAINER_OPEN);
-			containerOpen.loop(false);
-			containerOpen.play();
-			
+			var containerOpen = createSound(CONTAINER_OPEN, false);
 			var container;
 			let i;
 			for(i = 0; i < containers.length; i++) {
