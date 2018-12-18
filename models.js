@@ -294,8 +294,11 @@ class Player extends Character {
 				else if (range.test(choice)) {
 					let [start, end] = choice.split("-");
 					const chosenItems = container.content.slice(parseInt(start) - 1, parseInt(end));
-					const newContent = container.content.splice(parseInt(start) - 1, parseInt(end));
-					container.content = newContent;
+					
+					chosenItems.forEach(function(chosenItem) {
+						container.popItem(chosenItem);
+					});
+					
 					// TODO: Check for ilegal cases where numbers not in range
 					// OR/AND start >= end
 
