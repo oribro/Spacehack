@@ -4,7 +4,7 @@ const SPAWN_HP = 20;
 const SPAWN_DMG = 5;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_R + ";" + DOGFISH_WHINE + ";20;1"
+				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;1"
 				 };
 				 
 var npcs = [];
@@ -630,6 +630,11 @@ class NPC extends Character{
 			var biDigCurY = getTwoDigits(this.y);
 			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
 			npcs.splice(npcs.indexOf(this), 1);
+			
+			// Drop meat and bones
+			setItemOntoCell("c"+biDigCurY+biDigCurX, new Item("Meat"));
+			setItemOntoCell("c"+biDigCurY+biDigCurX, new Item("Bones"));
+			
 			printToLog("The " + this.type.toLowerCase() + " is dead!");
 			return true;
 		}

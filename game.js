@@ -362,7 +362,7 @@ function incrementTurnCounter(player) {
 	});
 	if(plot == 1) {
 		plot++;
-		npcs.push(new NPC(24, 7, "Dogfish", "enemy"));
+		npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
 		var dogfishSnarl = new sound(DOGFISH_SNARL);
 		dogfishSnarl.loop(false);
 		dogfishSnarl.play();
@@ -438,6 +438,7 @@ function setTileOnTop(cell, tile, walkable) {
 	img.style.top = "0";
 	img.style.left = "0";
 	cellElement.setAttribute("walkable", walkable.toString());
+	setEnv(cell, tile);
 }
 
 /* Returns the tile on top of the tile already in the cell. */

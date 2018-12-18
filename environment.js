@@ -31,6 +31,8 @@ const T_BUCKET = ASSETS + TILESET + "bucket.png";
 const T_FIRSTAID = ASSETS + TILESET + "first_aid.png";
 const T_DOGFISH_R = ASSETS + TILESET + "dogfish_r.png";
 const T_DOGFISH_L = ASSETS + TILESET + "dogfish_l.png";
+const T_MEAT = ASSETS + TILESET + "meat.png";
+const T_BONES = ASSETS + TILESET + "bones.png";
 
 /* Game sounds */
 const SOUNDS = "sounds/"
@@ -71,6 +73,7 @@ const ENV = {
 		
 		"dogfish_r": `T_DOGFISH;${STRINGS["examine_dogfish_r"]}`,
 		"dogfish_l": `T_DOGFISH;${STRINGS["examine_dogfish_l"]}`
+		
 }
 
 /* Returns the description of the environment element */

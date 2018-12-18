@@ -2,13 +2,16 @@
 const DEFAULT_COINS_VALUE = 10;
 const DEFAULT_RATION_VALUE = 100;
 const DEFAULT_FIRSTAID_VALUE = 10;
+const DEFAULT_MEAT_VALUE = 50;
 
 // Item list. 
 const ITEMS = {
 		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE}`,
 		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE}`,
 		"Bucket": `Bucket;Utility;Empty`,
-		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE}`
+		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE}`,
+		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE}`,
+		"Bones": `Bones;Weapon;1`
 	};
 	
 var containers = [];
