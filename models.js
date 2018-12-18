@@ -284,15 +284,11 @@ class Player extends Character {
 					let result = choice.split(",").map(
 						index => container.content[parseInt(index) - 1]
 					);
+					
+					result.forEach(function(chosenItem) {
+						container.popItem(chosenItem);
+					});
 
-					container.content = [...container.content.keys()].filter(
-						index => choice.split(",").every(
-							chosenIndex => parseInt(chosenIndex) !== index
-						)
-					);
-
-					alert(JSON.stringify(result));
-					alert(JSON.stringify(container.content));
 					return result;
 				}
 				else if (range.test(choice)) {
