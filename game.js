@@ -167,7 +167,7 @@ function spawnGameObjects() {
 	containers.push(new Container([new Item("FirstAid"),
 								   new Item("Ration"),
 								   new Item("Bucket")],
-								  "c1423"));
+								  "c1423", true));
 
 	//hideTile("c1423", T_FIRSTAID);
 	//setTileOnTop("c1423", T_CONTAINER, "false");
@@ -235,7 +235,23 @@ function createItemFromCell(cell) {
 function setItemOntoCell(cell, item) {
 	setTileOnTop(cell, item.tile, "false");
 	let cellElement = document.getElementById(cell);
-	cellElement.setAttribute("item", item.toString());
+	var hasContainer = false;
+	var cellContainer;
+	containers.forEach(function(container) {
+		if(container.cell == cell) {
+			hasContainer = true;
+			cellContainer = container;
+		}
+	});
+	if(!cellElement.hasAttribute("item")) {
+		cellElement.setAttribute("item", item.toString());
+	} else if (!hasContainer) {
+		cellElement.removeAttribute("item");
+		var firstItem = createItemFromCell(cell);
+		containers.push(new Container([item], cell, false));
+	} else {
+		cellContainer.push(item);
+	}
 }
 
 /* Removes item from the given cell if item exists, otherwise nothing happens. */

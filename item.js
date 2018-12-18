@@ -87,11 +87,14 @@ class Item {
 /* Class for item containers. Containers should be constructed inside the containers[] array. */
 class Container {
 	/* A container is constructed by a list of items and a cell where the container will spawn */
-	constructor(itemList, cell) {
+	constructor(itemList, cell, visible) {
 		this.itemList = itemList;
 		this.cellString = cell
-		setTileOnTop(this.cellString, T_CONTAINER, "false");
+		if(visible == true) {
+			setTileOnTop(this.cellString, T_CONTAINER, "false");
+		}
 		setEnv(this.cellString, T_CONTAINER);
+		
 	}
 	get content() {
 		return this.itemList;
@@ -113,6 +116,11 @@ class Container {
 	popItem(contItem) {
 		let item = contItem;
 		this.itemList.splice(this.itemList.indexOf(item), 1);
+	}
+	
+	// Takes an item object and pushes it into the container.
+	pushItem(contItem) {
+		this.itemList.push(contItem);
 	}
 }
 
