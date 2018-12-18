@@ -4,7 +4,7 @@ const SPAWN_HP = 20;
 const SPAWN_DMG = 5;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_R + ";20;1"
+				"Dogfish": T_DOGFISH_R + ";" + DOGFISH_WHINE + ";20;1"
 				 };
 				 
 var npcs = [];
@@ -444,7 +444,7 @@ class Player extends Character {
 				}
 			});
 			if(target != undefined) {
-				target.health = target.health - this.dmg;
+				target.getHit(this.dmg);
 				printToLog("You attack the " + target.type.toLowerCase() + ".");
 			} else {
 				printToLog("You attack the air next to you. The air is oblivious.");
@@ -510,9 +510,12 @@ class NPC extends Character{
 	constructor(x, y, type, status){
 		super(x, y);
 		this.type = type;
-		this.tile = NPC_LIST[type].slice(0, NPC_LIST[type].indexOf(";"));
-		this.hp = parseInt(NPC_LIST[type].slice(NPC_LIST[type].indexOf(";") + 1, NPC_LIST[type].lastIndexOf(";")));
-		this.dmg = parseInt(NPC_LIST[type].slice(NPC_LIST[type].lastIndexOf(";") + 1));
+		var npcString = NPC_LIST[type].split(";");
+		this.tile = npcString[0];
+		this.hurt = new sound(npcString[1]);
+		this.hurt.loop(false);
+		this.hp = npcString[2];
+		this.dmg = npcString[3];
 		this.friendStatus = status;
 		this.draw(x, y);
 	}
@@ -609,6 +612,12 @@ class NPC extends Character{
 			printToLog("The " + this.type.toLowerCase() + " attacks!");
 		}
 		return;
+	}
+	
+	/* Reduces dmg amount from NPC's hp and plays a grunting sound */
+	getHit(dmg) {
+		this.health = this.health - dmg;
+		this.hurt.play();
 	}
 	
 	/* When NPC's HP reaches zero, remove it from the game */
