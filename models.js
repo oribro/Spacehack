@@ -445,6 +445,9 @@ class Player extends Character {
 			});
 			if(target != undefined) {
 				target.getHit(this.dmg);
+				var punch = new sound(PUNCH);
+				punch.loop(false);
+				punch.play();
 				printToLog("You attack the " + target.type.toLowerCase() + ".");
 			} else {
 				printToLog("You attack the air next to you. The air is oblivious.");
