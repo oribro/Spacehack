@@ -266,8 +266,6 @@ function removeItemFromCell(cell) {
 		cellElement.removeAttribute("item");
 		removeTileOnTop(cell);
 		cellElement.setAttribute("walkable", "true");
-		let bottomTile = cellElement.getElementsByTagName("img")[0].getAttribute("src");
-		setEnv(cell, bottomTile);
 	}
 }
 
@@ -472,11 +470,16 @@ function getTileOnTop(cell) {
 	}
 }
 
-/* Removes the tile that covers another tile
+/* Removes the tile that covers another tile and set the 'env' attribute to the value of the bottom tile.
  * walkable: boolean. optional parameter to set the walkable attribute of the cell */
 function removeTileOnTop(cell, walkable) {
 	var overTile = document.getElementById(cell.replace('c','o'));
-	document.getElementById(cell).removeChild(overTile);
+	var cellElement = document.getElementById(cell);
+	cellElement.removeChild(overTile);
+	
+	let bottomTile = cellElement.getElementsByTagName("img")[0].getAttribute("src");
+	setEnv(cell, bottomTile);
+	
 	if(walkable != undefined) {
 		if(walkable == true) {
 			document.getElementById(cell).setAttribute("walkable", "true");
