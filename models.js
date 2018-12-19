@@ -236,15 +236,10 @@ class Player extends Character {
 			}
 			var container;
 			let i;
-
-			// TODO: Change containers to "dictionary" with cell as key.
 			
-			for(i = 0; i < containers.length; i++) {
-				if(containers[i].cell == cell) {
-					container = containers[i];
-					break;
-				}
-			}
+			container = containers[cell];
+			if (!container || container === undefined)
+				alert("Programming Error. Details: Check env variable for container.");
 
 			if (container.content.length === 0) {
 				printToLog("The container is empty. Nothing to do here.");
@@ -306,7 +301,7 @@ class Player extends Character {
 							removeTileOnTop(cell, true);
 							containerLength--;
 						}
-						containers.splice(i, 1);
+						delete containers[cell];
 					}
 
 					return result;
@@ -335,7 +330,7 @@ class Player extends Character {
 							removeTileOnTop(cell, true);
 							containerLength--;
 						}
-						containers.splice(i, 1);
+						delete containers[cell];
 					}
 
 					return chosenItems;
@@ -348,7 +343,7 @@ class Player extends Character {
 								removeTileOnTop(cell, true);
 								containerLength--;
 						}
-						containers.splice(i, 1);
+						delete containers[cell];
 					}
 					return chosenItems;
 				}

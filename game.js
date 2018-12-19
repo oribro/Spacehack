@@ -164,10 +164,14 @@ function spawnGameObjects() {
 	setEnv("c1704", T_DEBRIS2);
 	
 	// Container
-	containers.push(new Container([new Item("FirstAid"),
-								   new Item("Ration"),
-								   new Item("Bucket")],
-								  "c1423", true));
+	containers["c1423"] = new Container([
+		new Item("FirstAid"),
+		new Item("Ration"),
+		new Item("Bucket")
+	],
+		"c1423",
+		true
+	);
 
 	//hideTile("c1423", T_FIRSTAID);
 	//setTileOnTop("c1423", T_CONTAINER, "false");
@@ -242,23 +246,14 @@ function createItemFromCell(cell) {
 function setItemOntoCell(cell, item) {
 	setTileOnTop(cell, item.tile, "false");
 	let cellElement = document.getElementById(cell);
-	var hasContainer = false;
 	var cellContainer;
 
-	// TODO: Change containers to "dictionary" with cell as key.
-	
-	containers.forEach(function(container) {
-		if(container.cell == cell) {
-			hasContainer = true;
-			cellContainer = container;
-		}
-	});
 	if(!cellElement.hasAttribute("item")) {
 		cellElement.setAttribute("item", item.toString());
-	} else if (!hasContainer) {
+	} else if (!containers.hasOwnProperty(cell)) {
 		var firstItem = createItemFromCell(cell);
 		cellElement.removeAttribute("item");
-		containers.push(new Container([firstItem, item], cell, false));
+		containers[cell] = new Container([firstItem, item], cell, false);
 	} else {
 		cellContainer.push(item);
 	}

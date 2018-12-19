@@ -20,8 +20,8 @@ const ITEMS = {
 		"Bones": `Bones;Weapon;1;false`
 	};
 
-// TODO: Change containers to "dictionary" with cell as key.
-var containers = [];
+// Object containing containers found in game identified by their unique cell.
+var containers = {};
 
 /*
  *	Class for game items.
@@ -97,9 +97,12 @@ class Item {
 	}
 }
 
-/* Class for item containers. Containers should be constructed inside the containers[] array. */
+/* Class for item containers. Containers should be constructed inside the containers object. */
 class Container {
-	/* A container is constructed by a list of items and a cell where the container will spawn */
+	/* A container is constructed by a list of items and a visibility indicator:
+	A visible container is shown on the map as a box-like object
+	while invisible container provides the same logic but is not shown. An example would be
+	multiple items grouped on a tile following the death of an enemy. */
 	constructor(itemList, cell, visible) {
 		this.itemList = itemList;
 		this.cellString = cell
