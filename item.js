@@ -144,6 +144,7 @@ class Container {
 /* Holds the item passed to utilItem while prompting direction */
 var itemHolder;
 
+/* Handles the use of utility items */
 function utilItem(item, player, direction) {
 	switch (item.name) {
 		case "Bucket":
@@ -194,3 +195,88 @@ function utilItem(item, player, direction) {
 	}
 }
 
+/* If given item is stackable, stacks all items in the inventory of the given item into one pile of items.
+*  Return the inventory with all items that are similar to the given item stacked as one item.
+*/
+function itemStack(inventory, sampleItem) {
+	if(isNaN(sampleItem.value)) {
+		return inventory;
+	}
+	return inventory.filter(
+		item => item.name !== sampleItem.name
+	).concat(
+		new Item(
+			sampleItem.name,
+			sampleItem.type,
+			inventory.filter(
+				item => item.name === sampleItem.name
+			).map(
+				item => parseInt(item.value)
+			).reduce(
+				(val1, val2) => val1 + val2,
+				0
+			)
+		)
+	);
+}
+
+/* Spawns a game item at the given cell with the given item parameters.
+*  cell: string. The DOM element that contains the cell.
+*  tile: string. Path to the image that represents the tile.
+*  item: string. Item string representation.
+*/
+function spawnItem(cell, tile, item) {
+	// Spawn item image
+	setTileOnTop(cell, tile, "false");
+	document.getElementById(cell).setAttribute("item", item);
+}
+
+/*
+*  Creates a game item object from the string in the cell assuming such
+*  a string is found.
+*/
+function createItemFromCell(cell) {
+	cellElement = document.getElementById(cell);
+	if (cellElement.hasAttribute("item")) {
+		let item = cellElement.getAttribute("item");
+		let itemProperties = item.split(";");
+		// let itemNameLastIndex = item.indexOf(";");
+		// let name = item.slice(0, itemNameLastIndex);
+		let name = itemProperties[NAME_SLOT];
+		// let itemValueFirstIndex = item.lastIndexOf(";") + 1;
+		let value = itemProperties[VALUE_SLOT];
+		item = new Item(name);
+		// Update item value with the value from the cell.
+		// TODO: Constructor for name and value maybe?
+		item.value = value;
+		return item;
+	}
+	return null;
+}
+
+/* Sets the given item on the given cell */
+function setItemOntoCell(cell, item) {
+	setTileOnTop(cell, item.tile, "false");
+	let cellElement = document.getElementById(cell);
+	var cellContainer;
+
+	if(!cellElement.hasAttribute("item")) {
+		cellElement.setAttribute("item", item.toString());
+	} else if (!containers.hasOwnProperty(cell)) {
+		var firstItem = createItemFromCell(cell);
+		cellElement.removeAttribute("item");
+		containers[cell] = new Container([firstItem, item], cell, false);
+	} else {
+		cellContainer.push(item);
+	}
+}
+
+/* Removes item from the given cell if item exists, otherwise nothing happens. */
+function removeItemFromCell(cell) {
+	let cellElement = document.getElementById(cell);
+	if (cellElement.hasAttribute("item")) {
+		cellElement.removeAttribute("item");
+		removeTileOnTop(cell);
+		cellElement.setAttribute("walkable", "true");
+	}
+}
