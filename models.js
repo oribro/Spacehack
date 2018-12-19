@@ -571,7 +571,8 @@ class Player extends Character {
 	// Increase player health without exceeding max possible health.
 	set incHealth(addHp) {
 		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
-		document.getElementById("hp-value").innerHTML = this.hp;
+		if (this.hp.isFinite())
+			document.getElementById("hp-value").innerHTML = this.hp;
 	}
 }
 

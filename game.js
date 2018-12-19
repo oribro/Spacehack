@@ -22,6 +22,7 @@ window.onload = () => {
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(6, 5);
+	godmode(player);
 	
 	promptContinue(player);
 

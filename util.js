@@ -355,3 +355,11 @@ function getNPCArray(){
 	];
 }
 
+/* To Infinity and beyond! */
+function godmode(player) {
+	player.hp = Infinity;
+	player.hunger = Infinity;
+	let hpVal = document.getElementById("hp-value");
+	hpVal.innerHTML = "&infin;";
+	hpVal.style.fontSize = "1em";
+}
