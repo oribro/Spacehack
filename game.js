@@ -266,6 +266,8 @@ function removeItemFromCell(cell) {
 		cellElement.removeAttribute("item");
 		removeTileOnTop(cell);
 		cellElement.setAttribute("walkable", "true");
+		let bottomTile = cellElement.getElementsByTagName("img")[0].getAttribute("src");
+		setEnv(cell, bottomTile);
 	}
 }
 
