@@ -93,7 +93,7 @@ class Item {
 
 	/* Returns a string representation of the item similar to ITEMS values */
 	toString() {
-		return `${this.name};${this.type};${this.value}${this.isStackable}`;
+		return `${this.name};${this.type};${this.value};${this.isStackable}`;
 	}
 }
 
