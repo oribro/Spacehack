@@ -181,9 +181,9 @@ function utilItem(item, player, direction) {
 					fireElements = document.getElementsByClassName("fire");
 					fireElements[0].parentNode.removeChild(fireElements[0]);
 					fireSound.stop();
-					setEnv("c0604", "ship5");
-					setEnv("c0705", "ship6");
-					setEnv("c0805", "ship7");					
+					setEnv("c0604", T_SHIP5);
+					setEnv("c0705", T_SHIP6);
+					setEnv("c0805", T_SHIP7);					
 					item.value = "Empty";
 					repopInv(player);
 					plot++;
