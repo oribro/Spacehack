@@ -75,11 +75,7 @@ class Player extends Character {
 	constructor(x=0, y=0){
 		super(x, y);
 		this.hunger = 100;
-		// TODO: We wouldn't need this if we had enabled EventSystem.publish
-		// to accept methods. Right now the binding is needed because currently
-		// die is defined at WINDOW (global) scope.  
-		this.die = this.die.bind(this);
-		this.inventory = [new Item("Ration"),
+ 		this.inventory = [new Item("Ration"),
 						  new Item("Ration")
 						 ];
 		this.dmg = SPAWN_DMG;
