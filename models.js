@@ -47,7 +47,12 @@ class Character {
 		var biDigCurY = getTwoDigits(this.yPos);
 		
 		// Set current character cell to ground.
+		var item = createItemFromCell("c"+biDigCurY+biDigCurX);
+		if(item) {
+			removeTileOnTop("c"+biDigCurY+biDigCurX, false);
+		} else {
 		removeTileOnTop("c"+biDigCurY+biDigCurX, true);
+		}
 		
 		// Set character position properties to new position.
 		this.xPos = xPos;
@@ -472,7 +477,6 @@ class Player extends Character {
 		const biDigX = getTwoDigits(this.xPos);
 		const biDigY = getTwoDigits(this.yPos);
 		setItemOntoCell("c" + biDigY + biDigX, item);
-		document.getElementById("c" + biDigY + biDigX).setAttribute("walkable", "false");
 		printToLog("You dropped " + item.name + " on the ground.");
 		this.getInventory().splice(itemSel-1, 1);
 		repopInv(this);
