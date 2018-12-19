@@ -25,7 +25,7 @@ h2 {
 	text-align: center;
 }
 
-#controls {
+.left-window {
 	border-right: 2px solid orange;
 	width: fit-content;
 	padding: 0px 10px 10px;
@@ -35,16 +35,23 @@ h2 {
 	grid-row-start: 1;
 	grid-row-end: 4;
 	text-align: left;
-	display: none;
 }
 
-#controls-list {
+.left-window-list {
 	padding-left: 20px;
 	list-style-type: square;
 }
 
-#controls-list > li {
+.left-window-list > li {
 	padding-bottom: 5px;
+}
+
+#controls {
+	display: none;
+}
+
+#equipment {
+	display: none;
 }
 
 #main {
