@@ -14,6 +14,7 @@ const PICKUP = "p";
 const CONTROLS = "c";
 const DROP = "d";
 const ATTACK = "f";
+const EQUIPMENT = "q";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -23,6 +24,7 @@ document.getElementById("pickup-key").innerHTML = "'"+PICKUP+"'";
 document.getElementById("controls-key").innerHTML = "'"+CONTROLS+"'";
 document.getElementById("drop-key").innerHTML = "'"+DROP+"'";
 document.getElementById("attack-key").innerHTML = "'"+ATTACK+"'";
+document.getElementById("equipment-key").innerHTML = "'"+EQUIPMENT+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -98,6 +100,9 @@ function control(event, player) {
 			break;
 		case ATTACK:
 			player.attack();
+			break;
+		case EQUIPMENT:
+			toggleEquipment();
 			break;
 	}
 }

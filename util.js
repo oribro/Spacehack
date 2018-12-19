@@ -155,10 +155,19 @@ function promptDirection(action) {
 
 /******************* INTERFACE *******************/
 
+/* Hides any open left windows */
+function hideLeftWindow() {
+	var leftWindows = document.getElementsByClassName("left-window");
+	Array.from(leftWindows).forEach(function (window) {
+		window.style.display = "none";
+	});
+}
+
 /* Shows/hides the controls window */
 function toggleControls() {
 	var controls = document.getElementById("controls");
 	if(controls.style.display != "block") {
+		hideLeftWindow();
 		controls.style.display = "block";
 	} else {
 		controls.style.display = "none";
@@ -173,6 +182,17 @@ function toggleInventory(player) {
 		inventory.style.display = "block";
 	} else {
 		inventory.style.display = "none";
+	}
+}
+
+/* Shows/hides the equipment window */
+function toggleEquipment() {
+	var equipment = document.getElementById("equipment");
+	if(equipment.style.display != "block") {
+		hideLeftWindow();
+		equipment.style.display = "block";
+	} else {
+		equipment.style.display = "none";
 	}
 }
 
