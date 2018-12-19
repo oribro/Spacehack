@@ -236,15 +236,15 @@ class Player extends Character {
 			}
 			var container;
 			let i;
+
+			// TODO: Change containers to "dictionary" with cell as key.
+			
 			for(i = 0; i < containers.length; i++) {
 				if(containers[i].cell == cell) {
 					container = containers[i];
 					break;
 				}
 			}
-
-			// TODO: If the container is empty we can remove it from the cell.
-			// No need to keep an empty container.
 
 			if (container.content.length === 0) {
 				printToLog("The container is empty. Nothing to do here.");

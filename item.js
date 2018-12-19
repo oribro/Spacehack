@@ -33,23 +33,21 @@ class Item {
 	 */
 	constructor(name, type, value) {
 		if(type === undefined) {
-			var itemNameLastIndex = ITEMS[name].indexOf(";");
-			var itemTypeFirstIndex = ITEMS[name].indexOf(";") + 1;
-			var itemTypeLastIndex = ITEMS[name].lastIndexOf(";");
-			var itemValueFirstIndex = ITEMS[name].lastIndexOf(";") + 1;
+			const itemProperties = ITEMS[name].split(";");
 
-			this.itemName = ITEMS[name].slice(0, itemNameLastIndex);
-			this.itemType = ITEMS[name].slice(itemTypeFirstIndex, itemTypeLastIndex);
-			if(isNaN(ITEMS[name].slice(itemValueFirstIndex))) {
-				this.itemValue = ITEMS[name].slice(itemValueFirstIndex);
-			} else {
-				this.itemValue = parseInt(ITEMS[name].slice(itemValueFirstIndex));
-			}
-			this.itemTile = eval("T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase());
+			this.itemName = itemProperties[NAME_SLOT];
+			this.itemType = itemProperties[TYPE_SLOT];
+			// Check if the value is a number as a string and convert if true.
+			isNaN(itemProperties[VALUE_SLOT]) ? 
+				this.itemValue = itemProperties[VALUE_SLOT] : 
+				this.itemValue = parseInt(itemProperties[VALUE_SLOT]);
+
+			this.itemTile = eval("T_" + this.itemName.toUpperCase());
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 			// This is a good way to convert string to boolean in JS.
 			this.isItemStackable = itemProperties[STACKABLE_SLOT] === "true";
 
+		/* TODO: This should be deprecated soon */
 		} else {
 			this.itemName = name;
 			this.itemType = type;

@@ -223,10 +223,12 @@ function createItemFromCell(cell) {
 	cellElement = document.getElementById(cell);
 	if (cellElement.hasAttribute("item")) {
 		let item = cellElement.getAttribute("item");
-		let itemNameLastIndex = item.indexOf(";");
-		let name = item.slice(0, itemNameLastIndex);
-		let itemValueFirstIndex = item.lastIndexOf(";") + 1;
-		let value = item.slice(itemValueFirstIndex);
+		let itemProperties = item.split(";");
+		// let itemNameLastIndex = item.indexOf(";");
+		// let name = item.slice(0, itemNameLastIndex);
+		let name = itemProperties[NAME_SLOT];
+		// let itemValueFirstIndex = item.lastIndexOf(";") + 1;
+		let value = itemProperties[VALUE_SLOT];
 		item = new Item(name);
 		// Update item value with the value from the cell.
 		// TODO: Constructor for name and value maybe?
@@ -242,6 +244,9 @@ function setItemOntoCell(cell, item) {
 	let cellElement = document.getElementById(cell);
 	var hasContainer = false;
 	var cellContainer;
+
+	// TODO: Change containers to "dictionary" with cell as key.
+	
 	containers.forEach(function(container) {
 		if(container.cell == cell) {
 			hasContainer = true;
