@@ -228,7 +228,7 @@ class Player extends Character {
 	
 	/* Attempt to pickup items from a container */
 	loot(cell) {
-		if(getEnv(cell) == "container1") {
+		if(getEnv(cell) == "container1" || getEnv(cell) == "container2") {
 			var visibleContainer = false;
 			var cellElement = document.getElementById(cell);
 			var imgElements = cellElement.getElementsByTagName("img");

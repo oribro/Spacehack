@@ -40,6 +40,8 @@ const STRINGS = {
 	
 	"examine_container": "\"It's the container from the ship! It must have fallen while we crashed. There should be useful things inside.\"",
 	
+	"examine_items": "There are several items here.",
+	
 	"examine_dogfish_r": "It's a creature with a head of a fish and body of a dog. It's a dogfish. It seems angry.",
 	
 	"examine_dogfish_l": "It's a creature with a head of a fish and body of a dog. It's a dogfish. It seems angry.",

@@ -108,9 +108,10 @@ class Container {
 		this.cellString = cell
 		if(visible == true) {
 			setTileOnTop(this.cellString, T_CONTAINER, "false");
+			setEnv(this.cellString, T_CONTAINER);
+		} else {
+			setEnv(this.cellString, T_CONTAINER2);
 		}
-		setEnv(this.cellString, T_CONTAINER);
-		
 	}
 	get content() {
 		return this.itemList;
