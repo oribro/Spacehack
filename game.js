@@ -327,11 +327,10 @@ function promptContinue(player) {
 	document.body.onkeydown = function(event) {exitShip(player)};
 }
 
-/* Returns true if given position is in bounds and movable, false otherwise.
-*  xPos, yPos: Number.
-*	npcs: Array<NPC>. Character cannot stand where an NPC is found.
-*/
-function checkBounds(xPos, yPos, npcs) {
+/* Returns true if given position is in bounds, false otherwise */
+function inBounds(cell) {
+	let xPos = parseInt(cell.slice(3));
+	let yPos = parseInt(cell.slice(1,3));
 	// Check for board bounds.
 	if(xPos < 0 || xPos > (WIDTH - 1)) {
 		return false;
@@ -339,16 +338,13 @@ function checkBounds(xPos, yPos, npcs) {
 	if(yPos < 0 || yPos > (HEIGHT - 1)) {
 		return false;
 	}
-	
-	var biDigX = getTwoDigits(xPos);
-	var biDigY = getTwoDigits(yPos);
-	
-	// Check if cell is walkable.
-	if(!isWalkable("c" + biDigY + biDigX)) {
-		return false;
-	}
 	return true;
-	
+}
+
+/* Checks if a cell is movable. 
+ * Cell is movable only if it's within board bounds and its 'walkable' attribute is set to 'true' */
+function isMovable(cell) {
+	return (inBounds(cell) && isWalkable(cell));
 }
 
 

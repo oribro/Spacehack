@@ -112,7 +112,10 @@ class Player extends Character {
 				return;
 		}
 
-		if(checkBounds(...newPos, npcs)) {
+		let biDigX = getTwoDigits(newPos[0]);
+		let biDigY = getTwoDigits(newPos[1]);
+		
+		if(isMovable("c" + biDigY + biDigX)) {
 			newBiDig = this.moveChar(...newPos);
 			// Draw the character symbol at the updated location.
 			this.draw(...newBiDig);
@@ -210,6 +213,10 @@ class Player extends Character {
 			promptDirection("examine");
 		} else {
 			var cell = this.getCellFromDirection(direction);
+			if(!inBounds(cell)) {
+				printToLog(STRINGS["out_of_bounds"]);
+				return;
+			}
 			var cellElement = document.getElementById(cell);
 			// Check if the cell has item in it.
 			var item = createItemFromCell(cell);

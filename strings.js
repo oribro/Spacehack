@@ -56,7 +56,9 @@ const STRINGS = {
 	
 	"use_err_msg": "Please enter a valid item number.",
 
-	"not_implemented_err": "Oops. We are still working on this option."
+	"not_implemented_err": "Oops. We are still working on this option.",
+	
+	"out_of_bounds": "There's literally nothing there."
 	
 };
 
