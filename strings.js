@@ -58,7 +58,9 @@ const STRINGS = {
 
 	"not_implemented_err": "Oops. We are still working on this option.",
 	
-	"out_of_bounds": "There's literally nothing there."
+	"out_of_bounds": "There's literally nothing there.",
+
+	"not_in_range": "The number you entered is not in range of existing item numbers."
 	
 };
 

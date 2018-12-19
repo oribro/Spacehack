@@ -428,10 +428,10 @@ class Player extends Character {
 	/* Prompts the player for an item number and returns the input. */
 	itemSelection() {
 		var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
-		if(typeof itemSel != "number") {
+		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
 		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
-			printToLog(STRINGS["use_err_msg"]);
+			printToLog(STRINGS["not_in_range"]);
 		} else {
 			return itemSel;
 		}
@@ -442,6 +442,9 @@ class Player extends Character {
 	*/
 	use() {
 		var itemSel = this.itemSelection();
+		// Ilegal selection. Nothing to do here.
+		if (!itemSel)
+			return;
 		var item = this.getInventory()[itemSel-1];
 
 		// TODO: Iterate predefined item list in a generic way and find matching type.
@@ -500,6 +503,9 @@ class Player extends Character {
 	/* Prompts the player for an item number and drops the item. */
 	drop() {
 		var itemSel = this.itemSelection();
+		// Check for ilegal item selection.
+		if (!itemSel)
+			return;
 		var item = this.getInventory()[itemSel-1];
 		const biDigX = getTwoDigits(this.xPos);
 		const biDigY = getTwoDigits(this.yPos);
