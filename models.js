@@ -165,8 +165,11 @@ class Player extends Character {
 	
 	/* Reduces dmg amount from player's hp and plays a grunting sound */
 	getHit(dmg) {
-		this.health = this.health - dmg;
-		document.getElementById("hp-value").innerHTML = this.health;
+		// Check for godmode state.
+		if (Number.isFinite(this.health)) {
+			this.health = this.health - dmg;
+			document.getElementById("hp-value").innerHTML = this.health;
+		}
 		
 		var grunt = new sound(GRUNT);
 		grunt.loop(false);
@@ -458,7 +461,9 @@ class Player extends Character {
 					printToLog("You're already healthy as a horse.");
 					break;
 				}
-				this.incHealth = item.value;
+				// Check for godmode state.
+				if (Number.isFinite(this.hp))
+					this.incHealth = item.value;
 				printToLog("You use the " + item.name + ". You feel healthier.");
 				this.getInventory().splice(itemSel-1, 1);
 				repopInv(this);
@@ -571,8 +576,7 @@ class Player extends Character {
 	// Increase player health without exceeding max possible health.
 	set incHealth(addHp) {
 		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
-		if (this.hp.isFinite())
-			document.getElementById("hp-value").innerHTML = this.hp;
+		document.getElementById("hp-value").innerHTML = this.hp;
 	}
 }
 
