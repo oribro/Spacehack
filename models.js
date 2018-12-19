@@ -388,10 +388,10 @@ class Player extends Character {
 
 							// TODO: Not all items should be stackable!
 
-							//if (item.isStackable) {
-							this.inventory = itemStack(this.inventory, item);
-							this.setInventory(this.inventory);
-							//}
+							if (item.isStackable) {
+								this.inventory = itemStack(this.inventory, item);
+								this.setInventory(this.inventory);
+							}
 							repopInv(this);
 						}
 						return;
@@ -402,16 +402,14 @@ class Player extends Character {
 					if (loot) {
 						this.inventory = [...this.inventory, ...loot];
 
-						// TODO: Do the item stack for each stackable item!
-						this.inventory.forEach(
+						loot.forEach(
 							item => {
-								//if (item.isStackable) {
-								this.inventory = itemStack(this.inventory, item);
-								this.setInventory(this.inventory);
-								//}
+								if (item.isStackable) {
+									this.inventory = itemStack(this.inventory, item);
+									this.setInventory(this.inventory);
+								}
 							}
 						)
-						
 
 						repopInv(this);
 						return;

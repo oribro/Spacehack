@@ -4,16 +4,23 @@ const DEFAULT_RATION_VALUE = 100;
 const DEFAULT_FIRSTAID_VALUE = 10;
 const DEFAULT_MEAT_VALUE = 50;
 
+// Constant slots for item properties.
+const NAME_SLOT = 0;
+const TYPE_SLOT = 1;
+const VALUE_SLOT = 2;
+const STACKABLE_SLOT = 3;
+
 // Item list. 
 const ITEMS = {
-		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE}`,
-		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE}`,
-		"Bucket": `Bucket;Utility;Empty`,
-		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE}`,
-		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE}`,
-		"Bones": `Bones;Weapon;1`
+		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE};true`,
+		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE};true`,
+		"Bucket": `Bucket;Utility;Empty;false`,
+		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true`,
+		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true`,
+		"Bones": `Bones;Weapon;1;false`
 	};
-	
+
+// TODO: Change containers to "dictionary" with cell as key.
 var containers = [];
 
 /*
@@ -40,6 +47,8 @@ class Item {
 			}
 			this.itemTile = eval("T_" + ITEMS[name].slice(0, itemNameLastIndex).toUpperCase());
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
+			// This is a good way to convert string to boolean in JS.
+			this.isItemStackable = itemProperties[STACKABLE_SLOT] === "true";
 
 		} else {
 			this.itemName = name;
@@ -65,6 +74,9 @@ class Item {
 	get description() {
 		return this.itemDescription;
 	}
+	get isStackable() {
+		return this.isItemStackable;
+	}
 	set name(newName) {
 		this.itemName = newName;
 	}
@@ -77,10 +89,13 @@ class Item {
 	set description(newDescription) {
 		this.description = newDescription;
 	}
+	set isStackable(stackable) {
+		this.isItemStackable = stackable;
+	}
 
 	/* Returns a string representation of the item similar to ITEMS values */
 	toString() {
-		return `${this.name};${this.type};${this.value}`;
+		return `${this.name};${this.type};${this.value}${this.isStackable}`;
 	}
 }
 

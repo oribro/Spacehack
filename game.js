@@ -194,6 +194,11 @@ function spawnGameObjects() {
 		T_FIRSTAID, 
 		ITEMS["FirstAid"]
 	);
+	spawnItem(
+		"c1431",
+		T_BONES,
+		ITEMS["Bones"]
+	);
 	
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = SPAWN_HP;
