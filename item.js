@@ -12,7 +12,7 @@ const STACKABLE_SLOT = 3;
 
 // Item list. 
 const ITEMS = {
-		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE};true`,
+		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE};false`,
 		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE};true`,
 		"Bucket": `Bucket;Utility;Empty;false`,
 		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true`,
