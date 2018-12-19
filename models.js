@@ -472,8 +472,27 @@ class Player extends Character {
 			case "Utility":
 				utilItem(item, this);
 				break;
+			case "Weapon":
+				this.equip(item);
+				break;
+			case "Mask":
+				this.equip(item);
+				break;
+			case "Suit":
+				this.equip(item);
+				break;
 			default:
 				printToLog(STRINGS["not_implemented_err"]);
+		}
+	}
+	
+	equip(item) {
+		updateEquipment(item.name);
+		item.isEquipped = true;
+		if(item.type == "Weapon") {
+			this.dmg += parseInt(item.value);
+		} else {
+			// TODO: Add armor property and increase it when equipping mask or suit.
 		}
 	}
 	

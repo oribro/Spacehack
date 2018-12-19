@@ -222,6 +222,25 @@ function repopInv(player) {
 	
 }
 
+/* Takes an item name and sets its information in the relevant equipment slot */
+function updateEquipment(name) {
+	let type = ITEMS[name].split(";")[1];
+	let value = ITEMS[name].split(";")[2];
+	
+	switch (type) {
+		case "Weapon":
+			var equipmentSlot = document.getElementById("weapon-slot");
+			break;
+		case "Mask":
+			var equipmentSlot = document.getElementById("mask-slot");
+			break;
+		case "Suit":
+			var equipmentSlot = document.getElementById("suit-slot");
+			break;
+	}
+	equipmentSlot.innerHTML = name + " (" + value + ")";
+}
+
 
 /******************* SOUND *******************/
 

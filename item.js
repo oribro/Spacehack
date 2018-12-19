@@ -17,7 +17,7 @@ const ITEMS = {
 		"Bucket": `Bucket;Utility;Empty;false`,
 		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true`,
 		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true`,
-		"Bones": `Bones;Weapon;1;false`
+		"Bones": `Bones;Weapon;5;false`
 	};
 
 // Object containing containers found in game identified by their unique cell.
@@ -46,6 +46,7 @@ class Item {
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 			// This is a good way to convert string to boolean in JS.
 			this.isItemStackable = itemProperties[STACKABLE_SLOT] === "true";
+			this.equipped = false;
 
 		/* TODO: This should be deprecated soon */
 		} else {
@@ -75,6 +76,9 @@ class Item {
 	get isStackable() {
 		return this.isItemStackable;
 	}
+	get isEquipped() {
+		return this.equipped;
+	}
 	set name(newName) {
 		this.itemName = newName;
 	}
@@ -89,6 +93,9 @@ class Item {
 	}
 	set isStackable(stackable) {
 		this.isItemStackable = stackable;
+	}
+	set isEquipped(equipped) {
+		this.equipped = equipped;
 	}
 
 	/* Returns a string representation of the item similar to ITEMS values */
