@@ -43,6 +43,8 @@ function passToAction(direction, player) {
 		case "attack":
 			player.attack(direction);
 			break;
+		case "pickup":
+			player.pickup(direction);
 	}
 }
 

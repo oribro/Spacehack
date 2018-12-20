@@ -201,7 +201,9 @@ class Player extends Character {
 		}
 	}
 	
-	/* On key press of matching key, examines the perimeter around the player and prints information to log. */
+	/* On key press of matching key, examines the perimeter in the given direction
+	* and prints information to log. 
+	*/
 	examine(direction) {
 		if(direction === undefined) {
 			promptDirection("examine");
@@ -364,38 +366,38 @@ class Player extends Character {
 			return null;
 	}
 
-	/* On key press of matching key, prompts the player whether to pick up an item around him and picks up the item if player decides to. */
-	pickup() {
-		var i,j;
-		for(i = -1; i <= 1; i++) {
-			for(j = -1; j <= 1; j++) {
-				if(i == 0 && j == 0) {
-					continue;
-				}
-				if((this.xPos + i) >= 0 && (this.xPos + i) < WIDTH && 
-					(this.yPos + j) >= 0 && (this.yPos + j) < HEIGHT) {
-					var biDigX = getTwoDigits(this.xPos + i);
-					var biDigY = getTwoDigits(this.yPos + j);
-					var cell = "c" + biDigY + biDigX;
-					// Check if the cell has item in it.
-					var item = createItemFromCell(cell);
-					if (item) {
-						if (confirm(`Do you want to pick-up ${item.name}?`)) {
-							// Adds the item to player's inventory and removes it from the cell.
-							this.inventory = [...this.inventory, item];
-							removeItemFromCell(cell);
-							// Checks if the items can be stacked together.
-
-							// TODO: Not all items should be stackable!
-
-							if (item.isStackable) {
-								this.inventory = itemStack(this.inventory, item);
-								this.setInventory(this.inventory);
-							}
-							repopInv(this);
+	/* On key press of matching key, prompts the player whether to pick up an item
+	*  in the given direction and picks up the item if player decides to. */
+	pickup(direction) {
+		if(direction === undefined) {
+			promptDirection("pickup");
+		} else {
+			var cell = this.getCellFromDirection(direction);
+			if(!inBounds(cell)) {
+				printToLog(STRINGS["out_of_bounds"]);
+				return;
+			}
+			// We need to know how many items are in the cell in the wanted direction.
+			var numItems = getItemsInCell(cell).length;
+			// Single item case: check if the cell has item in it.
+			if (numItems === 1) {
+				let items = createItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
+				let item = items[SINGLE_ITEM_INDEX - 1];
+				if (item) {
+					if (confirm(`Do you want to pick-up ${item.name}?`)) {
+						// Adds the item to player's inventory and removes it from the cell.
+						this.inventory = [...this.inventory, item];
+						removeItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
+						// Checks if the items can be stacked together.
+						if (item.isStackable) {
+							this.inventory = itemStack(this.inventory, item);
+							this.setInventory(this.inventory);
 						}
-						return;
+						repopInv(this);
 					}
+					return;
+				}
+			}
 
 					// Try to loot a container.
 					let loot = this.loot(cell);
