@@ -20,13 +20,6 @@ function setTileOnTop(cell, tile, walkable) {
 	setEnv(cell, tile);
 }
 
-/* Returns the tile on top of the tile already in the cell. */
-function getTileOnTop(cell) {
-	var cellElement = document.getElementById(cell);
-	if(cellElement.getElementsByTagName("img").length > 1) {
-		return document.getElementById(cell.replace("c", "o"));
-	}
-}
 
 /* Removes the tile that covers another tile and set the 'env' attribute to the value of the bottom tile.
  * walkable: boolean. optional parameter to set the walkable attribute of the cell */
