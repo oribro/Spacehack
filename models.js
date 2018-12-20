@@ -662,6 +662,8 @@ class NPC extends Character{
 		this.hp = npcString[2];
 		this.dmg = npcString[3];
 		this.friendStatus = status;
+		// Item list dropped when the NPC gets killed.
+		this.dropLi = [new Item("Meat"), new Item("Bones")];
 		this.draw(x, y);
 	}
 	
@@ -669,6 +671,12 @@ class NPC extends Character{
 		return this.friendStatus;
 	}
 
+	get dropList() {
+		return this.dropLi;
+	}
+	set dropList(newList) {
+		this.dropLi = newList;
+	}
 	/*
 	*	Draws the character at the given position.
 	*/
@@ -772,10 +780,8 @@ class NPC extends Character{
 			var biDigCurY = getTwoDigits(this.y);
 			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
 			npcs.splice(npcs.indexOf(this), 1);
-			
 			// Drop meat and bones
-			setItemOntoCell("c"+biDigCurY+biDigCurX, new Item("Meat"));
-			setItemOntoCell("c"+biDigCurY+biDigCurX, new Item("Bones"));
+			setItemsOntoCell("c"+biDigCurY+biDigCurX, this.dropList);
 			
 			printToLog("The " + this.type.toLowerCase() + " is dead!");
 			return true;
