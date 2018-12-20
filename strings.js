@@ -4,6 +4,13 @@
 const PLAYER_NAME = "Bob";
 const PARTNER_NAME = "Annie";
 
+/* Constants for player choice method on multiple choice prompt */
+const CHOICE = {
+	"INDIVIDUALS": "individuals",
+	"RANGE": "range",
+	"ALL": "all"
+};
+
 const STRINGS = {	
 	"wakeup": "You wake up. \"Ughh my head... Are you ok?\"\n" +
 	"...\n" +

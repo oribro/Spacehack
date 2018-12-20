@@ -254,30 +254,11 @@ class Player extends Character {
 				printToLog("The container is empty. Nothing to do here.");
 				return;
 			}
-			var containerLength = container.content.length;
+			// Length of a cell container
+			// TODO: Make a clear seperation between invis and vis containers.
+			var invisContainerLength = container.content.length;
 			
-			let lootText;
-			if(visibleContainer) {
-				lootText = "These are the items inside the container:\n";
-			} else {
-				lootText = "There are several items here:\n";
-			}
-			for (let itemEntry of container.content.entries()) {
-				let number = itemEntry[0];
-				let item = itemEntry[1];
-				lootText += number + 1 + ". " + item.name + " (" + 
-				item.type + ", " + item.value + 
-				")\n";
-			}
-			lootText += `\nPlease pick the item(s) you wish to take.\n` +
-						`Enter item numbers seperated by comma (,)\n` +
-						`or two numbers seperated by dash (-) for a range of items.\n` +
-						`If you want to take all of them, enter the word: ALL\n` +
-						`Examples of item choices:\n` + 
-						`1,2,3\n` +
-						`2-5\n` + 
-						`ALL`;  
-			let choice = prompt(lootText);
+			let choice = promptMultItemsChoice(cell);
 
 			// Check for legal input
 			if (choice) {
@@ -413,28 +394,75 @@ class Player extends Character {
 				}
 			}
 
-					// Try to loot a container.
-					let loot = this.loot(cell);
-					if (loot) {
-						this.inventory = [...this.inventory, ...loot];
+			// Multiple item case: prompt the user to choose items.
+			else if (numItems > 1) {
+				let itemList = createItemsFromCell(cell, range(1, numItems));
+				let choice = promptMultItemsChoice(cell, itemList);
+				let validatedChoice = validateMultItemsChoice(choice, itemList);
+				let itemIndices;
+				let items;
 
-						loot.forEach(
-							item => {
-								if (item.isStackable) {
-									this.inventory = itemStack(this.inventory, item);
-									this.setInventory(this.inventory);
-								}
-							}
-						)
-
-						repopInv(this);
-						return;
+				// Check if choice is validated.
+				if (validatedChoice !== "") {
+					switch (validatedChoice) {
+						case CHOICE.INDIVIDUALS:
+							itemIndices = choice.split(',');
+							break;
+						case CHOICE.RANGE:
+							const [start, end] = choice.split('-');
+							itemIndices = range(start, end);
+							break;
+						case CHOICE.ALL:
+							itemIndices = range(1, numItems);
+							break;
 					}
+
+					// Add the items to the inventory and remove them from the cell.
+					items = createItemsFromCell(cell, itemIndices);
+					this.addItemsToInventory(items);
+					removeItemsFromCell(cell, itemIndices);
+					return;
 				}
 			}
+
+			// Try to loot a container.
+			// let loot = this.loot(cell);
+			// if (loot) {
+			// 	this.inventory = [...this.inventory, ...loot];
+
+			// 	loot.forEach(
+			// 		item => {
+			// 			if (item.isStackable) {
+			// 				this.inventory = itemStack(this.inventory, item);
+			// 				this.setInventory(this.inventory);
+			// 			}
+			// 		}
+			// 	)
+
+			// 	repopInv(this);
+			// 	return;
+			// }
 		}
 	}
 	
+	/*
+	*	Add the given array of items to the player's inventory.
+	*/
+	addItemsToInventory(items) {
+		this.inventory = [...this.inventory, ...items];
+
+		items.forEach(
+			item => {
+				if (item.isStackable) {
+					this.inventory = itemStack(this.inventory, item);
+					this.setInventory(this.inventory);
+				}
+			}
+		)
+
+		repopInv(this);
+	}
+
 	/* Prompts the player for an item number and returns the input.
 	 * equipment: optional, changes the prompt message to fit selection from equipment list.
 	 */

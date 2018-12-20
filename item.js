@@ -10,6 +10,9 @@ const TYPE_SLOT = 1;
 const VALUE_SLOT = 2;
 const STACKABLE_SLOT = 3;
 
+// Other constants.
+const SINGLE_ITEM_INDEX = 1;
+
 // Item list. 
 const ITEMS = {
 		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE};false`,
@@ -112,7 +115,7 @@ class Container {
 	multiple items grouped on a tile following the death of an enemy. */
 	constructor(itemList, cell, visible) {
 		this.itemList = itemList;
-		this.cellString = cell
+		this.cellString = cell;
 		if(visible == true) {
 			setTileOnTop(this.cellString, T_CONTAINER, "false");
 			setEnv(this.cellString, T_CONTAINER);
@@ -303,5 +306,102 @@ function removeItemsFromCell(cell, itemIndices) {
 	// No items left to block movement => set the cell as walkable.
 	if (itemElements.length === 0) 
 		cellElement.setAttribute("walkable", "true");
+}
+
+/*
+*	Function for retrieving the items in a given game cell.
+*	Returns an Array of DOM elements that contain game items. 
+*/
+function getItemsInCell(cell) {
+	let cellElement = document.getElementById(cell);
+
+	return [...cellElement.children].filter(
+		childElement => childElement.hasAttribute("item")
+	);
+}
+
+/*
+*  On encounter of multiple items choice, ask the player
+*  which items he would like to choose from the given item list.
+*/
+function promptMultItemsChoice(cell, itemList) {
+	let lootText = "There are several items here:\n";
+	
+	for (let itemEntry of itemList.entries()) {
+		let [number, item] = [...itemEntry]; 
+		lootText += number + 1 + ". " + item.name + " (" + 
+		item.type + ", " + item.value + 
+		")\n";
 	}
+
+	lootText += `\nPlease pick the item(s) you wish to take.\n` +
+				`Enter item numbers seperated by comma (,)\n` +
+				`or two numbers seperated by dash (-) for a range of items.\n` +
+				`If you want to take all of them, enter the word: ALL\n` +
+				`Examples of item choices:\n` + 
+				`1,2,3\n` +
+				`2-5\n` + 
+				`ALL`; 
+
+	return prompt(lootText);
+}
+
+/*
+*  Validate player input following promptMultItemsChoice.
+*  Returns the choice method the user entered as a string,
+*  or empty string if the validation failed.
+*  Choice method is one of:
+*  1. Individual Numbers seperated by comma (,)
+*  2. Range of numbers sperated by dash (-)
+*  3. All items, denoted by ALL.
+*/
+function validateMultItemsChoice(choice, itemList) {
+	// Check for legal input
+	if (choice) {
+		// Regex patterns to check if the user entered valid input.
+		const individuals = /^[0-9]+(,[0-9]+)*$/;
+		const range = /^[0-9]+-[0-9]+$/
+		const all = "ALL";
+
+		if (individuals.test(choice)) {
+
+			let ilegalIndices = choice.split(",").filter(
+				index => parseInt(index) < 1 || parseInt(index) > itemList.length
+
+			);
+			if (ilegalIndices.length > 0) {
+				alert("Numbers are not in range. Please enter numbers from the specified list.");
+				return "";
+			}
+
+			return CHOICE.INDIVIDUALS;
+		}
+		else if (range.test(choice)) {
+			let [start, end] = choice.split("-");
+
+			// Check for ilegal range
+			if (parseInt(start) >= parseInt(end) || 
+				parseInt(start) < 1 || 
+				parseInt(end) > itemList.length
+			) {
+				alert("The range you've entered is invalid. " +
+					"Please select numbers from the list and try again.");
+				return "";
+			}
+
+			return CHOICE.RANGE;
+		}
+		else if (choice === all) {
+			return CHOICE.ALL;
+		}
+		// No match -> ilegal input
+		else {
+			alert("Ilegal choice. Please follow the instructions and try again");
+			return "";
+		}
+
+	}
+	// Player aborted the choice prompt process.
+	else
+		return "";
 }
