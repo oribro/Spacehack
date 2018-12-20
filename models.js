@@ -301,15 +301,27 @@ class Player extends Character {
 					
 					result.forEach(function(chosenItem) {
 						container.popItem(chosenItem);
-					});
-					
-					if(container.content.length == 0 && !visibleContainer) {
-						while(containerLength != 0) {
-							removeTileOnTop(cell, true);
-							containerLength--;
+						alert(chosenItem);
+						if (!visibleContainer) {
+							if (container.content.length >= 1) {
+								removeTileOnTop(cell, false);
+								const topTile = getTileOnTop(cell);
+								alert(topTile.outerHTML);
+
+							}
 						}
-						delete containers[cell];
-					}
+					});
+
+					// if(!visibleContainer) {
+					// 	while(invisContainerLength > 1) {
+					// 		removeTileOnTop(cell, false);
+					// 		invisContainerLength--;
+					// 	}
+					// 	if (invisContainerLength === 1)
+					// 		removeTileOnTop(cell, true);
+
+					// 	delete containers[cell];
+					// }
 
 					return result;
 				}
@@ -333,9 +345,9 @@ class Player extends Character {
 					});
 					
 					if(container.content.length == 0 && !visibleContainer) {
-						while(containerLength != 0) {
+						while(invisContainerLength != 0) {
 							removeTileOnTop(cell, true);
-							containerLength--;
+							invisContainerLength--;
 						}
 						delete containers[cell];
 					}
@@ -346,9 +358,9 @@ class Player extends Character {
 					var chosenItems = container.content;
 					container.content = [];
 					if(!visibleContainer) {
-						while(containerLength != 0) {
+						while(invisContainerLength != 0) {
 								removeTileOnTop(cell, true);
-								containerLength--;
+								invisContainerLength--;
 						}
 						delete containers[cell];
 					}
