@@ -46,14 +46,9 @@ class Character {
 		var biDigCurX = getTwoDigits(this.xPos);
 		var biDigCurY = getTwoDigits(this.yPos);
 		
-		// Set current character cell to ground.
-		var item = createItemFromCell("c"+biDigCurY+biDigCurX);
-		if(item) {
-			removeTileOnTop("c"+biDigCurY+biDigCurX, false);
-		} else {
+		// Move the char from the current position.
 		removeTileOnTop("c"+biDigCurY+biDigCurX, true);
-		}
-		
+
 		// Set character position properties to new position.
 		this.xPos = xPos;
 		this.yPos = yPos;
@@ -222,8 +217,7 @@ class Player extends Character {
 			if (item) {
 				printToLog(item.description);
 				return;
-			// TODO: Examine non-items!
-			// The cell does not contain item. What if it contains a background element?
+
 			} else if(cellElement.hasAttribute("env")) {
 				printToLog(getDescription(cellElement.getAttribute("env")));
 			} else {

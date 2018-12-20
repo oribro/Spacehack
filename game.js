@@ -30,13 +30,7 @@ window.onload = () => {
 	
 	
 	promptContinue(player);
-
-	/*// Create npcs and keep them in the browser storage.
-	npcs = getNPCArray();
-	sessionStorage.setItem(
-		'npcs', JSON.stringify(npcs)
-	);
-	*/
+	
 }
 
 /* Turn counter */
