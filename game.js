@@ -22,12 +22,16 @@ window.onload = () => {
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(6, 5);
-	//godmode(player);
+	
+	/* Uncomment this for testing */
+	//npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
 	
 	document.getElementById("turn-value").innerHTML = turn;
 	document.getElementById("hp-value").innerHTML = SPAWN_HP;
 	document.getElementById("dmg-value").innerHTML = SPAWN_DMG;
-	
+
+	/* Uncomment this for testing */
+	//godmode(player);
 	
 	promptContinue(player);
 	
