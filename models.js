@@ -560,6 +560,10 @@ class Player extends Character {
 		if (!itemSel)
 			return;
 		var item = this.getInventory()[itemSel-1];
+		if(item.isEquipped) {
+			printToLog("This item is currently equipped, remove it to drop.");
+			return;
+		}
 		const biDigX = getTwoDigits(this.xPos);
 		const biDigY = getTwoDigits(this.yPos);
 		setItemOntoCell("c" + biDigY + biDigX, item);
