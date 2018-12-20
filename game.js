@@ -22,7 +22,12 @@ window.onload = () => {
 	// Create a new player character.
 	// Places the character at the top left.
 	var player = new Player(6, 5);
-	godmode(player);
+	//godmode(player);
+	
+	document.getElementById("turn-value").innerHTML = turn;
+	document.getElementById("hp-value").innerHTML = SPAWN_HP;
+	document.getElementById("dmg-value").innerHTML = SPAWN_DMG;
+	
 	
 	promptContinue(player);
 
@@ -167,9 +172,6 @@ function spawnGameObjects() {
 		T_BONES,
 		ITEMS["Bones"]
 	);
-	
-	document.getElementById("turn-value").innerHTML = turn;
-	document.getElementById("hp-value").innerHTML = SPAWN_HP;
 }
 
 /* Deletes the prompt message and prints next string */

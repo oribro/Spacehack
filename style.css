@@ -85,6 +85,8 @@ h2 {
 #stats {
 	grid-row-start: 1;
 	grid-row-end: 2;
+	
+	padding: 10px 5px;
 }
 
 #game-stats {
@@ -95,6 +97,10 @@ h2 {
 
 #player-stats {
 	float: right;
+}
+
+.stat {
+	padding: 5px;
 }
 
 #game-board {
@@ -139,12 +145,10 @@ h2 {
 	}
 }
 
+
+
 p.stat {
 	float: left;
-}
-
-#hp{
-	padding-right: 5px;
 }
 
 .tileline {
