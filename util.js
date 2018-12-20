@@ -356,3 +356,12 @@ function godmode(player) {
 	hpVal.innerHTML = "&infin;";
 	hpVal.style.fontSize = "1em";
 }
+
+/* Util function for creating a range of numbers in an array.
+*  The range is from start to end - inclusive.
+*/
+function range(start, end) {
+  return Array(end - start + 1).fill().map(
+  	(_, idx) => start + idx
+  );
+}

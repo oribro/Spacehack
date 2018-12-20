@@ -214,14 +214,16 @@ class Player extends Character {
 				return;
 			}
 			var cellElement = document.getElementById(cell);
-			// Check if the cell has item in it.
-			var item = createItemFromCell(cell);
-			if (item) {
-				printToLog(item.description);
+			// Check if the cell has item in it. 
+			// In case of multiple items, Only the top item will be examined.
+			var items = createItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
+			if (items) {
+				printToLog(items[SINGLE_ITEM_INDEX - 1].description);
 				return;
 
 			} else if(cellElement.hasAttribute("env")) {
 				printToLog(getDescription(cellElement.getAttribute("env")));
+
 			} else {
 				printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 			}

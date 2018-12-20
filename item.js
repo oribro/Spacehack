@@ -235,55 +235,73 @@ function itemStack(inventory, sampleItem) {
 function spawnItem(cell, tile, item) {
 	// Spawn item image
 	setTileOnTop(cell, tile, "false");
-	document.getElementById(cell).setAttribute("item", item);
+	let tileOnTop = document.getElementById(cell).lastElementChild;
+	tileOnTop.setAttribute("item", item);
 }
 
 /*
-*  Creates a game item object from the string in the cell assuming such
-*  a string is found.
+*  Creates the game item objects from the list of item indices specified by itemIndices.
+*  Each item has a corresponding string in one of the cell's children assuming such a string is found.
 */
-function createItemFromCell(cell) {
-	cellElement = document.getElementById(cell);
-	if (cellElement.hasAttribute("item")) {
-		let item = cellElement.getAttribute("item");
-		let itemProperties = item.split(";");
-		// let itemNameLastIndex = item.indexOf(";");
-		// let name = item.slice(0, itemNameLastIndex);
-		let name = itemProperties[NAME_SLOT];
-		// let itemValueFirstIndex = item.lastIndexOf(";") + 1;
-		let value = itemProperties[VALUE_SLOT];
-		item = new Item(name);
-		// Update item value with the value from the cell.
-		// TODO: Constructor for name and value maybe?
-		item.value = value;
-		return item;
-	}
-	return null;
+function createItemsFromCell(cell, itemIndices) {
+	// Get list of item element nodes piled on top of each other in the cell.
+	let itemElements = getItemsInCell(cell);
+
+	// No items in the cell: Nothing to do here.
+	if (itemElements.length === 0)
+		return null;
+	
+	let items = [];
+	// Create an item object for each item index given.
+	itemIndices.forEach(
+		index => {
+			let item = itemElements[parseInt(index) - 1].getAttribute("item");
+			if (!item) {
+				alert("Programming Error. Details: Check correlation "+
+					"between indices and item nodes");
+				return null;
+			}
+			let itemProperties = item.split(";");
+			let name = itemProperties[NAME_SLOT];
+			let value = itemProperties[VALUE_SLOT];
+			item = new Item(name);
+			item.value = value;
+			items.push(item);
+		}
+	)
+	return items;
 }
 
-/* Sets the given item on the given cell */
-function setItemOntoCell(cell, item) {
-	setTileOnTop(cell, item.tile, "false");
+/* Sets the given item list specified by items on the given cell.
+*	For each item, a string will be injected into a cell's child.
+*/
+function setItemsOntoCell(cell, items) {
 	let cellElement = document.getElementById(cell);
-	var cellContainer;
 
-	if(!cellElement.hasAttribute("item")) {
-		cellElement.setAttribute("item", item.toString());
-	} else if (!containers.hasOwnProperty(cell)) {
-		var firstItem = createItemFromCell(cell);
-		cellElement.removeAttribute("item");
-		containers[cell] = new Container([firstItem, item], cell, false);
-	} else {
-		cellContainer.push(item);
-	}
+	items.forEach(
+		item => {
+			setTileOnTop(cell, item.tile, "false");
+			let tileOnTop = cellElement.lastElementChild;
+			tileOnTop.setAttribute("item", item.toString());
+		}
+	)
 }
 
-/* Removes item from the given cell if item exists, otherwise nothing happens. */
-function removeItemFromCell(cell) {
+/* Removes items from the given cell according to the given item indices */
+function removeItemsFromCell(cell, itemIndices) {
+	// Get list of item element nodes piled on top of each other in the cell.
 	let cellElement = document.getElementById(cell);
-	if (cellElement.hasAttribute("item")) {
-		cellElement.removeAttribute("item");
-		removeTileOnTop(cell);
+	let itemElements = getItemsInCell(cell);
+
+	// For each item to remove, remove it from the DOM as well as from itemElements. 
+	itemIndices.forEach(
+		index => {
+			cellElement.removeChild(itemElements[index - 1]);
+			itemElements.splice(index - 1, 1);
+		}
+	);
+	// No items left to block movement => set the cell as walkable.
+	if (itemElements.length === 0) 
 		cellElement.setAttribute("walkable", "true");
 	}
 }
