@@ -505,6 +505,7 @@ class Player extends Character {
 		item.isEquipped = true;
 		if(item.type == "Weapon") {
 			this.dmg += parseInt(item.value);
+			createSound(EQUIP_WEAPON, false);
 		} else {
 			// TODO: Add armor property and increase it when equipping mask or suit.
 		}
@@ -543,6 +544,7 @@ class Player extends Character {
 			
 			item.isEquipped = false;
 			if(item.type == "Weapon") {
+				createSound(EQUIP_WEAPON, false);
 				this.dmg -= parseInt(item.value);
 				document.getElementById("weapon-slot").innerHTML = "Hands (0)";
 			} else {
