@@ -15,6 +15,7 @@ const CONTROLS = "c";
 const DROP = "d";
 const ATTACK = "f";
 const EQUIPMENT = "q";
+const REMOVE = "r";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -25,6 +26,7 @@ document.getElementById("controls-key").innerHTML = "'"+CONTROLS+"'";
 document.getElementById("drop-key").innerHTML = "'"+DROP+"'";
 document.getElementById("attack-key").innerHTML = "'"+ATTACK+"'";
 document.getElementById("equipment-key").innerHTML = "'"+EQUIPMENT+"'";
+document.getElementById("remove-key").innerHTML = "'"+REMOVE+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -103,6 +105,9 @@ function control(event, player) {
 			break;
 		case EQUIPMENT:
 			toggleEquipment();
+			break;
+		case REMOVE:
+			player.unequip(true);
 			break;
 	}
 }

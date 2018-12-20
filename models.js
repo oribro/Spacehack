@@ -425,9 +425,15 @@ class Player extends Character {
 		}
 	}
 	
-	/* Prompts the player for an item number and returns the input. */
-	itemSelection() {
-		var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
+	/* Prompts the player for an item number and returns the input.
+	 * equipment: optional, changes the prompt message to fit selection from equipment list.
+	 */
+	itemSelection(equipment) {
+		if(equipment) {
+			var itemSel = parseInt(prompt("Choose type number from the equipment list:"), 10);
+		} else {
+			var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
+		}
 		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
 		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
@@ -490,13 +496,58 @@ class Player extends Character {
 		}
 	}
 	
+	/* Takes an item and equips it */
 	equip(item) {
+		// Remove currently equipped item.
+		this.unequip(item.type);
+		
 		updateEquipment(item.name);
 		item.isEquipped = true;
 		if(item.type == "Weapon") {
 			this.dmg += parseInt(item.value);
 		} else {
 			// TODO: Add armor property and increase it when equipping mask or suit.
+		}
+	}
+	
+	/* Removes an equipped item from player's equipment 
+	 * type: item type or 'true' for user prompt.
+	 */
+	unequip(type) {
+		if(type == true) {
+			var typeNum = this.itemSelection(true);
+			// Ilegal selection. Nothing to do here.
+			if (!typeNum)
+				return;
+			switch (typeNum) {
+				case 1:
+					type = "Weapon";
+					break;
+				case 2:
+					type = "Mask";
+					break;
+				case 3:
+					type = "Suit";
+					break;
+				default:
+					return;
+			}
+		}
+		var item;
+		this.inventory.forEach(function(invItem) {
+			if(invItem.type == type && invItem.isEquipped) {
+				item = invItem;
+			}
+		});
+		if(item) {
+			
+			item.isEquipped = false;
+			if(item.type == "Weapon") {
+				this.dmg -= parseInt(item.value);
+				document.getElementById("weapon-slot").innerHTML = "Hands (0)";
+			} else {
+				// TODO: Add armor property and decrease it when unequipping mask or suit.
+			}
 		}
 	}
 	
