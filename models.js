@@ -621,8 +621,8 @@ class Player extends Character {
 	}
 	// Updates the player's level according to the xp.
 	updateLevel() {
-		if(this.xp == this.lvl * 1000 - XP_TURN) {
-			this.xp = -XP_TURN;
+		if(this.xp >= this.lvl * 1000 - XP_TURN) {
+			this.xp -= 1000;
 			this.lvl++;
 			document.getElementById("lvl-value").innerHTML = this.lvl;
 		}
