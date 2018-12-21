@@ -412,3 +412,27 @@ function validateMultItemsChoice(choice, itemList) {
 	else
 		return "";
 }
+
+/* Return item indices from the user choice given the user method of choosing items 
+*  The indices are returned as Number type.
+*/
+function getItemIndicesFromChoice(choice, method, numItems) {
+	let itemIndices;
+
+	switch (method) {
+		case CHOICE.INDIVIDUALS:
+			itemIndices = choice.split(',').map(
+				index => parseInt(index)	
+			);
+			break;
+		case CHOICE.RANGE:
+			const [start, end] = choice.split('-');
+			itemIndices = range(parseInt(start), parseInt(end));
+			break;
+		case CHOICE.ALL:
+			itemIndices = range(1, numItems);
+			break;
+	}
+
+	return itemIndices;
+}

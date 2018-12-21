@@ -275,24 +275,13 @@ class Player extends Character {
 			else if (numItems > 1) {
 				let itemList = createItemsFromCell(cell, range(1, numItems));
 				let choice = promptMultItemsChoice(cell, itemList);
-				let validatedChoice = validateMultItemsChoice(choice, itemList);
+				let method = validateMultItemsChoice(choice, itemList);
 				let itemIndices;
 				let items;
 
 				// Check if choice is validated.
-				if (validatedChoice !== "") {
-					switch (validatedChoice) {
-						case CHOICE.INDIVIDUALS:
-							itemIndices = choice.split(',');
-							break;
-						case CHOICE.RANGE:
-							const [start, end] = choice.split('-');
-							itemIndices = range(parseInt(start), parseInt(end));
-							break;
-						case CHOICE.ALL:
-							itemIndices = range(1, numItems);
-							break;
-					}
+				if (method !== "") {
+					itemIndices = getItemIndicesFromChoice(choice, method, numItems);
 
 					// Add the items to the inventory and remove them from the cell.
 					items = createItemsFromCell(cell, itemIndices);
@@ -302,23 +291,44 @@ class Player extends Character {
 				}
 			}
 
-			// Try to loot a container.
-			// let loot = this.loot(cell);
-			// if (loot) {
-			// 	this.inventory = [...this.inventory, ...loot];
+			// Container case: prompt the user to choose items and loot the container.
+			else if (getEnv(cell) == "container1") {
+				let container = containers[cell];
+				if (!container || container === undefined)
+					alert("Programming Error. Details: Check env variable for container.");
 
-			// 	loot.forEach(
-			// 		item => {
-			// 			if (item.isStackable) {
-			// 				this.inventory = itemStack(this.inventory, item);
-			// 				this.setInventory(this.inventory);
-			// 			}
-			// 		}
-			// 	)
+				createSound(CONTAINER_OPEN, false);
+				if (container.content.length === 0) {
+					printToLog("The container is empty. Nothing to do here.");
+					return;
+				}
 
-			// 	repopInv(this);
-			// 	return;
-			// }
+				let itemList = container.content;
+				let numItems = container.content.length;
+				let choice = promptMultItemsChoice(cell, itemList);
+				let method = validateMultItemsChoice(choice, itemList);
+
+				if (method !== "") {
+					let itemIndices = getItemIndicesFromChoice(choice, method, numItems);
+					// Remove the items from the container and add them to the inventory.
+					let items = [];
+					// Iterate backwards similar to the algorithm in removeItemFromCell,
+					// because the indices found after the removal having their index reduced by one.
+					for (let i = itemIndices.length -1 ; i >= 0; i--) {
+						let chosenIndex = itemIndices[i] - 1;
+						items.push(container.content[chosenIndex]);
+						container.popItem(chosenIndex);
+					}
+					this.addItemsToInventory(items);
+				}
+
+			}
+
+			// No items case: nothing to do here.
+			else {
+				printToLog(STRINGS["pickup_nothing"]);
+				return;
+			}
 		}
 	}
 	
