@@ -232,10 +232,40 @@ class Player extends Character {
 			// Check if the cell has item in it. 
 			// In case of multiple items, Only the top item will be examined.
 			let numItems = getItemsInCell(cell).length; 
-			if (numItems > 0) {
-				let topItem = createItemsFromCell(cell, [numItems]);
+			if (numItems === 1) {
+				let topItem = createItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
 				printToLog(topItem[SINGLE_ITEM_INDEX - 1].description);
 				return;
+
+			// Examine multiple items.
+			} else if (numItems > 1) {
+				let itemList = createItemsFromCell(cell, range(1, numItems));
+				let examineText = "There are several items here:\n\n";
+	
+				for (let itemEntry of itemList.entries()) {
+					let [number, item] = [...itemEntry]; 
+					examineText += number + 1 + ". " + item.name + " (" + 
+					item.type + ", " + item.value + 
+					")\n";
+				}
+
+				examineText += "\nPlease enter the item number you would like to examine.\n";
+				let choice = prompt(examineText);
+				if (choice) {
+					if (parseInt(choice) < 1 || 
+						parseInt(choice) > itemList.length) {
+							alert("The number you've entered is invalid. " +
+							"Please select a number from the list and try again.");
+							return;
+						}
+					else if (isNaN(choice)) {
+						alert("Ilegal choice. Please follow the instructions and try again");
+						return;
+					}
+
+					printToLog(itemList[parseInt(choice) - 1].description);
+					return;
+				}
 
 			} else if(cellElement.hasAttribute("env")) {
 				printToLog(getDescription(cellElement.getAttribute("env")));
