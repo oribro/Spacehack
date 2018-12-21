@@ -245,6 +245,7 @@ function spawnItem(cell, tile, item) {
 /*
 *  Creates the game item objects from the list of item indices specified by itemIndices.
 *  Each item has a corresponding string in one of the cell's children assuming such a string is found.
+*  itemIndices: array. Each index is a number between 1 and numItems.
 */
 function createItemsFromCell(cell, itemIndices) {
 	// Get list of item element nodes piled on top of each other in the cell.
@@ -290,7 +291,9 @@ function setItemsOntoCell(cell, items) {
 	)
 }
 
-/* Removes items from the given cell according to the given item indices */
+/* Removes items from the given cell according to the given item indices 
+*  itemIndices: array. Each index is a number between 1 and numItems.
+*/
 function removeItemsFromCell(cell, itemIndices) {
 	// Get list of item element nodes piled on top of each other in the cell.
 	let cellElement = document.getElementById(cell);
