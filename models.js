@@ -410,7 +410,7 @@ class Player extends Character {
 							break;
 						case CHOICE.RANGE:
 							const [start, end] = choice.split('-');
-							itemIndices = range(start, end);
+							itemIndices = range(parseInt(start), parseInt(end));
 							break;
 						case CHOICE.ALL:
 							itemIndices = range(1, numItems);

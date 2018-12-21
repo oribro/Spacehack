@@ -297,12 +297,15 @@ function removeItemsFromCell(cell, itemIndices) {
 	let itemElements = getItemsInCell(cell);
 
 	// For each item to remove, remove it from the DOM as well as from itemElements. 
-	itemIndices.forEach(
-		index => {
-			cellElement.removeChild(itemElements[index - 1]);
-			itemElements.splice(index - 1, 1);
-		}
-	);
+	// The algorithm iterates the item elements in reverse order because
+	// of the way the DOM works when removing children: when a child gets removed,
+	// the children that come after will be assigned their original index minus 1.
+	for (let i = itemIndices.length - 1; i >= 0; i--) {
+		let chosenIndex = itemIndices[i] - 1;
+		cellElement.removeChild(itemElements[chosenIndex]);
+		itemElements.splice(chosenIndex, 1);
+	}
+	
 	// No items left to block movement => set the cell as walkable.
 	if (itemElements.length === 0) 
 		cellElement.setAttribute("walkable", "true");
