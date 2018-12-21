@@ -311,8 +311,10 @@ function removeItemsFromCell(cell, itemIndices) {
 	}
 	
 	// No items left to block movement => set the cell as walkable.
-	if (itemElements.length === 0) 
+	if (itemElements.length === 0) {
 		cellElement.setAttribute("walkable", "true");
+		setEnv(cell, cellElement.firstElementChild.getAttribute("src"));
+	}
 }
 
 /*
