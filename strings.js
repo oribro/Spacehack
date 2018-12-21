@@ -67,7 +67,9 @@ const STRINGS = {
 	
 	"out_of_bounds": "There's literally nothing there.",
 
-	"not_in_range": "The number you entered is not in range of existing item numbers."
+	"not_in_range": "The number you entered is not in range of existing item numbers.",
+
+	"pickup_nothing": "There is nothing to pick up here."
 	
 };
 

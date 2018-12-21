@@ -216,9 +216,10 @@ class Player extends Character {
 			var cellElement = document.getElementById(cell);
 			// Check if the cell has item in it. 
 			// In case of multiple items, Only the top item will be examined.
-			var items = createItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
-			if (items) {
-				printToLog(items[SINGLE_ITEM_INDEX - 1].description);
+			let numItems = getItemsInCell(cell).length; 
+			if (numItems > 0) {
+				let topItem = createItemsFromCell(cell, [numItems]);
+				printToLog(topItem[SINGLE_ITEM_INDEX - 1].description);
 				return;
 
 			} else if(cellElement.hasAttribute("env")) {
@@ -374,6 +375,12 @@ class Player extends Character {
 			}
 			// We need to know how many items are in the cell in the wanted direction.
 			var numItems = getItemsInCell(cell).length;
+			// No items case: nothing to do here.
+			if (numItems === 0) {
+				printToLog(STRINGS["pickup_nothing"]);
+				return;
+			}
+
 			// Single item case: check if the cell has item in it.
 			if (numItems === 1) {
 				let items = createItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
