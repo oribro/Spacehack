@@ -334,7 +334,7 @@ function getItemsInCell(cell) {
 *  which items he would like to choose from the given item list.
 */
 function promptMultItemsChoice(cell, itemList) {
-	let lootText = "There are several items here:\n";
+	let lootText = "There are several items here:\n\n";
 	
 	for (let itemEntry of itemList.entries()) {
 		let [number, item] = [...itemEntry]; 
@@ -376,7 +376,6 @@ function validateMultItemsChoice(choice, itemList) {
 
 			let ilegalIndices = choice.split(",").filter(
 				index => parseInt(index) < 1 || parseInt(index) > itemList.length
-
 			);
 			if (ilegalIndices.length > 0) {
 				alert("Numbers are not in range. Please enter numbers from the specified list.");

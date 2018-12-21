@@ -558,6 +558,11 @@ class Player extends Character {
 		let image = document.getElementById(this.getImage());
 		document.getElementById("log").style.display = "none";
 		document.getElementById("stats").style.display = "none";
+		[...document.getElementsByClassName("right-window")].concat(
+			[...document.getElementsByClassName("left-window")]
+		).forEach(
+			element => element.style.display = "none"
+		);
 		// Using the power of ES to make a beautiful async animation:
 		// Once the animation starts, the program waits for it to finish.
 		image.style.animation = "rotate90 2s";
