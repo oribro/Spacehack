@@ -46,8 +46,14 @@ class Character {
 		var biDigCurX = getTwoDigits(this.xPos);
 		var biDigCurY = getTwoDigits(this.yPos);
 		
+		// Check if the player just dropped an item on the current cell.
+		var items = getItemsInCell("c"+biDigCurY+biDigCurX);
+		if(items.length > 0) {
+			removeTileOnTop("c"+biDigCurY+biDigCurX, false);
+		} else {
 		// Move the char from the current position.
-		removeTileOnTop("c"+biDigCurY+biDigCurX, true);
+			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
+		}
 
 		// Set character position properties to new position.
 		this.xPos = xPos;
@@ -613,7 +619,7 @@ class Player extends Character {
 		}
 		const biDigX = getTwoDigits(this.xPos);
 		const biDigY = getTwoDigits(this.yPos);
-		setItemOntoCell("c" + biDigY + biDigX, item);
+		setItemsOntoCell("c" + biDigY + biDigX, [item]);
 		printToLog("You dropped " + item.name + " on the ground.");
 		this.getInventory().splice(itemSel-1, 1);
 		repopInv(this);
