@@ -303,6 +303,7 @@ function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
 function incrementTurnCounter(player) {
 	turn++;
 	document.getElementById("turn-value").innerHTML = turn;
+	player.updateLevel();
 	npcs.forEach(function(npc) {
 		if(npc.status == "enemy") {
 			if(!npc.die()) {

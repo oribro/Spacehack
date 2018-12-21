@@ -2,9 +2,13 @@
 const MAX_HP = 100;
 const SPAWN_HP = 20;
 const SPAWN_DMG = 5;
+const SPAWN_XP = 0;
+const SPAWN_LVL = 1;
+const XP_TURN = 5;
+const XP_MULTIPLIER = 10;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;1"
+				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;1;500"
 				 };
 				 
 var npcs = [];
@@ -80,6 +84,8 @@ class Player extends Character {
 						  new Item("Ration")
 						 ];
 		this.dmg = SPAWN_DMG;
+		this.xp = SPAWN_XP;
+		this.lvl = SPAWN_LVL;
 	}
 
 	move(event) {
@@ -119,6 +125,9 @@ class Player extends Character {
 			this.getHungrier();
 			// Increment the turn counter.
 			incrementTurnCounter(this);
+			// Increase XP on every turn.
+			this.xp += XP_TURN;
+			document.getElementById("xp-value").innerHTML = this.xp;
 		}
 	}
 
@@ -520,6 +529,13 @@ class Player extends Character {
 				punch.loop(false);
 				punch.play();
 				printToLog("You attack the " + target.type.toLowerCase() + ".");
+				// Increase player xp when attacking.
+				if(target.health <= 0) {
+					this.xp += XP_MULTIPLIER * XP_TURN + target.getXpBonus;
+				} else {
+					this.xp += XP_MULTIPLIER * XP_TURN;
+				}
+				document.getElementById("xp-value").innerHTML = this.xp;
 			} else {
 				printToLog("You attack the air next to you. The air is oblivious.");
 			}
@@ -568,6 +584,15 @@ class Player extends Character {
 		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
 		document.getElementById("hp-value").innerHTML = this.hp;
 	}
+	// Updates the player's level according to the xp.
+	updateLevel() {
+		if(this.xp == this.lvl * 1000 - XP_TURN) {
+			this.xp = -XP_TURN;
+			this.lvl++;
+			document.getElementById("lvl-value").innerHTML = this.lvl;
+		}
+		
+	}
 }
 
 /*
@@ -590,10 +615,15 @@ class NPC extends Character{
 		this.hurt.loop(false);
 		this.hp = npcString[2];
 		this.dmg = npcString[3];
+		this.xpBonus = parseInt(npcString[4]);
 		this.friendStatus = status;
 		// Item list dropped when the NPC gets killed.
 		this.dropLi = [new Item("Meat"), new Item("Bones")];
 		this.draw(x, y);
+	}
+	
+	get getXpBonus() {
+		return this.xpBonus;
 	}
 	
 	get status() {
@@ -709,6 +739,7 @@ class NPC extends Character{
 			var biDigCurY = getTwoDigits(this.y);
 			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
 			npcs.splice(npcs.indexOf(this), 1);
+			
 			// Drop meat and bones
 			setItemsOntoCell("c"+biDigCurY+biDigCurX, this.dropList);
 			
