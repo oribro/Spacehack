@@ -381,11 +381,6 @@ class Player extends Character {
 			}
 			// We need to know how many items are in the cell in the wanted direction.
 			var numItems = getItemsInCell(cell).length;
-			// No items case: nothing to do here.
-			if (numItems === 0) {
-				printToLog(STRINGS["pickup_nothing"]);
-				return;
-			}
 
 			// Single item case: check if the cell has item in it.
 			if (numItems === 1) {

@@ -140,9 +140,10 @@ class Container {
 		});
 	}
 	// Takes an item object and removes this item from the container.
-	popItem(contItem) {
-		let item = contItem;
-		this.itemList.splice(this.itemList.indexOf(item), 1);
+	// The item is identified by it's unique index to avoid confusion with
+	// cases where there are multiple unstackable items with the same name.
+	popItem(itemIndex) {
+		this.itemList.splice(itemIndex, 1);
 	}
 	
 	// Takes an item object and pushes it into the container.
