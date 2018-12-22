@@ -9,18 +9,22 @@ const NAME_SLOT = 0;
 const TYPE_SLOT = 1;
 const VALUE_SLOT = 2;
 const STACKABLE_SLOT = 3;
+const LVL_SLOT = 4;
+const TILE_SLOT = 5;
 
 // Other constants.
 const SINGLE_ITEM_INDEX = 1;
 
 // Item list. 
 const ITEMS = {
-		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE};false`,
-		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE};true`,
-		"Bucket": `Bucket;Utility;Empty;false`,
-		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true`,
-		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true`,
-		"Bones": `Bones;Weapon;5;false`
+		"Ration": `Ration;Food;${DEFAULT_RATION_VALUE};false;0;T_RATION`,
+		"Coins":  `Coins;Currency;${DEFAULT_COINS_VALUE};true;0;T_COINS`,
+		"Bucket": `Bucket;Utility;Empty;false;0;T_BUCKET`,
+		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true;0;T_FIRSTAID`,
+		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true;0;T_MEAT`,
+		"Bones": `Bones;Weapon;5;false;1;T_BONES`,
+		"Std. Mask": `Std. Mask;Mask;3;false;1;T_STD_MASK`,
+		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`
 	};
 
 // Object containing containers found in game identified by their unique cell.
@@ -44,8 +48,8 @@ class Item {
 			isNaN(itemProperties[VALUE_SLOT]) ? 
 				this.itemValue = itemProperties[VALUE_SLOT] : 
 				this.itemValue = parseInt(itemProperties[VALUE_SLOT]);
-
-			this.itemTile = eval("T_" + this.itemName.toUpperCase());
+			this.itemLvl = parseInt(itemProperties[LVL_SLOT]);
+			this.itemTile = eval(itemProperties[TILE_SLOT]);
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 			// This is a good way to convert string to boolean in JS.
 			this.isItemStackable = itemProperties[STACKABLE_SLOT] === "true";
@@ -82,6 +86,9 @@ class Item {
 	get isEquipped() {
 		return this.equipped;
 	}
+	get lvl() {
+		return this.itemLvl;
+	}
 	set name(newName) {
 		this.itemName = newName;
 	}
@@ -100,10 +107,14 @@ class Item {
 	set isEquipped(equipped) {
 		this.equipped = equipped;
 	}
+	set lvl(newLvl) {
+		this.itemLvl = newLvl; 
+	}
+	
 
 	/* Returns a string representation of the item similar to ITEMS values */
 	toString() {
-		return `${this.name};${this.type};${this.value};${this.isStackable}`;
+		return `${this.name};${this.type};${this.value};${this.isStackable};${this.lvl}`;
 	}
 }
 

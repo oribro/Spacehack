@@ -8,7 +8,7 @@ const XP_TURN = 5;
 const XP_MULTIPLIER = 10;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;1;500"
+				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;11;500"
 				 };
 				 
 var npcs = [];
@@ -81,11 +81,17 @@ class Player extends Character {
 		super(x, y);
 		this.hunger = 100;
  		this.inventory = [new Item("Ration"),
-						  new Item("Ration")
+						  new Item("Ration"),
+						  new Item("Std. Mask"),
+						  new Item("Std. Suit")
 						 ];
 		this.dmg = SPAWN_DMG;
 		this.xp = SPAWN_XP;
 		this.lvl = SPAWN_LVL;
+		this.def = 0;
+		
+		this.equip(this.inventory[2], false);
+		this.equip(this.inventory[3], false);
 	}
 
 	move(event) {
@@ -177,7 +183,11 @@ class Player extends Character {
 	getHit(dmg) {
 		// Check for godmode state.
 		if (Number.isFinite(this.health)) {
-			this.health = this.health - dmg;
+			var computedDmg = dmg - this.def;
+			if(computedDmg < 0) {
+				computedDmg = 0;
+			}
+			this.health = this.health - computedDmg;
 			document.getElementById("hp-value").innerHTML = this.health;
 		}
 		
@@ -460,8 +470,13 @@ class Player extends Character {
 		}
 	}
 	
-	/* Takes an item and equips it */
-	equip(item) {
+	/* Takes an item and equips it 
+	 * playSound: boolean, optional. if defined doesnt play the equip sound. necessary for player construction */
+	equip(item, playSound) {
+		if(item.lvl > this.lvl) {
+			printToLog("You need to be at least level " + item.lvl + " to use this item.");
+			return;
+		}
 		// Remove currently equipped item.
 		this.unequip(item.type);
 		
@@ -472,7 +487,11 @@ class Player extends Character {
 			document.getElementById("dmg-value").innerHTML = this.dmg;
 			createSound(EQUIP_WEAPON, false);
 		} else {
-			// TODO: Add armor property and increase it when equipping mask or suit.
+			this.def += parseInt(item.value);
+			document.getElementById("def-value").innerHTML = this.def;
+			if(playSound === undefined) {
+				createSound(EQUIP_CLOTHING, false);
+			}
 		}
 	}
 	
@@ -514,7 +533,14 @@ class Player extends Character {
 				document.getElementById("dmg-value").innerHTML = this.dmg;
 				document.getElementById("weapon-slot").innerHTML = "Hands (0)";
 			} else {
-				// TODO: Add armor property and decrease it when unequipping mask or suit.
+				createSound(EQUIP_CLOTHING, false);
+				this.def -= parseInt(item.value);
+				document.getElementById("def-value").innerHTML = this.def;
+				if(item.type == "Mask") {
+					document.getElementById("mask-slot").innerHTML = "";
+				} else {
+					document.getElementById("suit-slot").innerHTML = "";
+				}
 			}
 		}
 	}
@@ -755,7 +781,7 @@ class NPC extends Character{
 		let yDist = Math.abs(player.yPos - this.y);
 		if(xDist < 2 && yDist < 2) {
 			player.getHit(this.dmg);
-			if (player.health === 0) {
+			if (player.health <= 0) {
 				player.die(`Killed by ${this.type}`);
 			}
 			printToLog("The " + this.type.toLowerCase() + " attacks!");

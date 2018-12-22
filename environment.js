@@ -51,6 +51,8 @@ const T_BUCKET = ASSETS + TILESET + "bucket.png";
 const T_FIRSTAID = ASSETS + TILESET + "first_aid.png";
 const T_MEAT = ASSETS + TILESET + "meat.png";
 const T_BONES = ASSETS + TILESET + "bones.png";
+const T_STD_MASK = ASSETS + TILESET + "std_mask.png";
+const T_STD_SUIT = ASSETS + TILESET + "std_suit.png";
 
 
 /*** Game sounds ***/

@@ -210,7 +210,11 @@ function repopInv(player) {
 		var li = olElement.appendChild(liElement);
 		li.setAttribute("id", "inv-item-"+i);
 		let item = inventory[i];
-		li.innerHTML =  item.name + " (" + item.type + ", " + item.value + ")";
+		if(item.lvl != 0) {
+			li.innerHTML =  item.name + " (" + item.type + ", " + item.value + ", Lvl " + item.lvl + ")";
+		} else {
+			li.innerHTML =  item.name + " (" + item.type + ", " + item.value + ")";
+		}
 	}
 	
 }
