@@ -624,7 +624,9 @@ class Player extends Character {
 		if(this.xp >= this.lvl * 1000 - XP_TURN) {
 			this.xp -= 1000;
 			this.lvl++;
+			this.dmg += this.lvl * 5;
 			document.getElementById("lvl-value").innerHTML = this.lvl;
+			document.getElementById("dmg-value").innerHTML = this.dmg;
 		}
 		
 	}
