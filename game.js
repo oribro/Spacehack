@@ -33,7 +33,7 @@ window.onload = () => {
 	document.getElementById("lvl-value").innerHTML = SPAWN_LVL;
 
 	/* Uncomment this for testing */
-	//godmode(player);
+	godmode(player);
 	
 	promptContinue(player);
 	
