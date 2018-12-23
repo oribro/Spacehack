@@ -210,6 +210,12 @@ function repopInv(player) {
 		var li = olElement.appendChild(liElement);
 		li.setAttribute("id", "inv-item-"+i);
 		let item = inventory[i];
+		if(item.isEquipped) {
+			li.style.color = "green";
+		}
+		if(!item.meetsReq(player)) {
+			li.style.color = "red";
+		}
 		if(item.lvl != 0) {
 			li.innerHTML =  item.name + " (" + item.type + ", " + item.value + ", Lvl " + item.lvl + ")";
 		} else {

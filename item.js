@@ -22,7 +22,7 @@ const ITEMS = {
 		"Bucket": `Bucket;Utility;Empty;false;0;T_BUCKET`,
 		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true;0;T_FIRSTAID`,
 		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true;0;T_MEAT`,
-		"Bones": `Bones;Weapon;5;false;1;T_BONES`,
+		"Bones": `Bones;Weapon;5;false;2;T_BONES`,
 		"Std. Mask": `Std. Mask;Mask;3;false;1;T_STD_MASK`,
 		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`
 	};
@@ -111,6 +111,11 @@ class Item {
 	}
 	set lvl(newLvl) {
 		this.itemLvl = newLvl; 
+	}
+	
+	/* Checks whether the player meets the requirements of the item and is able to equip it */
+	meetsReq(player) {
+		return (this.lvl <= player.lvl);
 	}
 	
 

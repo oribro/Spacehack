@@ -493,6 +493,7 @@ class Player extends Character {
 				createSound(EQUIP_CLOTHING, false);
 			}
 		}
+		repopInv(this);
 	}
 	
 	/* Removes an equipped item from player's equipment 
@@ -525,7 +526,6 @@ class Player extends Character {
 			}
 		});
 		if(item) {
-			
 			item.isEquipped = false;
 			if(item.type == "Weapon") {
 				createSound(EQUIP_WEAPON, false);
@@ -542,6 +542,7 @@ class Player extends Character {
 					document.getElementById("suit-slot").innerHTML = "";
 				}
 			}
+			repopInv(this);
 		}
 	}
 	
@@ -653,6 +654,7 @@ class Player extends Character {
 			this.dmg += this.lvl * 5;
 			document.getElementById("lvl-value").innerHTML = this.lvl;
 			document.getElementById("dmg-value").innerHTML = this.dmg;
+			repopInv(this);
 		}
 		
 	}
