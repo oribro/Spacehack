@@ -24,7 +24,9 @@ const ITEMS = {
 		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true;0;T_MEAT`,
 		"Bones": `Bones;Weapon;5;false;2;T_BONES`,
 		"Std. Mask": `Std. Mask;Mask;3;false;1;T_STD_MASK`,
-		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`
+		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`,
+		"Green fruit": `Green fruit;Food;50;true;0;T_FRUIT1`,
+		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`
 	};
 
 // Object containing containers found in game identified by their unique cell.
@@ -341,7 +343,7 @@ function removeItemsFromCell(cell, itemIndices) {
 */
 function getItemsInCell(cell) {
 	let cellElement = document.getElementById(cell);
-
+	
 	return [...cellElement.children].filter(
 		childElement => childElement.hasAttribute("item")
 	);

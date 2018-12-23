@@ -43,6 +43,8 @@ const T_SAND_G = ASSETS + TILESET + "sand_g.png";
 const T_BEACH1 = ASSETS + TILESET + "beach1.png";
 const T_WATER1 = ASSETS + TILESET + "water1.png";
 const T_FIRE1 = ASSETS + TILESET + "fire1.png";
+const T_TREE1 = ASSETS + TILESET + "tree1.png";
+const T_TREE2 = ASSETS + TILESET + "tree2.png";
 
 /* Item tiles */
 const T_COINS = ASSETS + TILESET + "coins.png";
@@ -53,6 +55,8 @@ const T_MEAT = ASSETS + TILESET + "meat.png";
 const T_BONES = ASSETS + TILESET + "bones.png";
 const T_STD_MASK = ASSETS + TILESET + "std_mask.png";
 const T_STD_SUIT = ASSETS + TILESET + "std_suit.png";
+const T_FRUIT1 = ASSETS + TILESET + "fruit1.png";
+const T_FRUIT2 = ASSETS + TILESET + "fruit2.png";
 
 
 /*** Game sounds ***/

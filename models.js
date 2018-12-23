@@ -124,6 +124,37 @@ class Player extends Character {
 		let biDigX = getTwoDigits(newPos[0]);
 		let biDigY = getTwoDigits(newPos[1]);
 		
+		// If out of bounds change map
+		if(!inBounds("c" + biDigY + biDigX)) {
+			if(plot < 2) {
+				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
+			} else {
+				if(newPos[0] >= WIDTH) {
+					spawnGameObjects("1,0");
+					newBiDig = this.moveChar(0, newPos[1]);
+					// Draw the character symbol at the updated location.
+					this.draw(...newBiDig);
+					this.getHungrier();
+					// Increment the turn counter.
+					incrementTurnCounter(this);
+					// Increase XP on every turn.
+					this.xp += XP_TURN;
+					document.getElementById("xp-value").innerHTML = this.xp;
+				} else if (newPos[0] < 0) {
+					spawnGameObjects("0,0");
+					newBiDig = this.moveChar(WIDTH-1, newPos[1]);
+					// Draw the character symbol at the updated location.
+					this.draw(...newBiDig);
+					this.getHungrier();
+					// Increment the turn counter.
+					incrementTurnCounter(this);
+					// Increase XP on every turn.
+					this.xp += XP_TURN;
+					document.getElementById("xp-value").innerHTML = this.xp;
+				}
+			}
+		}
+		
 		if(isMovable("c" + biDigY + biDigX)) {
 			newBiDig = this.moveChar(...newPos);
 			// Draw the character symbol at the updated location.
