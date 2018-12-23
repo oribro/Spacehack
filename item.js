@@ -60,7 +60,9 @@ class Item {
 			this.itemName = name;
 			this.itemType = type;
 			this.itemValue = value;
-			this.itemTile = eval("T_" + name.toUpperCase());
+			const itemProperties = ITEMS[name].split(";");
+			this.itemTile = eval(itemProperties[TILE_SLOT]);
+			this.itemLvl = parseInt(itemProperties[LVL_SLOT]);
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
 		}
 	}
