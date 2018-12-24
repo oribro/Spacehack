@@ -92,6 +92,9 @@ class Player extends Character {
 		
 		this.equip(this.inventory[2], false);
 		this.equip(this.inventory[3], false);
+		
+		this.mapX = 0;
+		this.mapY = 0;
 	}
 
 	move(event) {
@@ -130,7 +133,8 @@ class Player extends Character {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
 				if(newPos[0] >= WIDTH) {
-					spawnGameObjects("1,0");
+					this.mapX++;
+					spawnGameObjects(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(0, newPos[1]);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
@@ -141,7 +145,8 @@ class Player extends Character {
 					this.xp += XP_TURN;
 					document.getElementById("xp-value").innerHTML = this.xp;
 				} else if (newPos[0] < 0) {
-					spawnGameObjects("0,0");
+					this.mapX--;
+					spawnGameObjects(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(WIDTH-1, newPos[1]);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
@@ -152,6 +157,7 @@ class Player extends Character {
 					this.xp += XP_TURN;
 					document.getElementById("xp-value").innerHTML = this.xp;
 				}
+				document.getElementById("coords-value").innerHTML = "(" + this.mapX + "," + this.xPos + " ; " + this.mapY + "," + this.yPos + ")";
 			}
 		}
 		
@@ -165,6 +171,8 @@ class Player extends Character {
 			// Increase XP on every turn.
 			this.xp += XP_TURN;
 			document.getElementById("xp-value").innerHTML = this.xp;
+			// Update the coordinates stat.
+			document.getElementById("coords-value").innerHTML = "(" + this.mapX + "," + this.xPos + " ; " + this.mapY + "," + this.yPos + ")";
 		}
 	}
 
@@ -646,6 +654,7 @@ class Player extends Character {
 		let image = document.getElementById(this.getImage());
 		document.getElementById("log").style.display = "none";
 		document.getElementById("stats").style.display = "none";
+		document.getElementById("extended-stats").style.display = "none";
 		[...document.getElementsByClassName("right-window")].concat(
 			[...document.getElementsByClassName("left-window")]
 		).forEach(

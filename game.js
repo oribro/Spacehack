@@ -46,6 +46,7 @@ window.onload = () => {
 	document.getElementById("dmg-value").innerHTML = SPAWN_DMG;
 	document.getElementById("xp-value").innerHTML = SPAWN_XP;
 	document.getElementById("lvl-value").innerHTML = SPAWN_LVL;
+	document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
 
 	/* Uncomment this for testing */
 	//godmode(player);
