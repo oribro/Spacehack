@@ -20,6 +20,14 @@ function setTileOnTop(cell, tile, walkable) {
 	setEnv(cell, tile);
 }
 
+/* 'Overloaded' function for setting a tile on top of a tile.
+ * Calls setTileOnTop() with any number of cells passed as arguments after 'tile' and 'walkable'. */
+function setTilesOnTop(tile, walkable) {
+	for(i = 2; i < arguments.length; i++) {
+		setTileOnTop(arguments[i], tile, walkable);
+	}
+}
+
 
 /* Removes the tile that covers another tile and set the 'env' attribute to the value of the bottom tile.
  * walkable: boolean. optional parameter to set the walkable attribute of the cell */
@@ -97,6 +105,7 @@ function setCell(cell, tile, walkable) {
 	} else {
 		element.getElementsByTagName("img")[0].setAttribute("src", tile);
 	}
+	setEnv(cell, tile);
 	element.setAttribute("walkable", walkable.toString());
 }
 
