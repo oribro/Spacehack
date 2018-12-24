@@ -263,6 +263,14 @@ function spawnItem(cell, tile, item) {
 	tileOnTop.setAttribute("item", item);
 }
 
+/* 'Overloaded' function for spawning several instances of the same item.
+ * Calls spawnItem() with any number of cells passed as arguments after 'tile' and 'item'. */
+function spawnItems(tile, item) {
+	for(i = 2; i < arguments.length; i++) {
+		spawnItem(arguments[i], tile, item);
+	}
+}
+
 /*
 *  Creates the game item objects from the list of item indices specified by itemIndices.
 *  Each item has a corresponding string in one of the cell's children assuming such a string is found.

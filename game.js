@@ -49,7 +49,7 @@ window.onload = () => {
 
 	/* Uncomment this for testing */
 	//godmode(player);
-	plot = 2;
+	//plot = 2;
 	
 	promptContinue(player);
 	
@@ -68,8 +68,9 @@ function spawnGameObjects(map) {
 	board.setAttribute("id", "game-board");
 	document.getElementById("game").appendChild(board);
 	switch (map) {
-		// Starting map.
+		// Map 0,0 (Spawn map).
 		case "0,0":
+			document.getElementById("map-value").innerHTML = "Crash site";
 			// Spawn terrain environment elements.
 			//var i, j, biDigI, biDigJ;
 			for(i = 0; i < HEIGHT; i++) {
@@ -86,23 +87,17 @@ function spawnGameObjects(map) {
 					document.getElementById("r"+biDigI).appendChild(span);
 					if(j == 0) {
 						setCell(cell, T_WATER1, "false");
-						setEnv(cell, T_WATER1);
 					} else if (j == 1) {
 						setCell(cell, T_BEACH1, "false");
-						setEnv(cell, T_BEACH1);
 						span.lastElementChild.setAttribute("class", "water");
 					} else if (j == 2) {
 						setCell(cell, T_SAND_G, "true");
-						setEnv(cell, T_SAND_G);
 					} else if(j == WIDTH - 5) {
 						setCell(cell, T_VEGETATION2, "true");
-						setEnv(cell, T_VEGETATION2);
 					} else if(j >= WIDTH - 4) {
 						setCell(cell, T_VEGETATION1, "true");
-						setEnv(cell, T_VEGETATION1);
 					} else {
 						setCell(cell, T_GROUND, "true");
-						setEnv(cell, T_GROUND);
 					}
 				}
 			}
@@ -115,36 +110,20 @@ function spawnGameObjects(map) {
 			setTileOnTop("c0604", T_SHIP5, "false");
 			setTileOnTop("c0705", T_SHIP6, "false");
 			setTileOnTop("c0805", T_SHIP7, "false");
-			setEnv("c0505", T_SHIP2);
-			setEnv("c0605", T_SHIP3);
-			setEnv("c0606", T_SHIP4);
-			setEnv("c0604", T_SHIP5);
-			setEnv("c0705", T_SHIP6);
-			setEnv("c0805", T_SHIP7);
 
 			// Fire on ship.
 			["c0604", "c0705", "c0805"].forEach(
 				cell => {
 					setTileOnTop(cell, T_FIRE1, "false");
-					setEnv(cell, T_FIRE1);
+					//setEnv(cell, T_FIRE1);
 					// Important: assuming fire is on top of the other tile layers.
 					// We use here the fact that setTileOnTop sets the fire as the last child element.
 					document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
 				});
 
 			// Ship debris.
-			setTileOnTop("c0318", T_DEBRIS1, "false");
-			setTileOnTop("c0512", T_DEBRIS2, "false");
-			setTileOnTop("c1205", T_DEBRIS1, "false");
-			setTileOnTop("c1619", T_DEBRIS2, "false");
-			setTileOnTop("c1018", T_DEBRIS1, "false");
-			setTileOnTop("c1704", T_DEBRIS2, "false");
-			setEnv("c0318", T_DEBRIS1);
-			setEnv("c0512", T_DEBRIS2);
-			setEnv("c1205", T_DEBRIS1);
-			setEnv("c1619", T_DEBRIS2);
-			setEnv("c1018", T_DEBRIS1);
-			setEnv("c1704", T_DEBRIS2);
+			setTilesOnTop(T_DEBRIS1, "false", "c0318", "c1205", "c1018");
+			setTilesOnTop(T_DEBRIS2, "false", "c0512", "c1619", "c1704");
 			
 			// Container
 			containers["c1423"] = new Container([
@@ -155,10 +134,6 @@ function spawnGameObjects(map) {
 				"c1423",
 				true
 			);
-
-			//hideTile("c1423", T_FIRSTAID);
-			//setTileOnTop("c1423", T_CONTAINER, "false");
-			//setEnv("c1423", T_CONTAINER);
 
 			// Item spawn
 			spawnItem(
@@ -188,23 +163,46 @@ function spawnGameObjects(map) {
 			);
 			break;
 		
-		// 
+		// Map 1,0 (Right of spawn).
 		case "1,0":
+			document.getElementById("map-value").innerHTML = "Plains";
 			for(i = 0; i < HEIGHT; i++) {
 				var div = document.createElement("div");
 				biDigI = getTwoDigits(i);
 				div.setAttribute("id", "r"+biDigI);
 				div.setAttribute("class", "tileline");
 				board.appendChild(div);
+				
+				// Fill the board with vegetation.
 				for(j = 0; j < WIDTH; j++) {
 					biDigJ = getTwoDigits(j);
 					let cell = "c"+biDigI+biDigJ;
 					var span = document.createElement("span");
 					span.setAttribute("id", cell);
 					document.getElementById("r"+biDigI).appendChild(span);
-					setCell(cell, T_VEGETATION1, "true");	
-				}
+					setCell(cell, T_VEGETATION1, "true");				
+				}	
 			}
+			
+			// Green trees.
+			setTilesOnTop(T_TREE1, "false", "c0208", "c1513", "c1019", 
+											"c0417", "c1418", "c1506", 
+											"c0702", "c1203", "c0214", 
+											"c0910", "c0719"
+						  );
+			
+			// Green fruit.
+			spawnItems(T_FRUIT1, ITEMS["Green fruit"], "c0703", "c1202", "c0810", "c1413", "c1018", "c0114");
+			
+			// Red trees.
+			setTilesOnTop(T_TREE2, "false", "c1005", "c0512", "c1209", 
+											"c0914", "c1501", "c0303", 
+											"c1215", "c0607", "c0118"
+						  );
+			
+			// Red fruit.
+			spawnItems(T_FRUIT2, ITEMS["Red fruit"], "c0302", "c0707", "c0513", "c1309", "c1214", "c0218");
+			
 			break;
 	}
 }

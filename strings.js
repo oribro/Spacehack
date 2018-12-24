@@ -45,6 +45,14 @@ const STRINGS = {
 	
 	"examine_ground": "\"The ground here is rocky.\"",
 	
+	"examine_tree1": "\"It's a tree that has green fruit.\"",
+	
+	"examine_tree2": "\"It's a tree that has red fruit. It stings all over my body standing next to it.\"",
+	
+	"examine_green fruit": "\"Looks like the fruit from the green trees.\"",
+	
+	"examine_red fruit": "\"Looks like the fruit from the red trees.\"",
+	
 	"examine_container": "\"It's the container from the ship! It must have fallen while we crashed. There should be useful things inside.\"",
 	
 	"examine_items": "There are several items here.",

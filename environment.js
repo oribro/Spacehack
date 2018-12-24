@@ -117,7 +117,10 @@ const ENV = {
 		"container2": `T_CONTAINER;${STRINGS["examine_items"]}`,
 		
 		"dogfish_r": `T_DOGFISH;${STRINGS["examine_dogfish_r"]}`,
-		"dogfish_l": `T_DOGFISH;${STRINGS["examine_dogfish_l"]}`
+		"dogfish_l": `T_DOGFISH;${STRINGS["examine_dogfish_l"]}`,
+		
+		"tree1": `T_TREE1;${STRINGS["examine_tree1"]}`,
+		"tree2": `T_TREE2;${STRINGS["examine_tree2"]}`
 		
 }
 
