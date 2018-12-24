@@ -8,6 +8,21 @@ const MAX_FIRE_RANGE = 11;
 
 'use strict';
 
+/* Turn counter */
+var turn = 0;
+
+/* Game log string */
+var log = "";
+
+/* Plot advancement counter */
+var plot = 0;
+
+/* Enable/disable movement */
+var movement = true;
+
+/* Sound of fire burning */
+var fireSound = new sound(FIRE_SOUND);
+
 /*
 * Game setup
 */
@@ -34,31 +49,29 @@ window.onload = () => {
 
 	/* Uncomment this for testing */
 	//godmode(player);
+	plot = 2;
 	
 	promptContinue(player);
 	
 }
 
-/* Turn counter */
-var turn = 0;
-
-/* Game log string */
-var log = "";
-
-/* Plot advancement counter */
-var plot = 0;
-
-/* Enable/disable movement */
-var movement = true;
-
-/* Sound of fire burning */
-var fireSound = new sound(FIRE_SOUND);
-
+/* Draws a map on the game board according to the map parameter.
+ * Map: string. formatted "x,y" where x represents the horizontal location and y the vertical location.
+ * e.g.: "0,0" is the starting map, so "1,0" is the map to the right. "0,1" is the map below. 
+ */
 function spawnGameObjects(map) {
+	var i, j, biDigI, biDigJ;
+	// Delete and recreate the game-board DOM element.
+	var board = document.getElementById("game-board");
+	document.getElementById("game").removeChild(board);
+	board = document.createElement("div");
+	board.setAttribute("id", "game-board");
+	document.getElementById("game").appendChild(board);
 	switch (map) {
+		// Starting map.
 		case "0,0":
 			// Spawn terrain environment elements.
-			var i, j, biDigI, biDigJ;
+			//var i, j, biDigI, biDigJ;
 			for(i = 0; i < HEIGHT; i++) {
 				biDigI = getTwoDigits(i);
 				var div = document.createElement("div");
@@ -67,7 +80,7 @@ function spawnGameObjects(map) {
 				document.getElementById("game-board").appendChild(div);
 				for(j = 0; j < WIDTH; j++) {
 					biDigJ = getTwoDigits(j);
-					let cell = "c"+biDigI+biDigJ
+					let cell = "c"+biDigI+biDigJ;
 					var span = document.createElement("span");
 					span.setAttribute("id", cell);
 					document.getElementById("r"+biDigI).appendChild(span);
@@ -174,20 +187,15 @@ function spawnGameObjects(map) {
 				ITEMS["Bones"]
 			);
 			break;
-			
+		
+		// 
 		case "1,0":
-			var i, j, biDigI, biDigJ;
 			for(i = 0; i < HEIGHT; i++) {
-				biDigI = getTwoDigits(i);
-				var board = document.getElementById("game-board");
-				document.getElementById("game").removeChild(board);
-				board = document.createElement("div");
-				board.setAttribute("id", "game-board");
-				document.getElementById("game").appendChild(board);
 				var div = document.createElement("div");
+				biDigI = getTwoDigits(i);
 				div.setAttribute("id", "r"+biDigI);
 				div.setAttribute("class", "tileline");
-				document.getElementById("game-board").appendChild(div);
+				board.appendChild(div);
 				for(j = 0; j < WIDTH; j++) {
 					biDigJ = getTwoDigits(j);
 					let cell = "c"+biDigI+biDigJ;

@@ -25,19 +25,21 @@ function setTileOnTop(cell, tile, walkable) {
  * walkable: boolean. optional parameter to set the walkable attribute of the cell */
 function removeTileOnTop(cell, walkable) {
 	var overTile = document.getElementById(cell.replace('c','o'));
-	var cellElement = document.getElementById(cell);
-	cellElement.removeChild(overTile);
-	
-	let bottomTile = cellElement.getElementsByTagName("img")[0].getAttribute("src");
-	setEnv(cell, bottomTile);
-	
-	if(walkable != undefined) {
-		if(walkable == true) {
-			document.getElementById(cell).setAttribute("walkable", "true");
-		} else {
-			document.getElementById(cell).setAttribute("walkable", "false");
+	if(overTile) {
+		var cellElement = document.getElementById(cell);
+		cellElement.removeChild(overTile);
+		
+		let bottomTile = cellElement.getElementsByTagName("img")[0].getAttribute("src");
+		setEnv(cell, bottomTile);
+		
+		if(walkable != undefined) {
+			if(walkable == true) {
+				document.getElementById(cell).setAttribute("walkable", "true");
+			} else {
+				document.getElementById(cell).setAttribute("walkable", "false");
+			}
 		}
-	}	
+	}
 }
 
 /* Hides the given tile in the given cell */
