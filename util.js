@@ -168,6 +168,16 @@ function hideLeftWindow() {
 }
 
 /* Shows/hides the controls window */
+function toggleExtStats() {
+	var stats = document.getElementById("extended-stats");
+	if(stats.style.display != "block") {
+		stats.style.display = "block";
+	} else {
+		stats.style.display = "none";
+	}
+}
+
+/* Shows/hides the extended stats window */
 function toggleControls() {
 	var controls = document.getElementById("controls");
 	if(controls.style.display != "block") {

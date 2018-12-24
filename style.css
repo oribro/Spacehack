@@ -33,7 +33,7 @@ h2 {
 	grid-column-start: 1;
 	grid-column-end: 2;
 	grid-row-start: 1;
-	grid-row-end: 4;
+	grid-row-end: 5;
 	text-align: left;
 }
 
@@ -44,6 +44,16 @@ h2 {
 
 .left-window-list > li {
 	padding-bottom: 5px;
+}
+
+#extended-stats {
+	display: none;
+	grid-row-start: 1;
+	grid-row-end: 2;
+	grid-column-start: 2;
+	grid-column-end: 3;
+	
+	padding: 10px 5px;
 }
 
 #controls {
@@ -83,19 +93,21 @@ h2 {
 }
 
 #stats {
-	grid-row-start: 1;
-	grid-row-end: 2;
+	grid-row-start: 2;
+	grid-row-end: 3;
+	grid-column-start: 2;
+	grid-column-end: 3;
 	
 	padding: 10px 5px;
 }
 
-#game-stats {
+.game-stats {
 	padding-left: 5px;
 	float: left;
 		
 }
 
-#player-stats {
+.player-stats {
 	float: right;
 }
 
@@ -106,8 +118,10 @@ h2 {
 #game-board {
 	margin: auto;
 	width: 100%;
-	grid-row-start: 2;
-	grid-row-end: 3;
+	grid-row-start: 3;
+	grid-row-end: 4;
+	grid-column-start: 2;
+	grid-column-end: 3;
 }
 
 .fire {
@@ -188,8 +202,10 @@ p.stat {
 }
 
 #game-log {
-	grid-row-start: 3;
-	grid-row-end: 4;
+	grid-row-start: 4;
+	grid-row-end: 5;
+	grid-column-start: 2;
+	grid-column-end: 3;
 	width: 100%;
 }
 
@@ -239,7 +255,7 @@ p.stat {
 	grid-column-start: 3;
 	grid-column-end: 4;
 	grid-row-start: 1;
-	grid-row-end: 4;
+	grid-row-end: 5;
 	width: fit-content;
 	padding: 0px 10px;
 	border-left: 2px solid orange;

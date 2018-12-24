@@ -16,6 +16,7 @@ const DROP = "d";
 const ATTACK = "f";
 const EQUIPMENT = "q";
 const REMOVE = "r";
+const STATS = "s";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -27,6 +28,7 @@ document.getElementById("drop-key").innerHTML = "'"+DROP+"'";
 document.getElementById("attack-key").innerHTML = "'"+ATTACK+"'";
 document.getElementById("equipment-key").innerHTML = "'"+EQUIPMENT+"'";
 document.getElementById("remove-key").innerHTML = "'"+REMOVE+"'";
+document.getElementById("stats-key").innerHTML = "'"+STATS+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -110,6 +112,9 @@ function control(event, player) {
 			break;
 		case REMOVE:
 			player.unequip(true);
+			break;
+		case STATS:
+			toggleExtStats();
 			break;
 	}
 }

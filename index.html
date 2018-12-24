@@ -19,21 +19,14 @@
 				<h1>SpaceHack</h1>
 			</header>
 			<div id="game">
-				<div id="stats">
-					<span id="game-stats">
-						<span class="stat" id="turn">
-							<span id="turn-label">Turn:</span> 
-							<span id="turn-value"></span>
-						</span>
-						<span class="stat" id="map">
-							<span id="map-value"></span>
+				<div id="extended-stats">
+					<span class="game-stats">
+						<span class="stat" id="coords">
+								<span id="coords-label">Coordinates:</span> 
+								<span id="coords-value"></span>
 						</span>
 					</span>
-					<span id="player-stats">
-						<span class="stat" id="hp">
-							<span id="hp-label">HP:</span>
-							<span id="hp-value"></span>
-						</span>
+					<span class="player-stats">
 						<span class="stat" id="def">
 							<span id="def-label">Def:</span>
 							<span id="def-value"></span>
@@ -41,6 +34,24 @@
 						<span class="stat" id="dmg">
 							<span id="dmg-label">Dmg:</span>
 							<span id="dmg-value"></span>
+						</span>
+					</span>
+				</div>
+				<div id="stats">
+					<span class="game-stats">
+						<span class="stat" id="turn">
+							<span id="turn-label">Turn:</span> 
+							<span id="turn-value"></span>
+						</span>
+						<span class="stat" id="map">
+							<span id="map-label">Area:</span> 
+							<span id="map-value"></span>
+						</span>
+					</span>
+					<span class="player-stats">
+						<span class="stat" id="hp">
+							<span id="hp-label">HP:</span>
+							<span id="hp-value"></span>
 						</span>
 						<span class="stat" id="xp">
 							<span id="xp-label">XP:</span>
@@ -64,6 +75,7 @@
 						<li><span class="controls-label">Attack: </span><span id="attack-key"></span></li>
 						<li><span class="controls-label">Equipment: </span><span id="equipment-key"></span></li>
 						<li><span class="controls-label">Remove: </span><span id="remove-key"></span></li>
+						<li><span class="controls-label">Extended stats: </span><span id="stats-key"></span></li>
 						<li><span class="controls-label">Controls: </span><span id="controls-key"></span></li>
 					</ul>
 				</div>
