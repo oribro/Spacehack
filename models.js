@@ -135,7 +135,11 @@ class Player extends Character {
 				if(newPos[0] >= WIDTH) {
 					saveMapItems(this.mapX+","+this.mapY);
 					this.mapX++;
-					spawnGameObjects(this.mapX+","+this.mapY);
+					if(isInitialVisit(this.mapX+","+this.mapY)) {
+						spawnGameObjects(this.mapX+","+this.mapY, true);
+					} else {
+						spawnGameObjects(this.mapX+","+this.mapY);
+					}
 					loadMapItems(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(0, newPos[1]);
 					// Draw the character symbol at the updated location.
@@ -149,7 +153,11 @@ class Player extends Character {
 				} else if (newPos[0] < 0) {
 					saveMapItems(this.mapX+","+this.mapY);
 					this.mapX--;
-					spawnGameObjects(this.mapX+","+this.mapY);
+					if(isInitialVisit(this.mapX+","+this.mapY)) {
+						spawnGameObjects(this.mapX+","+this.mapY, true);
+					} else {
+						spawnGameObjects(this.mapX+","+this.mapY);
+					}
 					loadMapItems(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(WIDTH-1, newPos[1]);
 					// Draw the character symbol at the updated location.

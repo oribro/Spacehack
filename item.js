@@ -129,7 +129,7 @@ class Item {
 
 	/* Returns a string representation of the item similar to ITEMS values */
 	toString() {
-		return `${this.name};${this.type};${this.value};${this.isStackable};${this.lvl};${this.tile}`;
+		return ITEMS[this.name];
 	}
 }
 
@@ -327,7 +327,6 @@ function setItemsOntoCell(cell, itemsArr) {
 			tileOnTop.setAttribute("item", item.toString());
 			// Save item in map items
 			items[cell] = item.toString();
-			console.log(items);
 		}
 	)
 }
@@ -498,7 +497,7 @@ function loadMapItems(map) {
 		// For each item check if already spawned, if not - spawn it.
 		for(var itemCell in items) {
 			if(document.getElementById(itemCell.replace("c", "o")) == null) {
-				spawnItem(itemCell, items[itemCell].split(";")[TILE_SLOT], items[itemCell]);
+				spawnItem(itemCell, eval(items[itemCell].split(";")[TILE_SLOT]), items[itemCell]);
 			}
 		}
 	}

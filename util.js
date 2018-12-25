@@ -397,3 +397,11 @@ function range(start, end) {
   	(_, idx) => start + idx
   );
 }
+
+/* Uses the map's mapItems key to check if the map was visited before. */
+function isInitialVisit(map) {
+	if(mapItems[map] === undefined) {
+		return true;
+	}
+	return false;
+}

@@ -29,7 +29,7 @@ var fireSound = new sound(FIRE_SOUND);
 window.onload = () => {
 
 	// Create the board and fill environment.
-	spawnGameObjects("0,0");
+	spawnGameObjects("0,0", true);
 
 	// Print first text to log.
 	printToLog(STRINGS[EVENT.WAKEUP]);
@@ -58,9 +58,10 @@ window.onload = () => {
 
 /* Draws a map on the game board according to the map parameter.
  * Map: string. formatted "x,y" where x represents the horizontal location and y the vertical location.
- * e.g.: "0,0" is the starting map, so "1,0" is the map to the right. "0,1" is the map below. 
+ * e.g.: "0,0" is the starting map, so "1,0" is the map to the right. "0,1" is the map below.
+ * Initial: boolean. optional. if true spawns all first spawn items. otherwise they will be loaded from items list.
  */
-function spawnGameObjects(map) {
+function spawnGameObjects(map, initial) {
 	var i, j, biDigI, biDigJ;
 	// Delete and recreate the game-board DOM element.
 	var board = document.getElementById("game-board");
@@ -136,32 +137,34 @@ function spawnGameObjects(map) {
 				true
 			);
 
-			// Item spawn
-			spawnItem(
-				"c1010", 
-				T_COINS, 
-				ITEMS["Coins"]
-			);
-			spawnItem(
-				"c1626", 
-				T_COINS, 
-				ITEMS["Coins"]
-			);
-			spawnItem(
-				"c0729", 
-				T_COINS, 
-				ITEMS["Coins"]
-			);
-			spawnItem(
-				"c1310", 
-				T_FIRSTAID, 
-				ITEMS["FirstAid"]
-			);
-			spawnItem(
-				"c1431",
-				T_BONES,
-				ITEMS["Bones"]
-			);
+			if(initial) {
+				// Item spawn
+				spawnItem(
+					"c1010", 
+					T_COINS, 
+					ITEMS["Coins"]
+				);
+				spawnItem(
+					"c1626", 
+					T_COINS, 
+					ITEMS["Coins"]
+				);
+				spawnItem(
+					"c0729", 
+					T_COINS, 
+					ITEMS["Coins"]
+				);
+				spawnItem(
+					"c1310", 
+					T_FIRSTAID, 
+					ITEMS["FirstAid"]
+				);
+				spawnItem(
+					"c1431",
+					T_BONES,
+					ITEMS["Bones"]
+				);
+			}
 			break;
 		
 		// Map 1,0 (Right of spawn).
@@ -192,8 +195,7 @@ function spawnGameObjects(map) {
 											"c0910", "c0719"
 						  );
 			
-			// Green fruit.
-			spawnItems(T_FRUIT1, ITEMS["Green fruit"], "c0703", "c1202", "c0810", "c1413", "c1018", "c0114");
+			
 			
 			// Red trees.
 			setTilesOnTop(T_TREE2, "false", "c1005", "c0512", "c1209", 
@@ -201,8 +203,12 @@ function spawnGameObjects(map) {
 											"c1215", "c0607", "c0118"
 						  );
 			
-			// Red fruit.
-			spawnItems(T_FRUIT2, ITEMS["Red fruit"], "c0302", "c0707", "c0513", "c1309", "c1214", "c0218");
+			if(initial) {
+				// Green fruit.
+				spawnItems(T_FRUIT1, ITEMS["Green fruit"], "c0703", "c1202", "c0810", "c1413", "c1018", "c0114");
+				// Red fruit.
+				spawnItems(T_FRUIT2, ITEMS["Red fruit"], "c0302", "c0707", "c0513", "c1309", "c1214", "c0218");
+			}
 			
 			break;
 	}
