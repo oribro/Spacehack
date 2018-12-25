@@ -78,9 +78,10 @@ class Character {
 class Player extends Character {
 
 	constructor(x=0, y=0){
+		
 		super(x, y);
 		this.hunger = 100;
- 		this.inventory = [new Item("Ration"),
+		this.inventory = [new Item("Ration"),
 						  new Item("Ration"),
 						  new Item("Std. Mask"),
 						  new Item("Std. Suit")

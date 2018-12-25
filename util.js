@@ -131,8 +131,19 @@ function getEnv(cell) {
 
 /* Prompts the player to press a key */
 function promptContinue(player) {
-	printToLog(CONTINUE_PROMPT);
-	document.body.onkeydown = function(event) {exitShip(player)};
+	// If game is loaded from storage, pass keydown event straight to control.
+	if(localStorage.length != 0) {
+		document.body.onkeydown = function(event) {
+			fireSound.play();
+			control(event, player);
+			// Check if the player is within a reasonable distance from the fire
+			// such that he can still hear it burning.
+			shouldFirePlay(fireSound, player, 5, 7);
+		};
+	} else {
+		printToLog(CONTINUE_PROMPT);
+		document.body.onkeydown = function(event) {exitShip(player)};
+	}
 }
 
 /* Prints string to game log */
@@ -345,6 +356,7 @@ function incrementTurnCounter(player) {
 		}
 	});
 	managePlot(player);
+	saveGame(player);
 }
 
 /*
@@ -397,4 +409,64 @@ function isInitialVisit(map) {
 		return true;
 	}
 	return false;
+}
+
+/* Saves the game state to the localStorage object. */
+function saveGame(player) {
+	localStorage.setItem("turn", turn);
+	localStorage.setItem("log", log);
+	localStorage.setItem("plot", plot);
+	localStorage.setItem("movement", movement);
+	localStorage.setItem("npcs", JSON.stringify(npcs));
+	localStorage.setItem("containers", JSON.stringify(containers));
+	localStorage.setItem("items", JSON.stringify(items));
+	localStorage.setItem("mapItems", JSON.stringify(mapItems));
+	
+	localStorage.setItem("playerX", player.xPos);
+	localStorage.setItem("playerY", player.yPos);
+	localStorage.setItem("playerHp", player.hp);
+	localStorage.setItem("playerInv", JSON.stringify(player.inventory));
+	localStorage.setItem("playerDmg", player.dmg);
+	localStorage.setItem("playerXp", player.xp);
+	localStorage.setItem("playerLvl", player.lvl);
+	localStorage.setItem("playerMapX", player.mapX);
+	localStorage.setItem("playerMapY", player.mapY);
+}
+
+/* Loads the game state from the localStorage object. */
+function loadGame() {
+	if(localStorage.length != 0) {
+		turn = parseInt(localStorage.getItem("turn"));
+		log = localStorage.getItem("log");
+		plot = parseInt(localStorage.getItem("plot"));
+		movement = JSON.parse(localStorage.getItem("movement"));
+		containers = JSON.parse(localStorage.getItem("containers"));
+		items = JSON.parse(localStorage.getItem("items"));
+		mapItems = JSON.parse(localStorage.getItem("mapItems"));
+		if(npcs.length == 0) {
+			npcs = [];
+		} else {
+			npcs = JSON.parse(localStorage.getItem("npcs"));
+		}
+		
+		var player = new Player(localStorage.getItem("playerX"), localStorage.getItem("playerY"));
+		player.xPos = parseInt(localStorage.getItem("playerX"));
+		player.yPos = parseInt(localStorage.getItem("playerY"));
+		player.hp = parseInt(localStorage.getItem("playerHp"));
+		player.dmg = parseInt(localStorage.getItem("playerDmg"));
+		player.xp = parseInt(localStorage.getItem("playerXp"));
+		player.lvl = parseInt(localStorage.getItem("playerLvl"));
+		player.mapX = parseInt(localStorage.getItem("playerMapX"));
+		player.mapY = parseInt(localStorage.getItem("playerMapY"));
+		
+		var restoredInv = JSON.parse(localStorage.getItem("playerInv"));
+		for(i = 0; i < restoredInv.length; i++) {
+			var restoredVal = restoredInv[i].itemValue;
+			restoredInv[i] = new Item(restoredInv[i].itemName);
+			restoredInv[i].value = restoredVal;
+		}
+		player.setInventory(restoredInv);
+		console.log(items);
+		return player;
+	}
 }

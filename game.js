@@ -27,33 +27,54 @@ var fireSound = new sound(FIRE_SOUND);
 * Game setup
 */
 window.onload = () => {
-
-	// Create the board and fill environment.
-	spawnGameObjects("0,0", true);
-
-	// Print first text to log.
-	printToLog(STRINGS[EVENT.WAKEUP]);
-
-	// Create a new player character.
-	// Places the character at the top left.
-	var player = new Player(6, 5);
 	
-	/* Uncomment this for testing */
-	//npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
+	var player;
 	
-	document.getElementById("turn-value").innerHTML = turn;
-	document.getElementById("hp-value").innerHTML = SPAWN_HP;
-	document.getElementById("dmg-value").innerHTML = SPAWN_DMG;
-	document.getElementById("xp-value").innerHTML = SPAWN_XP;
-	document.getElementById("lvl-value").innerHTML = SPAWN_LVL;
-	document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
+	if(localStorage.length != 0) {
+		player = loadGame();	
 
-	/* Uncomment this for testing */
-	//godmode(player);
-	//plot = 2;
+		// Create the board and fill environment.
+		spawnGameObjects("0,0", isInitialVisit(player.mapX+","+player.mapY));
+		
+		printToLog(log);
+		printToLog("Game restored.");
+				
+		const playerPos = [player.xPos, player.yPos];
+		player.draw(...playerPos);
+		
+		document.getElementById("turn-value").innerHTML = turn;
+		document.getElementById("hp-value").innerHTML = player.health;
+		document.getElementById("dmg-value").innerHTML = player.dmg;
+		document.getElementById("xp-value").innerHTML = player.xp;
+		document.getElementById("lvl-value").innerHTML = player.lvl;
+		document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
+	} else {
+		// Create the board and fill environment.
+		spawnGameObjects("0,0", true);
+
+		// Print first text to log.
+		printToLog(STRINGS[EVENT.WAKEUP]);
+
+		// Create a new player character.
+		// Places the character at the top left.
+		player = new Player(6, 5);
+		
+		/* Uncomment this for testing */
+		//npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
+		
+		document.getElementById("turn-value").innerHTML = turn;
+		document.getElementById("hp-value").innerHTML = SPAWN_HP;
+		document.getElementById("dmg-value").innerHTML = SPAWN_DMG;
+		document.getElementById("xp-value").innerHTML = SPAWN_XP;
+		document.getElementById("lvl-value").innerHTML = SPAWN_LVL;
+		document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
+
+		/* Uncomment this for testing */
+		//godmode(player);
+		//plot = 2;
 	
+	}
 	promptContinue(player);
-	
 }
 
 /* Draws a map on the game board according to the map parameter.
