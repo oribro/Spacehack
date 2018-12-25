@@ -134,7 +134,9 @@ function promptContinue(player) {
 	// If game is loaded from storage, pass keydown event straight to control.
 	if(localStorage.length != 0) {
 		document.body.onkeydown = function(event) {
-			fireSound.play();
+			if(plot <= 1) {
+				fireSound.play();
+			}
 			control(event, player);
 			// Check if the player is within a reasonable distance from the fire
 			// such that he can still hear it burning.
@@ -436,6 +438,12 @@ function saveGame(player) {
 /* Loads the game state from the localStorage object. */
 function loadGame() {
 	if(localStorage.length != 0) {
+		// If player died, force a new game.
+		if(parseInt(localStorage.getItem("playerHp")) <= 0) {
+			newGame();
+			return;
+		}
+		
 		turn = parseInt(localStorage.getItem("turn"));
 		log = localStorage.getItem("log");
 		plot = parseInt(localStorage.getItem("plot"));
@@ -466,7 +474,7 @@ function loadGame() {
 			restoredInv[i].value = restoredVal;
 		}
 		player.setInventory(restoredInv);
-		console.log(items);
+
 		return player;
 	}
 }

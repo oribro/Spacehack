@@ -34,7 +34,7 @@ window.onload = () => {
 		player = loadGame();	
 
 		// Create the board and fill environment.
-		spawnGameObjects("0,0", isInitialVisit(player.mapX+","+player.mapY));
+		spawnGameObjects(player.mapX+","+player.mapY, isInitialVisit(player.mapX+","+player.mapY));
 		
 		printToLog(log);
 		printToLog("Game restored.");
