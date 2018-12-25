@@ -49,8 +49,8 @@ window.onload = () => {
 	document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
 
 	/* Uncomment this for testing */
-	godmode(player);
-	plot = 2;
+	//godmode(player);
+	//plot = 2;
 	
 	promptContinue(player);
 	
@@ -207,7 +207,7 @@ function spawnGameObjects(map, initial) {
 				if(i <= 4) {
 					setTilesOnTop(T_WATER1, "false", "c"+biDigY+"25", "c"+biDigY+"26", 
 													 "c"+biDigY+"27", "c"+biDigY+"28", "c"+biDigY+"29");
-				} else if(i <=8) {
+				} else if(i <= 8) {
 					setTilesOnTop(T_WATER1, "false", "c"+biDigY+"25", "c"+biDigY+"26", 
 													 "c"+biDigY+"27", "c"+biDigY+"28", "c"+biDigY+"29", "c"+biDigY+"30");
 				} else {
@@ -241,4 +241,30 @@ function exitShip(player) {
 		shouldFirePlay(fireSound, player, 5, 7);
 	};
 	
+}
+
+/* Manages plot events */
+function managePlot(player) {
+	switch(plot) {
+		case 1:
+			plot++;
+			npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
+			/*var dogfishSnarl = new sound(DOGFISH_SNARL);
+			dogfishSnarl.loop(false);
+			dogfishSnarl.play();*/
+			createSound(DOGFISH_SNARL, false);
+			printToLog("\"What was that?!\"");
+			break;
+		case 2:
+			if(player.mapX == 1 && player.mapY == 0 && player.xPos == 19) {
+				plot++;
+				npcs.push(new NPC(24, 1, "Dogfish", "enemy"));
+				npcs.push(new NPC(24, 8, "Dogfish", "enemy"));
+				npcs.push(new NPC(25, 15, "Dogfish", "enemy"));
+				createSound(WATER_SPLASH, false);
+				createSound(DOGFISH_SNARL, false);
+				printToLog("\"Not this thing again...\"");
+			}
+			break;
+	}
 }

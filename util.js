@@ -344,14 +344,7 @@ function incrementTurnCounter(player) {
 			return;
 		}
 	});
-	if(plot == 1) {
-		plot++;
-		npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
-		var dogfishSnarl = new sound(DOGFISH_SNARL);
-		dogfishSnarl.loop(false);
-		dogfishSnarl.play();
-		printToLog("\"What was that?!\"");
-	}
+	managePlot(player);
 }
 
 /*
