@@ -43,6 +43,8 @@ const STRINGS = {
 	
 	"examine_beach": "\"Ok so there's water on this planet, maybe life too?\"",
 	
+	"examine_water": "\"That looks deep.\"",
+	
 	"examine_ground": "\"The ground here is rocky.\"",
 	
 	"examine_tree1": "\"It's a tree that has green fruit.\"",

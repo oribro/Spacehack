@@ -49,8 +49,8 @@ window.onload = () => {
 	document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
 
 	/* Uncomment this for testing */
-	//godmode(player);
-	//plot = 2;
+	godmode(player);
+	plot = 2;
 	
 	promptContinue(player);
 	
@@ -195,13 +195,26 @@ function spawnGameObjects(map, initial) {
 											"c0910", "c0719"
 						  );
 			
-			
-			
 			// Red trees.
 			setTilesOnTop(T_TREE2, "false", "c1005", "c0512", "c1209", 
 											"c0914", "c1501", "c0303", 
 											"c1215", "c0607", "c0118"
 						  );
+						  
+			// Lake.
+			for(i = 0; i < HEIGHT; i++) {
+				let biDigY = getTwoDigits(i);
+				if(i <= 4) {
+					setTilesOnTop(T_WATER1, "false", "c"+biDigY+"25", "c"+biDigY+"26", 
+													 "c"+biDigY+"27", "c"+biDigY+"28", "c"+biDigY+"29");
+				} else if(i <=8) {
+					setTilesOnTop(T_WATER1, "false", "c"+biDigY+"25", "c"+biDigY+"26", 
+													 "c"+biDigY+"27", "c"+biDigY+"28", "c"+biDigY+"29", "c"+biDigY+"30");
+				} else {
+					setTilesOnTop(T_WATER1, "false", "c"+biDigY+"26", "c"+biDigY+"27", 
+													 "c"+biDigY+"28", "c"+biDigY+"29", "c"+biDigY+"30");
+				}
+			}
 			
 			if(initial) {
 				// Green fruit.

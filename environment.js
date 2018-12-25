@@ -45,6 +45,14 @@ const T_WATER1 = ASSETS + TILESET + "water1.png";
 const T_FIRE1 = ASSETS + TILESET + "fire1.png";
 const T_TREE1 = ASSETS + TILESET + "tree1.png";
 const T_TREE2 = ASSETS + TILESET + "tree2.png";
+const T_LAKE1 = ASSETS + TILESET + "lake1.png";
+const T_LAKE2 = ASSETS + TILESET + "lake2.png";
+const T_LAKE3 = ASSETS + TILESET + "lake3.png";
+const T_LAKE4 = ASSETS + TILESET + "lake4.png";
+const T_LAKE5 = ASSETS + TILESET + "lake5.png";
+const T_LAKE6 = ASSETS + TILESET + "lake6.png";
+const T_LAKE7 = ASSETS + TILESET + "lake7.png";
+const T_LAKE8 = ASSETS + TILESET + "lake8.png";
 
 /* Item tiles */
 const T_COINS = ASSETS + TILESET + "coins.png";
@@ -120,8 +128,9 @@ const ENV = {
 		"dogfish_l": `T_DOGFISH;${STRINGS["examine_dogfish_l"]}`,
 		
 		"tree1": `T_TREE1;${STRINGS["examine_tree1"]}`,
-		"tree2": `T_TREE2;${STRINGS["examine_tree2"]}`
+		"tree2": `T_TREE2;${STRINGS["examine_tree2"]}`,
 		
+		"water1": `T_WATER1;${STRINGS["examine_water"]}`
 }
 
 
