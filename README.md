@@ -7,6 +7,6 @@ The main objectives of the game is to find your partner, fix the ship and return
 
 Main contributors:
 
-	[Yuval Razieli](https://github.com/razieli)
+	Yuval Razieli
 	
-	[Ori Broda](https://github.com/oribro/)
+	Ori Broda
