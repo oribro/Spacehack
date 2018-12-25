@@ -285,30 +285,24 @@ a:active {
 
 footer {
 	position: fixed;
-	padding: 10px;
-	font-size: 1.2em;
 	bottom: 0;
+	padding: 10px;
+	
+	font-size: 1.2em;
+	
 	width: 100%;
 	width: -webkit-fill-available;
 	width: -moz-available;
 }
 
-#toggle-controls {
-	display: inline-block;
-	float: left;
+.footer-links {
 	padding: 10px;
 }
 
-#new-game {
-	display: inline-block;
-	padding: 10px;
-	text-align: center;
-	margin: 0 auto;
-	width: fit-content;
-}
-
-#github-link {
-	display: inline-block;
+.footer-right {
 	float: right;
-	padding: 10px;
+}
+
+.footer-left {
+	float: left;
 }
