@@ -29,8 +29,14 @@ const ITEMS = {
 		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`
 	};
 
-// Object containing containers found in game identified by their unique cell.
+// Object containing containers found in map identified by their unique cell.
 var containers = {};
+
+// Object containing items found in map identified by their unique cell.
+var items = {};
+
+// Object containing items and containers found in map identified by their unique cell.
+var mapItems = {};
 
 /*
  *	Class for game items.
@@ -123,7 +129,7 @@ class Item {
 
 	/* Returns a string representation of the item similar to ITEMS values */
 	toString() {
-		return `${this.name};${this.type};${this.value};${this.isStackable};${this.lvl}`;
+		return `${this.name};${this.type};${this.value};${this.isStackable};${this.lvl};${this.tile}`;
 	}
 }
 
@@ -261,6 +267,9 @@ function spawnItem(cell, tile, item) {
 	setTileOnTop(cell, tile, "false");
 	let tileOnTop = document.getElementById(cell).lastElementChild;
 	tileOnTop.setAttribute("item", item);
+	
+	// Save item in map items
+	items[cell] = item;
 }
 
 /* 'Overloaded' function for spawning several instances of the same item.
@@ -308,14 +317,17 @@ function createItemsFromCell(cell, itemIndices) {
 /* Sets the given item list specified by items on the given cell.
 *	For each item, a string will be injected into a cell's child.
 */
-function setItemsOntoCell(cell, items) {
+function setItemsOntoCell(cell, itemsArr) {
 	let cellElement = document.getElementById(cell);
 
-	items.forEach(
+	itemsArr.forEach(
 		item => {
 			setTileOnTop(cell, item.tile, "false");
 			let tileOnTop = cellElement.lastElementChild;
 			tileOnTop.setAttribute("item", item.toString());
+			// Save item in map items
+			items[cell] = item.toString();
+			console.log(items);
 		}
 	)
 }
@@ -336,6 +348,9 @@ function removeItemsFromCell(cell, itemIndices) {
 		let chosenIndex = itemIndices[i] - 1;
 		cellElement.removeChild(itemElements[chosenIndex]);
 		itemElements.splice(chosenIndex, 1);
+		if(items[cell]) {
+			delete items[cell];
+		}
 	}
 	
 	// No items left to block movement => set the cell as walkable.
@@ -464,4 +479,27 @@ function getItemIndicesFromChoice(choice, method, numItems) {
 	}
 
 	return itemIndices;
+}
+
+/* Saves all the items and containers in a given map and resets the lists */
+function saveMapItems(map) {
+	mapItems[map] = [items, containers];
+	items = {};
+	containers = {};
+}
+
+/* Loads all the items and containers in a given map */
+function loadMapItems(map) {
+	if(mapItems[map] !== undefined) {
+		// Restore map's items and containers lists.
+		items = mapItems[map][0];
+		containers = mapItems[map][1];
+		
+		// For each item check if already spawned, if not - spawn it.
+		for(var itemCell in items) {
+			if(document.getElementById(itemCell.replace("c", "o")) == null) {
+				spawnItem(itemCell, items[itemCell].split(";")[TILE_SLOT], items[itemCell]);
+			}
+		}
+	}
 }

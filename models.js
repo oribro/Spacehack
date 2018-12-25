@@ -133,8 +133,10 @@ class Player extends Character {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
 				if(newPos[0] >= WIDTH) {
+					saveMapItems(this.mapX+","+this.mapY);
 					this.mapX++;
 					spawnGameObjects(this.mapX+","+this.mapY);
+					loadMapItems(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(0, newPos[1]);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
@@ -145,8 +147,10 @@ class Player extends Character {
 					this.xp += XP_TURN;
 					document.getElementById("xp-value").innerHTML = this.xp;
 				} else if (newPos[0] < 0) {
+					saveMapItems(this.mapX+","+this.mapY);
 					this.mapX--;
 					spawnGameObjects(this.mapX+","+this.mapY);
+					loadMapItems(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(WIDTH-1, newPos[1]);
 					// Draw the character symbol at the updated location.
 					this.draw(...newBiDig);
