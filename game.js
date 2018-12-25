@@ -113,16 +113,6 @@ function spawnGameObjects(map, initial) {
 			setTileOnTop("c0705", T_SHIP6, "false");
 			setTileOnTop("c0805", T_SHIP7, "false");
 
-			// Fire on ship.
-			["c0604", "c0705", "c0805"].forEach(
-				cell => {
-					setTileOnTop(cell, T_FIRE1, "false");
-					//setEnv(cell, T_FIRE1);
-					// Important: assuming fire is on top of the other tile layers.
-					// We use here the fact that setTileOnTop sets the fire as the last child element.
-					document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
-				});
-
 			// Ship debris.
 			setTilesOnTop(T_DEBRIS1, "false", "c0318", "c1205", "c1018");
 			setTilesOnTop(T_DEBRIS2, "false", "c0512", "c1619", "c1704");
@@ -137,7 +127,17 @@ function spawnGameObjects(map, initial) {
 				true
 			);
 
+			// These happen only on the first time the map is visited.
 			if(initial) {
+				// Fire on ship.
+				["c0604", "c0705", "c0805"].forEach(
+					cell => {
+						setTileOnTop(cell, T_FIRE1, "false");
+						// Important: assuming fire is on top of the other tile layers.
+						// We use here the fact that setTileOnTop sets the fire as the last child element.
+						document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
+					});
+					
 				// Item spawn
 				spawnItem(
 					"c1010", 
