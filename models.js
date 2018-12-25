@@ -708,6 +708,7 @@ class Player extends Character {
 			document.getElementById("lvl-value").innerHTML = this.lvl;
 			document.getElementById("dmg-value").innerHTML = this.dmg;
 			repopInv(this);
+			printToLog("You are now level " + this.lvl + ".");
 		}
 		
 	}
