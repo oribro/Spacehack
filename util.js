@@ -470,3 +470,9 @@ function loadGame() {
 		return player;
 	}
 }
+
+/* Clears the local storage and forces a new game. */
+function newGame() {
+	localStorage.clear();
+	location.reload();
+}
