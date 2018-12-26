@@ -130,7 +130,7 @@ class Player extends Character {
 		
 		// If out of bounds change map
 		if(!inBounds("c" + biDigY + biDigX)) {
-			if(plot < 2) {
+			if(plot < PLOT.RIVER_AMBUSH) {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
 				if(newPos[0] >= WIDTH) {

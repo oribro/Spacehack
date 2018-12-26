@@ -14,14 +14,21 @@ var turn = 0;
 /* Game log string */
 var log = "";
 
-/* Plot advancement counter */
-var plot = 0;
-
 /* Enable/disable movement */
 var movement = true;
 
 /* Sound of fire burning */
 var fireSound = new sound(FIRE_SOUND);
+
+/* Plot constants */
+const PLOT = {
+	INTRO: 0,
+	DOGFISH: 1,
+	RIVER_AMBUSH: 2,
+}
+
+/* Plot advancement counter */
+var plot = PLOT.INTRO;
 
 /*
 * Game setup
@@ -268,7 +275,7 @@ function exitShip(player) {
 /* Manages plot events */
 function managePlot(player) {
 	switch(plot) {
-		case 1:
+		case PLOT.DOGFISH:
 			plot++;
 			npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
 			/*var dogfishSnarl = new sound(DOGFISH_SNARL);
@@ -277,7 +284,7 @@ function managePlot(player) {
 			createSound(DOGFISH_SNARL, false);
 			printToLog("\"What was that?!\"");
 			break;
-		case 2:
+		case PLOT.RIVER_AMBUSH:
 			if(player.mapX == 1 && player.mapY == 0 && player.xPos == 19) {
 				plot++;
 				npcs.push(new NPC(24, 1, "Dogfish", "enemy"));

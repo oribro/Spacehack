@@ -134,7 +134,7 @@ function promptContinue(player) {
 	// If game is loaded from storage, pass keydown event straight to control.
 	if(localStorage.length != 0) {
 		document.body.onkeydown = function(event) {
-			if(plot <= 1) {
+			if(plot <= PLOT.DOGFISH) {
 				fireSound.play();
 			}
 			control(event, player);
