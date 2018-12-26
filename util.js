@@ -415,6 +415,7 @@ function isInitialVisit(map) {
 
 /* Saves the game state to the localStorage object. */
 function saveGame(player) {
+	// Save main game variables.
 	localStorage.setItem("turn", turn);
 	localStorage.setItem("log", log);
 	localStorage.setItem("plot", plot);
@@ -422,8 +423,12 @@ function saveGame(player) {
 	localStorage.setItem("npcs", JSON.stringify(npcs));
 	localStorage.setItem("containers", JSON.stringify(containers));
 	localStorage.setItem("items", JSON.stringify(items));
+
+	// Save current map items.
+	saveMapItems(player.mapX+","+player.mapY);
 	localStorage.setItem("mapItems", JSON.stringify(mapItems));
 	
+	// Save player properties.
 	localStorage.setItem("playerX", player.xPos);
 	localStorage.setItem("playerY", player.yPos);
 	localStorage.setItem("playerHp", player.hp);
@@ -444,19 +449,20 @@ function loadGame() {
 			return;
 		}
 		
+		// Load main game variables.
 		turn = parseInt(localStorage.getItem("turn"));
 		log = localStorage.getItem("log");
 		plot = parseInt(localStorage.getItem("plot"));
 		movement = JSON.parse(localStorage.getItem("movement"));
 		containers = JSON.parse(localStorage.getItem("containers"));
 		items = JSON.parse(localStorage.getItem("items"));
-		mapItems = JSON.parse(localStorage.getItem("mapItems"));
 		if(npcs.length == 0) {
 			npcs = [];
 		} else {
 			npcs = JSON.parse(localStorage.getItem("npcs"));
 		}
 		
+		// Load player properties.
 		var player = new Player(localStorage.getItem("playerX"), localStorage.getItem("playerY"));
 		player.xPos = parseInt(localStorage.getItem("playerX"));
 		player.yPos = parseInt(localStorage.getItem("playerY"));
@@ -467,6 +473,10 @@ function loadGame() {
 		player.mapX = parseInt(localStorage.getItem("playerMapX"));
 		player.mapY = parseInt(localStorage.getItem("playerMapY"));
 		
+		// Load current map items.
+		mapItems = JSON.parse(localStorage.getItem("mapItems"));
+		
+		// Load inventory items.
 		var restoredInv = JSON.parse(localStorage.getItem("playerInv"));
 		for(i = 0; i < restoredInv.length; i++) {
 			var restoredVal = restoredInv[i].itemValue;

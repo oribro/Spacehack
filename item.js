@@ -480,11 +480,15 @@ function getItemIndicesFromChoice(choice, method, numItems) {
 	return itemIndices;
 }
 
-/* Saves all the items and containers in a given map and resets the lists */
-function saveMapItems(map) {
+/* Saves all the items and containers in a given map and resets the lists 
+ * map: string. The string representation of the map, e.g.: "0,0".
+ * reset: optional. if set resets the items and containers lists. */
+function saveMapItems(map, reset) {
 	mapItems[map] = [items, containers];
-	items = {};
-	containers = {};
+	if(reset) {
+		items = {};
+		containers = {};
+	}
 }
 
 /* Loads all the items and containers in a given map */

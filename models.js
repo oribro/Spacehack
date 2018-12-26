@@ -134,7 +134,7 @@ class Player extends Character {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
 				if(newPos[0] >= WIDTH) {
-					saveMapItems(this.mapX+","+this.mapY);
+					saveMapItems(this.mapX+","+this.mapY, true);
 					this.mapX++;
 					if(isInitialVisit(this.mapX+","+this.mapY)) {
 						spawnGameObjects(this.mapX+","+this.mapY, true);
@@ -152,7 +152,7 @@ class Player extends Character {
 					this.xp += XP_TURN;
 					document.getElementById("xp-value").innerHTML = this.xp;
 				} else if (newPos[0] < 0) {
-					saveMapItems(this.mapX+","+this.mapY);
+					saveMapItems(this.mapX+","+this.mapY, true);
 					this.mapX--;
 					if(isInitialVisit(this.mapX+","+this.mapY)) {
 						spawnGameObjects(this.mapX+","+this.mapY, true);

@@ -32,10 +32,11 @@ window.onload = () => {
 	
 	if(localStorage.length != 0) {
 		player = loadGame();	
-
+		
 		// Create the board and fill environment.
 		spawnGameObjects(player.mapX+","+player.mapY, isInitialVisit(player.mapX+","+player.mapY));
-		
+		loadMapItems(player.mapX+","+player.mapY);
+
 		printToLog(log);
 		printToLog("Game restored.");
 				
