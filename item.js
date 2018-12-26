@@ -142,6 +142,7 @@ class Container {
 	constructor(itemList, cell, visible) {
 		this.itemList = itemList;
 		this.cellString = cell;
+		this.visibility = visible;
 		if(visible == true) {
 			setTileOnTop(this.cellString, T_CONTAINER, "false");
 			setEnv(this.cellString, T_CONTAINER);
@@ -497,6 +498,19 @@ function loadMapItems(map) {
 		// Restore map's items and containers lists.
 		items = mapItems[map][0];
 		containers = mapItems[map][1];
+		
+		// Recast containers and items inside.
+		for(i in containers) {
+			containers[i] = new Container(containers[i].itemList, containers[i].cellString, containers[i].visibility);
+			
+			for(j in containers[i].content) {
+				var restoredVal = containers[i].content[j].itemValue;
+				var restoredEquipStatus = containers[i].content[j].equipped;
+				containers[i].content[j] = new Item(containers[i].content[j].itemName);
+				containers[i].content[j].value = restoredVal;
+				containers[i].content[j].isEquipped = restoredEquipStatus;
+			}
+		}
 		
 		// For each item check if already spawned, if not - spawn it.
 		for(var itemCell in items) {

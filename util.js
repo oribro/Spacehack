@@ -427,7 +427,7 @@ function saveGame(player) {
 	// Save current map items.
 	saveMapItems(player.mapX+","+player.mapY);
 	localStorage.setItem("mapItems", JSON.stringify(mapItems));
-	
+
 	// Save player properties.
 	localStorage.setItem("playerX", player.xPos);
 	localStorage.setItem("playerY", player.yPos);
