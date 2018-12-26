@@ -367,6 +367,7 @@ class Player extends Character {
 							this.setInventory(this.inventory);
 						}
 						repopInv(this);
+						saveGame(this);
 					}
 					return;
 				}
@@ -388,6 +389,7 @@ class Player extends Character {
 					items = createItemsFromCell(cell, itemIndices);
 					this.addItemsToInventory(items);
 					removeItemsFromCell(cell, itemIndices);
+					saveGame(this);
 					return;
 				}
 			}
@@ -421,6 +423,7 @@ class Player extends Character {
 						container.popItem(chosenIndex);
 					}
 					this.addItemsToInventory(items);
+					saveGame(this);
 				}
 
 			}
@@ -520,6 +523,7 @@ class Player extends Character {
 			default:
 				printToLog(STRINGS["not_implemented_err"]);
 		}
+		saveGame(this);
 	}
 	
 	/* Takes an item and equips it 
@@ -546,6 +550,10 @@ class Player extends Character {
 			}
 		}
 		repopInv(this);
+		
+		if(this.mapX !== undefined) {
+			saveGame(this);
+		}
 	}
 	
 	/* Removes an equipped item from player's equipment 
@@ -554,7 +562,7 @@ class Player extends Character {
 	unequip(type) {
 		if(type == true) {
 			var typeNum = this.itemSelection(true);
-			// Ilegal selection. Nothing to do here.
+			// Illegal selection. Nothing to do here.
 			if (!typeNum)
 				return;
 			switch (typeNum) {
@@ -595,6 +603,7 @@ class Player extends Character {
 				}
 			}
 			repopInv(this);
+			saveGame(this);
 		}
 	}
 	
@@ -615,6 +624,7 @@ class Player extends Character {
 		printToLog("You dropped " + item.name + " on the ground.");
 		this.getInventory().splice(itemSel-1, 1);
 		repopInv(this);
+		saveGame(this);
 	}
 	
 	/* Prompts the player for a direction and if there's an NPC in that direction attacks it */

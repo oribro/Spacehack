@@ -480,8 +480,10 @@ function loadGame() {
 		var restoredInv = JSON.parse(localStorage.getItem("playerInv"));
 		for(i = 0; i < restoredInv.length; i++) {
 			var restoredVal = restoredInv[i].itemValue;
+			var restoredEquipStatus = restoredInv[i].equipped;
 			restoredInv[i] = new Item(restoredInv[i].itemName);
 			restoredInv[i].value = restoredVal;
+			restoredInv[i].isEquipped = restoredEquipStatus;
 		}
 		player.setInventory(restoredInv);
 
