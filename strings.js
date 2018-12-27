@@ -79,7 +79,9 @@ const STRINGS = {
 
 	"not_in_range": "The number you entered is not in range of existing item numbers.",
 
-	"pickup_nothing": "There is nothing to pick up here."
+	"pickup_nothing": "There is nothing to pick up here.",
+
+	"poisoned": "Yikes! You have become poisoned and are losing health."
 	
 };
 

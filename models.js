@@ -10,7 +10,14 @@ const XP_MULTIPLIER = 10;
 const NPC_LIST = {
 				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;11;500"
 				 };
-				 
+
+/* Constants for the different statuses the player can be at */
+const PLAYER_STATUS = {
+	"HEALTHY": "Healthy",
+	"POISONED": "Poisoned",
+	"MALNOURISHED": "Malnourished"
+}
+
 var npcs = [];
 
 /*
@@ -96,6 +103,10 @@ class Player extends Character {
 		
 		this.mapX = 0;
 		this.mapY = 0;
+
+		this.pStatus = PLAYER_STATUS.HEALTHY;
+		document.getElementById("status-value").innerHTML = this.pStatus;
+
 	}
 
 	move(event) {
@@ -181,6 +192,8 @@ class Player extends Character {
 			// Draw the character symbol at the updated location.
 			this.draw(...newBiDig);
 			this.getHungrier();
+			// Check for poison
+			this.poisonCheck();
 			// Increment the turn counter.
 			incrementTurnCounter(this);
 			// Increase XP on every turn.
@@ -188,6 +201,15 @@ class Player extends Character {
 			document.getElementById("xp-value").innerHTML = this.xp;
 			// Update the coordinates stat.
 			document.getElementById("coords-value").innerHTML = "(" + this.mapX + "," + this.xPos + " ; " + this.mapY + "," + this.yPos + ")";
+		}
+	}
+
+	poisonCheck() {
+		if (this.pStatus === PLAYER_STATUS.POISONED) {
+			this.health = this.health - 1;
+			document.getElementById("hp-value").innerHTML = this.health;
+			if (this.health === 0)
+				this.die("Poisoned");
 		}
 	}
 
@@ -222,6 +244,8 @@ class Player extends Character {
 		}
 		if(this.hunger == 0) {
 			printToLog(STRINGS[EVENT.HUNGRY3]);
+			this.pStatus = PLAYER_STATUS.MALNOURISHED;
+			document.getElementById("status-value").innerHTML = this.pStatus;
 		}
 		if(this.hunger < 0) {
 			this.health = this.health - 1;
@@ -521,8 +545,15 @@ class Player extends Character {
 		// This is a nasty code duplication right here.
 		switch(item.type) {
 			case "Food":
-				this.incHunger = item.value;
-				printToLog("You eat the " + item.name + ". You feel satiated.");
+				if (item.name === "Red fruit") {
+					this.pStatus = PLAYER_STATUS.POISONED;
+					document.getElementById("status-value").innerHTML = this.pStatus;
+					printToLog(STRINGS["poisoned"]);
+				}
+				else {
+					this.incHunger = item.value;
+					printToLog("You eat the " + item.name + ". You feel satiated.");
+				}
 				this.getInventory().splice(itemSel-1, 1);
 				repopInv(this);
 				break;
@@ -535,6 +566,12 @@ class Player extends Character {
 				// Check for godmode state.
 				if (Number.isFinite(this.hp))
 					this.incHealth = item.value;
+				// Check for poison
+				if (this.pStatus === PLAYER_STATUS.POISONED) {
+					this.pStatus = PLAYER_STATUS.HEALTHY;
+					document.getElementById("status-value").innerHTML = this.pStatus;
+					printToLog("The " + item.name + " cures you of poison.");
+				}
 				printToLog("You use the " + item.name + ". You feel healthier.");
 				this.getInventory().splice(itemSel-1, 1);
 				repopInv(this);
@@ -731,16 +768,27 @@ class Player extends Character {
 	get hungerVal() {
 		return this.hunger;
 	}
+	get status() {
+		return this.pStatus;
+	}
 	set hungerVal(newHunger) {
 		this.hunger = newHunger;
 	}
 	set incHunger(addHunger) {
+		// Check if the player is overcoming malnourishment.
+		if (this.hunger <= 0 && this.hunger + addHunger > 0) {
+			this.pStatus = PLAYER_STATUS.HEALTHY;
+			document.getElementById("status-value").innerHTML = this.pStatus;
+		}
 		this.hunger += addHunger;
 	}
 	// Increase player health without exceeding max possible health.
 	set incHealth(addHp) {
 		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
 		document.getElementById("hp-value").innerHTML = this.hp;
+	}
+	set status(newStatus) {
+		this.pStatus = newStatus;
 	}
 	// Updates the player's level according to the xp.
 	updateLevel() {
