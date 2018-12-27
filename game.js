@@ -158,14 +158,7 @@ function spawnGameObjects(map, initial) {
 
 			// These happen only on the first time the map is visited.
 			if(initial) {
-				// Fire on ship.
-				["c0604", "c0705", "c0805"].forEach(
-					cell => {
-						setTileOnTop(cell, T_FIRE1, "false");
-						// Important: assuming fire is on top of the other tile layers.
-						// We use here the fact that setTileOnTop sets the fire as the last child element.
-						document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
-					});
+				
 					
 				// Item spawn
 				spawnItem(
@@ -194,6 +187,19 @@ function spawnGameObjects(map, initial) {
 					ITEMS["Bones"]
 				);
 			}
+			
+			// Draw fire on ship only if it hadn't been put out yet.
+			if(plot <= PLOT.DOGFISH) {
+				// Fire on ship.
+				["c0604", "c0705", "c0805"].forEach(
+					cell => {
+						setTileOnTop(cell, T_FIRE1, "false");
+						// Important: assuming fire is on top of the other tile layers.
+						// We use here the fact that setTileOnTop sets the fire as the last child element.
+						document.getElementById(cell).lastElementChild.setAttribute("class", "fire");
+					});
+			}
+			
 			break;
 		
 		// Map 1,0 (Right of spawn).
@@ -276,6 +282,7 @@ function exitShip(player) {
 function managePlot(player) {
 	switch(plot) {
 		case PLOT.DOGFISH:
+			fireSound.stop();
 			plot++;
 			npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
 			/*var dogfishSnarl = new sound(DOGFISH_SNARL);
