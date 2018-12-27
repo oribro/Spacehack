@@ -420,6 +420,7 @@ function saveGame(player) {
 	localStorage.setItem("log", log);
 	localStorage.setItem("plot", plot);
 	localStorage.setItem("movement", movement);
+	localStorage.setItem("currMap", currMap);
 	localStorage.setItem("npcs", JSON.stringify(npcs));
 	localStorage.setItem("containers", JSON.stringify(containers));
 	localStorage.setItem("items", JSON.stringify(items));
@@ -457,6 +458,7 @@ function loadGame(afterGameDraw) {
 			log = localStorage.getItem("log");
 			plot = parseInt(localStorage.getItem("plot"));
 			movement = JSON.parse(localStorage.getItem("movement"));
+			currMap = localStorage.getItem("currMap");
 			containers = JSON.parse(localStorage.getItem("containers"));
 			items = JSON.parse(localStorage.getItem("items"));
 			
@@ -496,6 +498,7 @@ function loadGame(afterGameDraw) {
 					var hp = npcs[i].hp;
 					npcs[i] = new NPC(npcs[i].x, npcs[i].y, npcs[i].type, npcs[i].friendStatus);
 					npcs[i].health = hp;
+					npcs[i].currMap = currMap;
 				}
 			}
 		}

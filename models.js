@@ -136,6 +136,7 @@ class Player extends Character {
 				if(newPos[0] >= WIDTH) {
 					saveMapItems(this.mapX+","+this.mapY, true);
 					this.mapX++;
+					currMap = this.mapX+","+this.mapY;
 					if(isInitialVisit(this.mapX+","+this.mapY)) {
 						spawnGameObjects(this.mapX+","+this.mapY, true);
 					} else {
@@ -154,6 +155,7 @@ class Player extends Character {
 				} else if (newPos[0] < 0) {
 					saveMapItems(this.mapX+","+this.mapY, true);
 					this.mapX--;
+					currMap = this.mapX+","+this.mapY;
 					if(isInitialVisit(this.mapX+","+this.mapY)) {
 						spawnGameObjects(this.mapX+","+this.mapY, true);
 					} else {
@@ -750,6 +752,7 @@ class NPC extends Character{
 		// Item list dropped when the NPC gets killed.
 		this.dropLi = [new Item("Meat"), new Item("Bones")];
 		this.draw(x, y);
+		this.currMap = currMap;
 	}
 	
 	get getXpBonus() {
@@ -781,13 +784,60 @@ class NPC extends Character{
 		let xDist = Math.abs(player.xPos - this.x);
 		let yDist = Math.abs(player.yPos - this.y);
 		let xDest, yDest;
+		
+		if(player.mapX+","+player.mapY != this.currMap) {
+			let currMapX = this.currMap.split(",")[0];
+			let currMapY = this.currMap.split(",")[1];
+			// The map distance between the player and the NPC.
+			let mapXOffset = player.mapX - currMapX;
+			let mapYOffset = player.mapY - currMapY;
+			let mapOffset = Math.abs(mapXOffset + mapYOffset);
+
+			// If the map distance is 1 follow player to his map.
+			if(mapOffset == 1) {
+				// Check the direction to go.
+				if(Math.abs(mapXOffset) == 1) {
+					xDest = this.x + mapXOffset;
+					yDest = this.y;
+				} else if(Math.abs(mapYOffset) == 1) {
+					xDest = this.x;
+					yDest = this.y + mapYOffset;
+				}
+				
+				let biDigXDest = getTwoDigits(xDest);
+				let biDigYDest = getTwoDigits(yDest);
+				
+				// Check if still within map. 
+				// If still in bounds - keep moving towards edge without drawing the NPC.
+				// If reached the edge - place the NPC in the player's map in the suitable edge.
+				if(!inBounds("c"+biDigYDest+biDigXDest)) {
+					this.currMap = player.mapX+","+player.mapY;
+					if(xDest >= WIDTH) {
+						xDest = 0;
+					} else if(yDest >= HEIGHT) {
+						yDest = 0;
+					} else if(xDest < 0) {
+						xDest = WIDTH-1;
+					} else if(yDest < 0) {
+						yDest = HEIGHT-1;
+					}
+					this.moveChar(xDest, yDest);
+					this.draw(this.x, this.y);
+					return;
+				} else {
+					this.moveChar(xDest, yDest);
+					return;
+				}
+			}
+		}
+		
 		if(xDist < 2 && yDist < 2) {
 			return;
 		}
 		if(player.xPos > this.x) {
 			this.tile = this.tile.replace(this.type.toLowerCase() + "_l", this.type.toLowerCase() + "_r");
 			if(xDist > yDist) {
-				xDest = this.x +1;
+				xDest = this.x + 1;
 				yDest = this.y;
 			} else {
 				if(player.yPos > this.y) {

@@ -17,6 +17,9 @@ var log = "";
 /* Enable/disable movement */
 var movement = true;
 
+/* Current game map */
+var currMap = "0,0";
+
 /* Sound of fire burning */
 var fireSound = new sound(FIRE_SOUND);
 
