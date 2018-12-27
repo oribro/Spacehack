@@ -440,54 +440,65 @@ function saveGame(player) {
 	localStorage.setItem("playerMapY", player.mapY);
 }
 
-/* Loads the game state from the localStorage object. */
-function loadGame() {
+/* Loads the game state from the localStorage object.
+ * afterGameDraw: optional. used to load objects that require interaction with the DOM elements,
+ * as they are only created after the first time this function runs. */
+function loadGame(afterGameDraw) {
 	if(localStorage.length != 0) {
-		// If player died, force a new game.
-		if(parseInt(localStorage.getItem("playerHp")) <= 0) {
-			newGame();
-			return;
-		}
-		
-		// Load main game variables.
-		turn = parseInt(localStorage.getItem("turn"));
-		log = localStorage.getItem("log");
-		plot = parseInt(localStorage.getItem("plot"));
-		movement = JSON.parse(localStorage.getItem("movement"));
-		containers = JSON.parse(localStorage.getItem("containers"));
-		items = JSON.parse(localStorage.getItem("items"));
-		if(npcs.length == 0) {
-			npcs = [];
-		} else {
-			npcs = JSON.parse(localStorage.getItem("npcs"));
-		}
-		
-		// Load player properties.
-		var player = new Player(localStorage.getItem("playerX"), localStorage.getItem("playerY"));
-		player.xPos = parseInt(localStorage.getItem("playerX"));
-		player.yPos = parseInt(localStorage.getItem("playerY"));
-		player.hp = parseInt(localStorage.getItem("playerHp"));
-		player.dmg = parseInt(localStorage.getItem("playerDmg"));
-		player.xp = parseInt(localStorage.getItem("playerXp"));
-		player.lvl = parseInt(localStorage.getItem("playerLvl"));
-		player.mapX = parseInt(localStorage.getItem("playerMapX"));
-		player.mapY = parseInt(localStorage.getItem("playerMapY"));
-		
-		// Load current map items.
-		mapItems = JSON.parse(localStorage.getItem("mapItems"));
-		
-		// Load inventory items.
-		var restoredInv = JSON.parse(localStorage.getItem("playerInv"));
-		for(i = 0; i < restoredInv.length; i++) {
-			var restoredVal = restoredInv[i].itemValue;
-			var restoredEquipStatus = restoredInv[i].equipped;
-			restoredInv[i] = new Item(restoredInv[i].itemName);
-			restoredInv[i].value = restoredVal;
-			restoredInv[i].isEquipped = restoredEquipStatus;
-		}
-		player.setInventory(restoredInv);
+		if(afterGameDraw === undefined) {
+			// If player died, force a new game.
+			if(parseInt(localStorage.getItem("playerHp")) <= 0) {
+				newGame();
+				return;
+			}
+			
+			// Load main game variables.
+			turn = parseInt(localStorage.getItem("turn"));
+			log = localStorage.getItem("log");
+			plot = parseInt(localStorage.getItem("plot"));
+			movement = JSON.parse(localStorage.getItem("movement"));
+			containers = JSON.parse(localStorage.getItem("containers"));
+			items = JSON.parse(localStorage.getItem("items"));
+			
+			// Load player properties.
+			var player = new Player(localStorage.getItem("playerX"), localStorage.getItem("playerY"));
+			player.xPos = parseInt(localStorage.getItem("playerX"));
+			player.yPos = parseInt(localStorage.getItem("playerY"));
+			player.hp = parseInt(localStorage.getItem("playerHp"));
+			player.dmg = parseInt(localStorage.getItem("playerDmg"));
+			player.xp = parseInt(localStorage.getItem("playerXp"));
+			player.lvl = parseInt(localStorage.getItem("playerLvl"));
+			player.mapX = parseInt(localStorage.getItem("playerMapX"));
+			player.mapY = parseInt(localStorage.getItem("playerMapY"));
+			
+			// Load current map items.
+			mapItems = JSON.parse(localStorage.getItem("mapItems"));
+			
+			// Load inventory items.
+			var restoredInv = JSON.parse(localStorage.getItem("playerInv"));
+			for(i = 0; i < restoredInv.length; i++) {
+				var restoredVal = restoredInv[i].itemValue;
+				var restoredEquipStatus = restoredInv[i].equipped;
+				restoredInv[i] = new Item(restoredInv[i].itemName);
+				restoredInv[i].value = restoredVal;
+				restoredInv[i].isEquipped = restoredEquipStatus;
+			}
+			player.setInventory(restoredInv);
 
-		return player;
+			return player;
+		} else {
+			// Load NPCs
+			npcs = JSON.parse(localStorage.getItem("npcs"));
+			if(npcs.length == 0) {
+				npcs = [];
+			} else {
+				for(i in npcs) {
+					var hp = npcs[i].hp;
+					npcs[i] = new NPC(npcs[i].x, npcs[i].y, npcs[i].type, npcs[i].friendStatus);
+					npcs[i].health = hp;
+				}
+			}
+		}
 	}
 }
 
