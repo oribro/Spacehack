@@ -368,6 +368,7 @@ class Player extends Character {
 							this.inventory = itemStack(this.inventory, item);
 							this.setInventory(this.inventory);
 						}
+						printToLog("You picked up the " + item.name + ".");
 						repopInv(this);
 						saveGame(this);
 					}
@@ -391,6 +392,21 @@ class Player extends Character {
 					items = createItemsFromCell(cell, itemIndices);
 					this.addItemsToInventory(items);
 					removeItemsFromCell(cell, itemIndices);
+					
+					// Print a message to the log with the items that were picked up.
+					var pickupMsg = "You picked up the";
+					var i = 0;
+					do {
+						pickupMsg += " " + items[i].name + ",";
+						i++;
+					} while(i < items.length - 1);	
+					if(i < items.length) {
+						pickupMsg = pickupMsg.slice(0, length-1) + " and " + items[i].name + ".";
+					} else {
+						pickupMsg = pickupMsg.slice(0, length-1) + ".";
+					}
+					printToLog(pickupMsg);
+					
 					saveGame(this);
 					return;
 				}
@@ -425,6 +441,21 @@ class Player extends Character {
 						container.popItem(chosenIndex);
 					}
 					this.addItemsToInventory(items);
+					
+					// Print a message to the log with the items that were picked up.
+					var pickupMsg = "You picked up the";
+					var i = 0;
+					do {
+						pickupMsg += " " + items[i].name + ",";
+						i++;
+					} while(i < items.length - 1);	
+					if(i < items.length) {
+						pickupMsg = pickupMsg.slice(0, length-1) + " and " + items[i].name + ".";
+					} else {
+						pickupMsg = pickupMsg.slice(0, length-1) + ".";
+					}
+					printToLog(pickupMsg);
+					
 					saveGame(this);
 				}
 
