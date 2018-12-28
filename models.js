@@ -6,6 +6,7 @@ const SPAWN_XP = 0;
 const SPAWN_LVL = 1;
 const XP_TURN = 5;
 const XP_MULTIPLIER = 10;
+const POISON_PERIOD = 10;
 
 const NPC_LIST = {
 				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;11;500"
@@ -204,12 +205,21 @@ class Player extends Character {
 		}
 	}
 
+	/* Checks if the player is poisoned and updates the remaining time left until cured */
 	poisonCheck() {
 		if (this.pStatus === PLAYER_STATUS.POISONED) {
+			if (this.poisonCounter === POISON_PERIOD) {
+				document.getElementById("status-value").innerHTML = PLAYER_STATUS.HEALTHY;
+				this.pStatus = PLAYER_STATUS.HEALTHY;
+				this.poisonCounter = 1;
+				printToLog("The poison fades away and you're cured.");
+				return;
+			}
 			this.health = this.health - 1;
 			document.getElementById("hp-value").innerHTML = this.health;
 			if (this.health === 0)
 				this.die("Poisoned");
+			this.poisonCounter++;
 		}
 	}
 
@@ -545,10 +555,12 @@ class Player extends Character {
 		// This is a nasty code duplication right here.
 		switch(item.type) {
 			case "Food":
-				if (item.name === "Red fruit") {
+				// Check if the item is considered poisonous.
+				if (POISONOUS_FOOD.indexOf(item.name) !== -1) {
 					this.pStatus = PLAYER_STATUS.POISONED;
 					document.getElementById("status-value").innerHTML = this.pStatus;
 					printToLog(STRINGS["poisoned"]);
+					this.poisonCounter = 1;
 				}
 				else {
 					this.incHunger = item.value;

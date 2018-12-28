@@ -29,6 +29,12 @@ const ITEMS = {
 		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`
 	};
 
+// List of poisonous food
+const POISONOUS_FOOD = [
+	"Meat",
+	"Red fruit"
+];
+
 // Object containing containers found in map identified by their unique cell.
 var containers = {};
 
