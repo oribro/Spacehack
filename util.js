@@ -413,6 +413,19 @@ function isInitialVisit(map) {
 	return false;
 }
 
+/* Retrieves a list of items for each game cell that contains item(s). */ 
+function getGameItems(itemCells) {
+	let items = {};
+
+	for (let cell of itemCells) {
+		items[cell] = getItemsInCell(cell).map(
+			itemElement => itemElement.getAttribute("item")
+		);
+	}
+	
+	return items;
+}
+
 /* Saves the game state to the localStorage object. */
 function saveGame(player) {
 	// Save main game variables.
@@ -423,6 +436,7 @@ function saveGame(player) {
 	localStorage.setItem("currMap", currMap);
 	localStorage.setItem("npcs", JSON.stringify(npcs));
 	localStorage.setItem("containers", JSON.stringify(containers));
+	items = getGameItems(itemCells);
 	localStorage.setItem("items", JSON.stringify(items));
 
 	// Save current map items.

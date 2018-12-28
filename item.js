@@ -38,8 +38,8 @@ const POISONOUS_FOOD = [
 // Object containing containers found in map identified by their unique cell.
 var containers = {};
 
-// Object containing items found in map identified by their unique cell.
-var items = {};
+// Set of the game cells the contain at least one item. Set ensures no duplicate cells.
+var itemCells = new Set();
 
 // Object containing items and containers found in map identified by their unique cell.
 var mapItems = {};
@@ -275,8 +275,8 @@ function spawnItem(cell, tile, item) {
 	let tileOnTop = document.getElementById(cell).lastElementChild;
 	tileOnTop.setAttribute("item", item);
 	
-	// Save item in map items
-	items[cell] = item;
+	// Mark this cell as contains item(s).
+	itemCells.add(cell);
 }
 
 /* 'Overloaded' function for spawning several instances of the same item.
@@ -332,10 +332,11 @@ function setItemsOntoCell(cell, itemsArr) {
 			setTileOnTop(cell, item.tile, "false");
 			let tileOnTop = cellElement.lastElementChild;
 			tileOnTop.setAttribute("item", item.toString());
-			// Save item in map items
-			items[cell] = item.toString();
 		}
 	)
+
+	// Mark this cell as contains item(s).
+	itemCells.add(cell);
 }
 
 /* Removes items from the given cell according to the given item indices 
@@ -354,15 +355,14 @@ function removeItemsFromCell(cell, itemIndices) {
 		let chosenIndex = itemIndices[i] - 1;
 		cellElement.removeChild(itemElements[chosenIndex]);
 		itemElements.splice(chosenIndex, 1);
-		if(items[cell]) {
-			delete items[cell];
-		}
 	}
 	
 	// No items left to block movement => set the cell as walkable.
 	if (itemElements.length === 0) {
 		cellElement.setAttribute("walkable", "true");
 		setEnv(cell, cellElement.firstElementChild.getAttribute("src"));
+		// The cell no longer contains items so we don't save it.
+		itemCells.delete(cell);
 	}
 }
 
@@ -521,7 +521,14 @@ function loadMapItems(map) {
 		// For each item check if already spawned, if not - spawn it.
 		for(var itemCell in items) {
 			if(document.getElementById(itemCell.replace("c", "o")) == null) {
-				spawnItem(itemCell, eval(items[itemCell].split(";")[TILE_SLOT]), items[itemCell]);
+				cellItems = items[itemCell].map(
+					itemString => {
+						const itemProperties = itemString.split(";");
+						let itemName = itemProperties[NAME_SLOT];
+						return new Item(itemName);
+					}
+				)
+				setItemsOntoCell(itemCell, cellItems);
 			}
 		}
 	}
