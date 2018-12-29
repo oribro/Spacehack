@@ -568,6 +568,7 @@ class Player extends Character {
 				}
 				this.getInventory().splice(itemSel-1, 1);
 				repopInv(this);
+				createSound(CHEWING, false);
 				break;
 			case "Health":
 				// Check if the first aid is needed.
@@ -584,6 +585,7 @@ class Player extends Character {
 					document.getElementById("status-value").innerHTML = this.pStatus;
 					printToLog("The " + item.name + " cures you of poison.");
 				}
+				createSound(RELIEF, false);
 				printToLog("You use the " + item.name + ". You feel healthier.");
 				this.getInventory().splice(itemSel-1, 1);
 				repopInv(this);

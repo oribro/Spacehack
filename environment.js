@@ -91,8 +91,11 @@ const FIRE_SOUND = ASSETS + SOUNDS + "fire.mp3";
 
 /* Item sounds */
 const WATER_SPLASH = ASSETS + SOUNDS + "water-pouring.wav";
+const BUCKET_DIP = ASSETS + SOUNDS + "bucket-dip.mp3";
 const EQUIP_WEAPON = ASSETS + SOUNDS + "equip_weapon.m4a";
 const EQUIP_CLOTHING = ASSETS + SOUNDS + "equip_clothing.wav";
+const CHEWING = ASSETS + SOUNDS + "chewing.wav";
+const RELIEF = ASSETS + SOUNDS + "relief.wav";
 
 /* Other sounds */
 const SAD_TROMBONE = ASSETS + SOUNDS + "sad-trombone.wav";

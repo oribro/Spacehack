@@ -208,6 +208,7 @@ function utilItem(item, player, direction) {
 					printToLog("You fill the bucket with water.");
 					item.value = "Water";
 					repopInv(player);
+					createSound(BUCKET_DIP, false);
 				} else if(env == "beach1" && item.value != "Empty") {
 					printToLog("\"But my bucket is already full!\"");
 				} else if(env != "beach1" && env != "fire1" && item.value != "Empty") {
