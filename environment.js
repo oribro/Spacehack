@@ -53,6 +53,7 @@ const T_LAKE5 = ASSETS + TILESET + "lake5.png";
 const T_LAKE6 = ASSETS + TILESET + "lake6.png";
 const T_LAKE7 = ASSETS + TILESET + "lake7.png";
 const T_LAKE8 = ASSETS + TILESET + "lake8.png";
+const T_ROCK = ASSETS + TILESET + "rock.png";
 
 /* Item tiles */
 const T_COINS = ASSETS + TILESET + "coins.png";
@@ -65,6 +66,9 @@ const T_STD_MASK = ASSETS + TILESET + "std_mask.png";
 const T_STD_SUIT = ASSETS + TILESET + "std_suit.png";
 const T_FRUIT1 = ASSETS + TILESET + "fruit1.png";
 const T_FRUIT2 = ASSETS + TILESET + "fruit2.png";
+const T_AXE = ASSETS + TILESET + "axe.png";
+const T_PICKAXE = ASSETS + TILESET + "pickaxe.png";
+const T_HAMMER = ASSETS + TILESET + "hammer.png";
 
 
 /*** Game sounds ***/
