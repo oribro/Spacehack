@@ -30,10 +30,22 @@ const STRINGS = {
 	"examine_firstaid": "\"I can use it to heal my wounds.\"",	
 	
 	"examine_bucket": "\"A standard bucket. I can use it to carry liquids.\"",
+
+	"examine_axe": "\"I can use it to cut trees.\"",
+
+	"examine_pickaxe": "\"It should be good with rocks.\"",
+
+	"examine_hammer": "\"A must-have tool for building things.\"",
 	
 	"examine_meat": "\"Meat from another world, what could go wrong if I eat it?\"",
 	
 	"examine_bones": "\"Bones. Could be useful.\"",
+
+	"examine_wood": "\"The remains of what was once a tree.\"",
+
+	"examine_rock": "\"A very solid material.\"",
+
+	"examine_metal": "\"It's probably not native to this planet. I wonder how it can be of use.\"",
 	
 	"examine_ship_fire": "\"Ship caught fire. I should put it out.\"",
 	

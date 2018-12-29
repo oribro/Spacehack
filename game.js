@@ -85,7 +85,7 @@ window.onload = () => {
 
 		/* Uncomment this for testing */
 		//godmode(player);
-		//plot = 2;
+		plot = 2;
 	
 	}
 	promptContinue(player);
@@ -156,7 +156,10 @@ function spawnGameObjects(map, initial) {
 			containers["c1423"] = new Container([
 				new Item("FirstAid"),
 				new Item("Ration"),
-				new Item("Bucket")
+				new Item("Bucket"),
+				new Item("Axe"),
+				new Item("Pickaxe"),
+				new Item("Hammer")
 			],
 				"c1423",
 				true
@@ -256,6 +259,13 @@ function spawnGameObjects(map, initial) {
 													 "c"+biDigY+"28", "c"+biDigY+"29", "c"+biDigY+"30");
 				}
 			}
+
+			// Rocks.
+			setTilesOnTop(
+				T_BOULDER2, 
+				"false", 
+				"c1725", "c0925", "c0024"			
+			);
 			
 			if(initial) {
 				// Green fruit.

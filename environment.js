@@ -70,7 +70,7 @@ const T_AXE = ASSETS + TILESET + "axe.png";
 const T_PICKAXE = ASSETS + TILESET + "pickaxe.png";
 const T_HAMMER = ASSETS + TILESET + "hammer.png";
 const T_METAL = ASSETS + TILESET + "metal.png";
-const T_LOGS = ASSETS + TILESET + "logs.png";
+const T_WOOD = ASSETS + TILESET + "wood.png";
 
 
 /*** Game sounds ***/

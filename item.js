@@ -26,7 +26,13 @@ const ITEMS = {
 		"Std. Mask": `Std. Mask;Mask;3;false;1;T_STD_MASK`,
 		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`,
 		"Green fruit": `Green fruit;Food;50;true;0;T_FRUIT1`,
-		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`
+		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`,
+		"Wood": `Wood;Resource;1;false;0;T_WOOD`,
+		"Rock": `Rock;Resource;1;false;0;T_ROCK`,
+		"Metal": `Metal;Resource;1;false;0;T_METAL`,
+		"Axe": `Axe;Utility;1;false;0;T_AXE`,
+		"Hammer": `Hammer;Utility;1;false;0;T_HAMMER`,
+		"Pickaxe": `Pickaxe;Utility;1;false;0;T_PICKAXE`
 	};
 
 // List of poisonous food
@@ -190,15 +196,16 @@ var itemHolder;
 
 /* Handles the use of utility items */
 function utilItem(item, player, direction) {
-	switch (item.name) {
-		case "Bucket":
-			if(direction === undefined) {
-				itemHolder = item;
-				promptDirection("utilItem");
-			} else {
-				var cell = player.getCellFromDirection(direction);
-				var cellElement = document.getElementById(cell);
-				var env = cellElement.getAttribute("env");
+	if(direction === undefined) {
+		itemHolder = item;
+		promptDirection("utilItem");
+	} else {
+		var cell = player.getCellFromDirection(direction);
+		var cellElement = document.getElementById(cell);
+		var env = cellElement.getAttribute("env");
+
+		switch (item.name) {
+			case "Bucket":
 				/* Sound of water splashing */
 				var waterSplash = new sound(WATER_SPLASH);
 				// Only one water splash per bucket pour.
@@ -209,13 +216,16 @@ function utilItem(item, player, direction) {
 					item.value = "Water";
 					repopInv(player);
 					createSound(BUCKET_DIP, false);
+					break;
 				} else if(env == "beach1" && item.value != "Empty") {
 					printToLog("\"But my bucket is already full!\"");
+					break;
 				} else if(env != "beach1" && env != "fire1" && item.value != "Empty") {
 					printToLog("You pour all the " + item.value.toLowerCase() + " on the ground. Bucket is now empty.");
 					waterSplash.play();
 					item.value = "Empty";
 					repopInv(player);
+					break;
 				} else if(env == "fire1" && item.value == "Water") {
 					printToLog("You pour the water on the fire and it dies out. \"One step closer to getting home.\"");
 					waterSplash.play();
@@ -233,10 +243,36 @@ function utilItem(item, player, direction) {
 					item.value = "Empty";
 					repopInv(player);
 					plot++;
-				} else {
-					printToLog("\"How can I use the bucket with that?\"");
+					break;
 				}
-			}
+
+			case "Axe":
+				if (env === "tree1" || env === "tree2") {
+					printToLog("You swing your axe at the tree and wood falls off.");
+					removeTileOnTop(cell, true);
+					setItemsOntoCell(cell, [new Item("Wood")]);
+					break;
+				}
+
+			case "Pickaxe":
+				if (env === "boulder2") {
+					printToLog("You swing your pickaxe at the boulder and rocks fall off.");
+					removeTileOnTop(cell, true);
+					setItemsOntoCell(cell, [new Item("Rock")]);
+					break;
+				}
+
+			case "Hammer":
+				if (env === "debris1" || env === "debris2") {
+					printToLog("You use the hammer to shape the debris into metal.");
+					removeTileOnTop(cell, true);
+					setItemsOntoCell(cell, [new Item("Metal")]);
+					break;
+				}
+
+			default:
+				printToLog("\"How can I use the " + item.name + " with that?\"");
+		}
 	}
 }
 
