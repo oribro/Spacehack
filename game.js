@@ -262,7 +262,7 @@ function spawnGameObjects(map, initial) {
 
 			// Rocks.
 			setTilesOnTop(
-				T_BOULDER2, 
+				T_ROCK, 
 				"false", 
 				"c1725", "c0925", "c0024"			
 			);

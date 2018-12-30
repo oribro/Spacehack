@@ -28,7 +28,7 @@ const ITEMS = {
 		"Green fruit": `Green fruit;Food;50;true;0;T_FRUIT1`,
 		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`,
 		"Wood": `Wood;Resource;1;false;0;T_WOOD`,
-		"Rock": `Rock;Resource;1;false;0;T_ROCK`,
+		"Gravel": `Gravel;Resource;1;false;0;T_GRAVEL`,
 		"Metal": `Metal;Resource;1;false;0;T_METAL`,
 		"Axe": `Axe;Utility;1;false;0;T_AXE`,
 		"Hammer": `Hammer;Utility;1;false;0;T_HAMMER`,
@@ -255,10 +255,10 @@ function utilItem(item, player, direction) {
 				}
 
 			case "Pickaxe":
-				if (env === "boulder2") {
-					printToLog("You swing your pickaxe at the boulder and rocks fall off.");
+				if (env === "rock") {
+					printToLog("You swing your pickaxe at the rock and small stones fall off.");
 					removeTileOnTop(cell, true);
-					setItemsOntoCell(cell, [new Item("Rock")]);
+					setItemsOntoCell(cell, [new Item("Gravel")]);
 					break;
 				}
 
