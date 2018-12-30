@@ -522,19 +522,43 @@ class Player extends Character {
 
 		repopInv(this);
 	}
+	
+	/* Takes item name and value and returns whether this item with at least that value is in the inventory */
+	inInv(itemName, itemValue) {
+		for(i = 0; i < this.inventory.length; i++) {
+			if(this.inventory[i].name == itemName && this.inventory[i].value >= itemValue) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	/* Prompts the player for an item number and returns the input.
-	 * equipment: optional, changes the prompt message to fit selection from equipment list.
+	/* Prompts the player for a selection number and returns the input.
+	 * category: the name of the list from which the player selects.
 	 */
-	itemSelection(equipment) {
-		if(equipment) {
-			var itemSel = parseInt(prompt("Choose type number from the equipment list:"), 10);
-		} else {
-			var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
+	itemSelection(category) {
+		var listLength;
+		switch(category) {
+			case "inventory":
+				var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
+				listLength = this.getInventory().length;
+				break;
+			case "equipment":
+				var itemSel = parseInt(prompt("Choose type number from the equipment list:"), 10);
+				listLength = 3;
+				break;
+			case "parts":
+				var itemSel = parseInt(prompt("Choose part number from the ship parts list:"), 10);
+				listLength = Object.keys(PARTS_REQS).length;
+				break;
+			case "workbench":
+				var itemSel = parseInt(prompt("Choose item number from the workbench list:"), 10);
+				listLength = Object.keys(WORKBENCH_REQS).length;
+				break;
 		}
 		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
-		} else if (itemSel < 1 || itemSel > this.getInventory().length) {
+		} else if (itemSel < 1 || itemSel > listLength) {
 			printToLog(STRINGS["not_in_range"]);
 		} else {
 			return itemSel;
@@ -545,7 +569,7 @@ class Player extends Character {
 	*	drop: boolean. Determines whether to use the item or drop it.
 	*/
 	use() {
-		var itemSel = this.itemSelection();
+		var itemSel = this.itemSelection("inventory");
 		// Ilegal selection. Nothing to do here.
 		if (!itemSel)
 			return;
@@ -615,19 +639,57 @@ class Player extends Character {
 	/* Use acquired resources for constructing beneficial items and spaceship parts */
 	build(direction) {
 		if(direction === undefined) {
-			promptDirection("utilItem");
+			promptDirection("build");
 		} else {
 			var cell = player.getCellFromDirection(direction);
 			var cellElement = document.getElementById(cell);
 			var env = cellElement.getAttribute("env");
-
+			
 			// Build ship parts.
 			if (env && env.search("ship") != -1) {
-
+				// Prompt user for ship part selection.
+				var partSel = this.itemSelection("parts");
+				if(partSel == 0) {
+					printToLog("You cannot build a workbench inside the ship.");
+					return;
+				}
+				var partKey = Object.keys(PARTS_REQS)[partSel];
+				var partReqs = PARTS_REQS[partKey];
+				if(this.inInv("Metal", PARTS_REQS.partReqs.split(";")[0]) && 
+				   this.inInv("Wood", PARTS_REQS.partReqs.split(";")[1]) && 
+				   this.inInv("Gravel", PARTS_REQS.partReqs.split(";")[2])) {
+					// TODO: add part to ship visually and mark it off the parts list.
+				} else {
+					printToLog("You don't have enough resources to build this.");
+					return;
+				}
+			// Build from workbench.
+			} else if(env && env.search("workbench") != -1) {
+				// Prompt user for workbench item selection.
+				var partSel = this.itemSelection("workbench");
+				var partKey = Object.keys(WORKBENCH_REQS)[partSel];
+				var workbenchReqs = WORKBENCH_REQS[workbenchReqs];
+				if(this.inInv("Metal", WORKBENCH_REQS.workbenchReqs.split(";")[0]) && 
+				   this.inInv("Wood", WORKBENCH_REQS.workbenchReqs.split(";")[1]) && 
+				   this.inInv("Gravel", WORKBENCH_REQS.workbenchReqs.split(";")[2])) {
+					// TODO: reduce resources from inventory, create selected item and add to inventory.
+				} else {
+					printToLog("You don't have enough resources to build this.");
+					return;
+				}
+			// Build a workbench.
+			} else if(this.inInv("Metal", PARTS_REQS.WORKBENCH.split(";")[0]) && 
+					  this.inInv("Wood", PARTS_REQS.WORKBENCH.split(";")[1]) && 
+					  this.inInv("Gravel", PARTS_REQS.WORKBENCH.split(";")[2])) {
+				if(confirm(`Do you want to build a workbench there?`)) {
+					// TODO: build workbench there.
+				} else {
+					printToLog("You built nothing.");
+				}
+			} else {
+				printToLog("You don't have enough resources to build.");
 			}
 		}
-
-		// TODO: Add workbench functionality.
 	}
 
 	/* Takes an item and equips it 
@@ -665,7 +727,7 @@ class Player extends Character {
 	 */
 	unequip(type) {
 		if(type == true) {
-			var typeNum = this.itemSelection(true);
+			var typeNum = this.itemSelection("equipment");
 			// Illegal selection. Nothing to do here.
 			if (!typeNum)
 				return;
@@ -713,7 +775,7 @@ class Player extends Character {
 	
 	/* Prompts the player for an item number and drops the item. */
 	drop() {
-		var itemSel = this.itemSelection();
+		var itemSel = this.itemSelection("inventory");
 		// Check for ilegal item selection.
 		if (!itemSel)
 			return;

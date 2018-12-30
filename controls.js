@@ -49,6 +49,8 @@ function passToAction(direction, player) {
 			break;
 		case "pickup":
 			player.pickup(direction);
+		case "build":
+			player.build(direction);
 	}
 }
 

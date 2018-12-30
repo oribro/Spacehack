@@ -31,6 +31,7 @@ const T_DEBRIS1 = ASSETS + TILESET + "debris1.png";
 const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 const T_CONTAINER = ASSETS + TILESET + "container1.png";
 const T_CONTAINER2 = ASSETS + TILESET + "container2.png";
+const T_WORKBENCH = ASSETS + TILESET + "workbench.png";
 
 /* Environment tiles */
 const T_GROUND 	= ASSETS + TILESET + "ground1.png";
