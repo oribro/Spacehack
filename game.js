@@ -85,7 +85,7 @@ window.onload = () => {
 
 		/* Uncomment this for testing */
 		//godmode(player);
-		plot = 2;
+		//plot = 2;
 	
 	}
 	promptContinue(player);
