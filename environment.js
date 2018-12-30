@@ -103,6 +103,9 @@ const EQUIP_WEAPON = ASSETS + SOUNDS + "equip_weapon.m4a";
 const EQUIP_CLOTHING = ASSETS + SOUNDS + "equip_clothing.wav";
 const CHEWING = ASSETS + SOUNDS + "chewing.wav";
 const RELIEF = ASSETS + SOUNDS + "relief.wav";
+const HAMMER = ASSETS + SOUNDS + "hammer.wav";
+const PICKAXE = ASSETS + SOUNDS + "pickaxe.wav";
+const AXE = ASSETS + SOUNDS + "axe.wav";
 
 /* Other sounds */
 const SAD_TROMBONE = ASSETS + SOUNDS + "sad-trombone.wav";

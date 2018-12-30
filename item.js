@@ -247,6 +247,7 @@ function utilItem(item, player, direction) {
 
 			case "Axe":
 				if (env === "tree1" || env === "tree2") {
+					createSound(AXE, false);
 					printToLog("You swing your axe at the tree and wood falls off.");
 					removeTileOnTop(cell, true);
 					setItemsOntoCell(cell, [new Item("Wood")]);
@@ -257,6 +258,7 @@ function utilItem(item, player, direction) {
 
 			case "Pickaxe":
 				if (env === "rock") {
+					createSound(PICKAXE, false);
 					printToLog("You swing your pickaxe at the rock and small stones fall off.");
 					removeTileOnTop(cell, true);
 					setItemsOntoCell(cell, [new Item("Gravel")]);
@@ -267,6 +269,7 @@ function utilItem(item, player, direction) {
 
 			case "Hammer":
 				if (env === "debris1" || env === "debris2") {
+					createSound(HAMMER, false);
 					printToLog("You use the hammer to shape the debris into metal.");
 					removeTileOnTop(cell, true);
 					setItemsOntoCell(cell, [new Item("Metal")]);
