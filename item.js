@@ -27,9 +27,9 @@ const ITEMS = {
 		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`,
 		"Green fruit": `Green fruit;Food;50;true;0;T_FRUIT1`,
 		"Red fruit": `Red fruit;Food;50;true;0;T_FRUIT2`,
-		"Wood": `Wood;Resource;1;false;0;T_WOOD`,
-		"Gravel": `Gravel;Resource;1;false;0;T_GRAVEL`,
-		"Metal": `Metal;Resource;1;false;0;T_METAL`,
+		"Wood": `Wood;Resource;1;true;0;T_WOOD`,
+		"Gravel": `Gravel;Resource;1;true;0;T_GRAVEL`,
+		"Metal": `Metal;Resource;1;true;0;T_METAL`,
 		"Axe": `Axe;Utility;1;false;0;T_AXE`,
 		"Hammer": `Hammer;Utility;1;false;0;T_HAMMER`,
 		"Pickaxe": `Pickaxe;Utility;1;false;0;T_PICKAXE`
