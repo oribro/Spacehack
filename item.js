@@ -216,16 +216,13 @@ function utilItem(item, player, direction) {
 					item.value = "Water";
 					repopInv(player);
 					createSound(BUCKET_DIP, false);
-					break;
 				} else if(env == "beach1" && item.value != "Empty") {
 					printToLog("\"But my bucket is already full!\"");
-					break;
 				} else if(env != "beach1" && env != "fire1" && item.value != "Empty") {
 					printToLog("You pour all the " + item.value.toLowerCase() + " on the ground. Bucket is now empty.");
 					waterSplash.play();
 					item.value = "Empty";
 					repopInv(player);
-					break;
 				} else if(env == "fire1" && item.value == "Water") {
 					printToLog("You pour the water on the fire and it dies out. \"One step closer to getting home.\"");
 					waterSplash.play();
@@ -243,35 +240,44 @@ function utilItem(item, player, direction) {
 					item.value = "Empty";
 					repopInv(player);
 					plot++;
-					break;
+				} else {
+					printToLog("\"How can I use the " + item.name + " with that?\"");
 				}
+				break;
 
 			case "Axe":
 				if (env === "tree1" || env === "tree2") {
 					printToLog("You swing your axe at the tree and wood falls off.");
 					removeTileOnTop(cell, true);
 					setItemsOntoCell(cell, [new Item("Wood")]);
-					break;
+				} else {
+					printToLog("\"How can I use the " + item.name + " with that?\"");
 				}
+				break;
 
 			case "Pickaxe":
 				if (env === "rock") {
 					printToLog("You swing your pickaxe at the rock and small stones fall off.");
 					removeTileOnTop(cell, true);
 					setItemsOntoCell(cell, [new Item("Gravel")]);
-					break;
+				} else {
+					printToLog("\"How can I use the " + item.name + " with that?\"");
 				}
+				break;
 
 			case "Hammer":
 				if (env === "debris1" || env === "debris2") {
 					printToLog("You use the hammer to shape the debris into metal.");
 					removeTileOnTop(cell, true);
 					setItemsOntoCell(cell, [new Item("Metal")]);
-					break;
+				} else {
+					printToLog("\"How can I use the " + item.name + " with that?\"");
 				}
+				break;
 
 			default:
 				printToLog("\"How can I use the " + item.name + " with that?\"");
+				break;
 		}
 	}
 }
