@@ -44,6 +44,8 @@ const STRINGS = {
 	"examine_wood": "\"The remains of what was once a tree.\"",
 
 	"examine_rock": "\"A very solid material.\"",
+	
+	"examine_gravel": "\"Rock reduced to little stones.\"",
 
 	"examine_metal": "\"It's probably not native to this planet. I wonder how it can be of use.\"",
 	

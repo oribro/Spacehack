@@ -143,7 +143,9 @@ const ENV = {
 		"tree1": `T_TREE1;${STRINGS["examine_tree1"]}`,
 		"tree2": `T_TREE2;${STRINGS["examine_tree2"]}`,
 		
-		"water1": `T_WATER1;${STRINGS["examine_water"]}`
+		"water1": `T_WATER1;${STRINGS["examine_water"]}`,
+		
+		"rock": `T_ROCK;${STRINGS["examine_rock"]}`
 }
 
 
