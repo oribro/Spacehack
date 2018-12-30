@@ -612,6 +612,24 @@ class Player extends Character {
 		saveGame(this);
 	}
 	
+	/* Use acquired resources for constructing beneficial items and spaceship parts */
+	build(direction) {
+		if(direction === undefined) {
+			promptDirection("utilItem");
+		} else {
+			var cell = player.getCellFromDirection(direction);
+			var cellElement = document.getElementById(cell);
+			var env = cellElement.getAttribute("env");
+
+			// Build ship parts.
+			if (env && env.search("ship") != -1) {
+
+			}
+		}
+
+		// TODO: Add workbench functionality.
+	}
+
 	/* Takes an item and equips it 
 	 * playSound: boolean, optional. if defined doesnt play the equip sound. necessary for player construction */
 	equip(item, playSound) {
