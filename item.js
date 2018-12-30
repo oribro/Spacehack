@@ -12,6 +12,15 @@ const STACKABLE_SLOT = 3;
 const LVL_SLOT = 4;
 const TILE_SLOT = 5;
 
+// Constants for ship parts requirements. String format: "metal;wood;gravel".
+const PARTS_REQS = {
+		WORKBENCH: "5;5;3",
+		HULL:	   "20;10;0",
+		WHEELS:	   "10;10;0",
+		TAIL:	   "20;5;0",
+		ENGINE:	   "50;0;0"
+	};
+
 // Other constants.
 const SINGLE_ITEM_INDEX = 1;
 

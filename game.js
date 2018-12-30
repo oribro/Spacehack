@@ -88,6 +88,22 @@ window.onload = () => {
 		//plot = 2;
 	
 	}
+	document.getElementById("workbench-reqs").innerHTML = "Metal: " + PARTS_REQS.WORKBENCH.split(";")[0] + "; " +
+														  "Wood: " + PARTS_REQS.WORKBENCH.split(";")[1] + "; " +
+														  "Gravel: " + PARTS_REQS.WORKBENCH.split(";")[2];
+														  
+	document.getElementById("hull-reqs").innerHTML = 	  "Metal: " + PARTS_REQS.HULL.split(";")[0] + "; " +
+														  "Wood: " + PARTS_REQS.HULL.split(";")[1];
+	
+	document.getElementById("wheels-reqs").innerHTML = 	  "Metal: " + PARTS_REQS.WHEELS.split(";")[0] + "; " +
+														  "Wood: " + PARTS_REQS.WHEELS.split(";")[1];
+														  
+	document.getElementById("tail-reqs").innerHTML = 	  "Metal: " + PARTS_REQS.TAIL.split(";")[0] + "; " +
+														  "Wood: " + PARTS_REQS.TAIL.split(";")[1];
+														  
+	document.getElementById("engine-reqs").innerHTML = 	  "Metal: " + PARTS_REQS.ENGINE.split(";")[0] + "; " +
+														  "Wood: " + PARTS_REQS.ENGINE.split(";")[1];
+														  
 	promptContinue(player);
 }
 

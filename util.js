@@ -223,6 +223,17 @@ function toggleEquipment() {
 	}
 }
 
+/* Shows/hides the parts window */
+function toggleParts() {
+	var parts = document.getElementById("parts");
+	if(parts.style.display != "block") {
+		hideLeftWindow();
+		parts.style.display = "block";
+	} else {
+		parts.style.display = "none";
+	}
+}
+
 /* Repopulates the player inventory */
 function repopInv(player) {
 	var invElement = document.getElementById("inventory");

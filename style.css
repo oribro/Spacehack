@@ -35,6 +35,7 @@ h2 {
 	grid-row-start: 1;
 	grid-row-end: 5;
 	text-align: left;
+	display: none;
 }
 
 .left-window-list {
@@ -54,14 +55,6 @@ h2 {
 	grid-column-end: 3;
 	
 	padding: 10px 5px;
-}
-
-#controls {
-	display: none;
-}
-
-#equipment {
-	display: none;
 }
 
 #main {

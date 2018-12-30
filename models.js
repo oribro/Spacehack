@@ -367,7 +367,9 @@ class Player extends Character {
 
 			} else if(cellElement.hasAttribute("env")) {
 				printToLog(getDescription(cellElement.getAttribute("env")));
-
+				if(cellElement.getAttribute("env").search("ship") != -1) {
+					toggleParts();
+				}
 			} else {
 				printToLog(STRINGS[EVENT.EXAMINE_NOTHING]);
 			}
