@@ -18,6 +18,7 @@ const EQUIPMENT = "q";
 const REMOVE = "r";
 const STATS = "s";
 const PARTS = "m";
+const BUILD = "b";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -31,6 +32,7 @@ document.getElementById("equipment-key").innerHTML = "'"+EQUIPMENT+"'";
 document.getElementById("remove-key").innerHTML = "'"+REMOVE+"'";
 document.getElementById("stats-key").innerHTML = "'"+STATS+"'";
 document.getElementById("parts-key").innerHTML = "'"+PARTS+"'";
+document.getElementById("build-key").innerHTML = "'"+BUILD+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -49,8 +51,10 @@ function passToAction(direction, player) {
 			break;
 		case "pickup":
 			player.pickup(direction);
+			break;
 		case "build":
 			player.build(direction);
+			break;
 	}
 }
 
@@ -122,6 +126,9 @@ function control(event, player) {
 			break;
 		case PARTS:
 			toggleParts();
+			break;
+		case BUILD:
+			player.build();
 			break;
 	}
 }

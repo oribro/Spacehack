@@ -92,7 +92,13 @@ class Player extends Character {
 		this.inventory = [new Item("Ration"),
 						  new Item("Ration"),
 						  new Item("Std. Mask"),
-						  new Item("Std. Suit")
+						  new Item("Std. Suit"),
+						  // Uncomment to test workbench.
+						  /*
+						  new Item("Wood", "Resource", 5),
+						  new Item("Metal", "Resource", 5),
+						  new Item("Gravel", "Resource", 3)
+						  */
 						 ];
 		this.dmg = SPAWN_DMG;
 		this.xp = SPAWN_XP;
@@ -523,6 +529,28 @@ class Player extends Character {
 		repopInv(this);
 	}
 	
+	/* Remove the given item from the inventory.
+	 * Optional: itemValue, the value of the item to reduce if the item is stackable. 
+	 */
+	removeItemFromInventory(itemName, itemValue) {
+		var i = -1;
+		var inv = this.inventory;
+		this.inventory.forEach(function (invItem) {
+			i++;
+			if(invItem.name == itemName) {
+				if(itemValue !== undefined) {
+					if(itemValue < invItem.value && invItem.isStackable) {
+						invItem.value = invItem.value - itemValue;
+						return;
+					}
+				}
+				inv.splice(i, 1);
+				return;
+			}
+		});
+		repopInv(this);
+	}
+	
 	/* Takes item name and value and returns whether this item with at least that value is in the inventory */
 	inInv(itemName, itemValue) {
 		for(i = 0; i < this.inventory.length; i++) {
@@ -641,7 +669,7 @@ class Player extends Character {
 		if(direction === undefined) {
 			promptDirection("build");
 		} else {
-			var cell = player.getCellFromDirection(direction);
+			var cell = this.getCellFromDirection(direction);
 			var cellElement = document.getElementById(cell);
 			var env = cellElement.getAttribute("env");
 			
@@ -655,9 +683,9 @@ class Player extends Character {
 				}
 				var partKey = Object.keys(PARTS_REQS)[partSel];
 				var partReqs = PARTS_REQS[partKey];
-				if(this.inInv("Metal", PARTS_REQS.partReqs.split(";")[0]) && 
-				   this.inInv("Wood", PARTS_REQS.partReqs.split(";")[1]) && 
-				   this.inInv("Gravel", PARTS_REQS.partReqs.split(";")[2])) {
+				if(this.inInv("Metal", parseInt(PARTS_REQS.partReqs.split(";")[0])) && 
+				   this.inInv("Wood", parseInt(PARTS_REQS.partReqs.split(";")[1])) && 
+				   this.inInv("Gravel", parseInt(PARTS_REQS.partReqs.split(";")[2]))) {
 					// TODO: add part to ship visually and mark it off the parts list.
 				} else {
 					printToLog("You don't have enough resources to build this.");
@@ -669,20 +697,25 @@ class Player extends Character {
 				var partSel = this.itemSelection("workbench");
 				var partKey = Object.keys(WORKBENCH_REQS)[partSel];
 				var workbenchReqs = WORKBENCH_REQS[workbenchReqs];
-				if(this.inInv("Metal", WORKBENCH_REQS.workbenchReqs.split(";")[0]) && 
-				   this.inInv("Wood", WORKBENCH_REQS.workbenchReqs.split(";")[1]) && 
-				   this.inInv("Gravel", WORKBENCH_REQS.workbenchReqs.split(";")[2])) {
+				if(this.inInv("Metal", parseInt(WORKBENCH_REQS.workbenchReqs.split(";")[0])) && 
+				   this.inInv("Wood", parseInt(WORKBENCH_REQS.workbenchReqs.split(";")[1])) && 
+				   this.inInv("Gravel", parseInt(WORKBENCH_REQS.workbenchReqs.split(";")[2]))) {
 					// TODO: reduce resources from inventory, create selected item and add to inventory.
 				} else {
 					printToLog("You don't have enough resources to build this.");
 					return;
 				}
 			// Build a workbench.
-			} else if(this.inInv("Metal", PARTS_REQS.WORKBENCH.split(";")[0]) && 
-					  this.inInv("Wood", PARTS_REQS.WORKBENCH.split(";")[1]) && 
-					  this.inInv("Gravel", PARTS_REQS.WORKBENCH.split(";")[2])) {
+			} else if(this.inInv("Metal", parseInt(PARTS_REQS.WORKBENCH.split(";")[0])) && 
+					  this.inInv("Wood", parseInt(PARTS_REQS.WORKBENCH.split(";")[1])) && 
+					  this.inInv("Gravel", parseInt(PARTS_REQS.WORKBENCH.split(";")[2]))) {
 				if(confirm(`Do you want to build a workbench there?`)) {
-					// TODO: build workbench there.
+					setTileOnTop(cell, T_WORKBENCH, false);
+					// Reduce resources from inventory.
+					this.removeItemFromInventory("Metal", parseInt(PARTS_REQS.WORKBENCH.split(";")[0]));
+					this.removeItemFromInventory("Wood", parseInt(PARTS_REQS.WORKBENCH.split(";")[1]));
+					this.removeItemFromInventory("Gravel", parseInt(PARTS_REQS.WORKBENCH.split(";")[2]));
+					printToLog("You have built a workbench.");
 				} else {
 					printToLog("You built nothing.");
 				}

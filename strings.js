@@ -77,6 +77,8 @@ const STRINGS = {
 	
 	"examine_dogfish_l": "It's a creature with a head of a fish and body of a dog. It's a dogfish. It seems angry.",
 	
+	"examine_workbench": "\"I can build very useful equipment with this workbench.\"",
+	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
 	"hungry1": "You are getting hungry.",

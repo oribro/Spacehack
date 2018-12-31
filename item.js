@@ -93,6 +93,7 @@ class Item {
 			this.itemTile = eval(itemProperties[TILE_SLOT]);
 			this.itemLvl = parseInt(itemProperties[LVL_SLOT]);
 			this.itemDescription = STRINGS[`examine_${name.toLowerCase()}`];
+			this.isItemStackable = itemProperties[STACKABLE_SLOT] === "true";
 		}
 	}
 	
