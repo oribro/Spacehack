@@ -94,11 +94,11 @@ class Player extends Character {
 						  new Item("Std. Mask"),
 						  new Item("Std. Suit"),
 						  // Uncomment to test workbench.
-						  /*
-						  new Item("Wood", "Resource", 5),
-						  new Item("Metal", "Resource", 5),
+						  
+						  new Item("Metal", "Resource", 20),
+						  new Item("Wood", "Resource", 10),
 						  new Item("Gravel", "Resource", 3)
-						  */
+						  
 						 ];
 		this.dmg = SPAWN_DMG;
 		this.xp = SPAWN_XP;
@@ -683,10 +683,19 @@ class Player extends Character {
 				}
 				var partKey = Object.keys(PARTS_REQS)[partSel];
 				var partReqs = PARTS_REQS[partKey];
-				if(this.inInv("Metal", parseInt(PARTS_REQS.partReqs.split(";")[0])) && 
-				   this.inInv("Wood", parseInt(PARTS_REQS.partReqs.split(";")[1])) && 
-				   this.inInv("Gravel", parseInt(PARTS_REQS.partReqs.split(";")[2]))) {
-					// TODO: add part to ship visually and mark it off the parts list.
+				console.log(partKey);
+				console.log(partReqs);
+				if(this.inInv("Metal", parseInt(partReqs.split(";")[0])) && 
+				   this.inInv("Wood", parseInt(partReqs.split(";")[1])) && 
+				   this.inInv("Gravel", parseInt(partReqs.split(";")[2]))) {
+					   console.log("here");
+					// Reduce resources from inventory.
+					this.removeItemFromInventory("Metal", parseInt(partReqs.split(";")[0]));
+					this.removeItemFromInventory("Wood", parseInt(partReqs.split(";")[1]));
+					this.removeItemFromInventory("Gravel", parseInt(partReqs.split(";")[2]));
+					// Mark the part off the parts list.
+					document.getElementById(partKey.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
+					//  TODO: add part to ship visually.
 				} else {
 					printToLog("You don't have enough resources to build this.");
 					return;
@@ -697,9 +706,9 @@ class Player extends Character {
 				var partSel = this.itemSelection("workbench");
 				var partKey = Object.keys(WORKBENCH_REQS)[partSel];
 				var workbenchReqs = WORKBENCH_REQS[workbenchReqs];
-				if(this.inInv("Metal", parseInt(WORKBENCH_REQS.workbenchReqs.split(";")[0])) && 
-				   this.inInv("Wood", parseInt(WORKBENCH_REQS.workbenchReqs.split(";")[1])) && 
-				   this.inInv("Gravel", parseInt(WORKBENCH_REQS.workbenchReqs.split(";")[2]))) {
+				if(this.inInv("Metal", parseInt(workbenchReqs.split(";")[0])) && 
+				   this.inInv("Wood", parseInt(workbenchReqs.split(";")[1])) && 
+				   this.inInv("Gravel", parseInt(workbenchReqs.split(";")[2]))) {
 					// TODO: reduce resources from inventory, create selected item and add to inventory.
 				} else {
 					printToLog("You don't have enough resources to build this.");
