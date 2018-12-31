@@ -675,6 +675,10 @@ class Player extends Character {
 			
 			// Build ship parts.
 			if (env && env.search("ship") != -1) {
+				if(plot < 1) {
+					printToLog("\"I should probably extinguish the fire before I worry about fixing the ship.\"");
+					return;
+				}
 				// Prompt user for ship part selection.
 				var partSel = this.itemSelection("parts");
 				if(partSel == 0) {
@@ -683,19 +687,20 @@ class Player extends Character {
 				}
 				var partKey = Object.keys(PARTS_REQS)[partSel];
 				var partReqs = PARTS_REQS[partKey];
-				console.log(partKey);
-				console.log(partReqs);
+
 				if(this.inInv("Metal", parseInt(partReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(partReqs.split(";")[1])) && 
 				   this.inInv("Gravel", parseInt(partReqs.split(";")[2]))) {
-					   console.log("here");
+					createSound(BUILDING, false);
 					// Reduce resources from inventory.
 					this.removeItemFromInventory("Metal", parseInt(partReqs.split(";")[0]));
 					this.removeItemFromInventory("Wood", parseInt(partReqs.split(";")[1]));
 					this.removeItemFromInventory("Gravel", parseInt(partReqs.split(";")[2]));
 					// Mark the part off the parts list.
 					document.getElementById(partKey.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
-					//  TODO: add part to ship visually.
+					// Add part to ship visually.
+					repairShip(partKey);
+					printToLog("You have built and repaired the " + partKey.toLowerCase() + ".");
 				} else {
 					printToLog("You don't have enough resources to build this.");
 					return;
@@ -719,6 +724,7 @@ class Player extends Character {
 					  this.inInv("Wood", parseInt(PARTS_REQS.WORKBENCH.split(";")[1])) && 
 					  this.inInv("Gravel", parseInt(PARTS_REQS.WORKBENCH.split(";")[2]))) {
 				if(confirm(`Do you want to build a workbench there?`)) {
+					createSound(BUILDING, false);
 					setTileOnTop(cell, T_WORKBENCH, false);
 					// Reduce resources from inventory.
 					this.removeItemFromInventory("Metal", parseInt(PARTS_REQS.WORKBENCH.split(";")[0]));

@@ -535,3 +535,21 @@ function newGame() {
 	localStorage.clear();
 	location.reload();
 }
+
+/* Repairs the given ship part (changes the tiles). */
+function repairShip(part) {
+	switch(part) {
+		case "HULL":
+			removeTileOnTop("c0505");
+			setTileOnTop("c0505", T_SHIP2F, false);
+			
+			removeTileOnTop("c0605");
+			setTileOnTop("c0605", T_SHIP3F, false);
+			
+			removeTileOnTop("c0705");
+			setTileOnTop("c0705", T_SHIP6F, false);
+			break;
+		default:
+			break;
+	}
+}
