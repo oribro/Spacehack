@@ -95,9 +95,9 @@ class Player extends Character {
 						  new Item("Std. Suit"),
 						  // Uncomment to test workbench.
 						  
-						  new Item("Metal", "Resource", 20),
-						  new Item("Wood", "Resource", 10),
-						  new Item("Gravel", "Resource", 3)
+						  new Item("Metal", "Resource", 999),
+						  new Item("Wood", "Resource", 999),
+						  new Item("Gravel", "Resource", 999)
 						  
 						 ];
 		this.dmg = SPAWN_DMG;
@@ -707,14 +707,25 @@ class Player extends Character {
 				}
 			// Build from workbench.
 			} else if(env && env.search("workbench") != -1) {
+				toggleWorkbench();
 				// Prompt user for workbench item selection.
-				var partSel = this.itemSelection("workbench");
-				var partKey = Object.keys(WORKBENCH_REQS)[partSel];
-				var workbenchReqs = WORKBENCH_REQS[workbenchReqs];
+				var benchSel = this.itemSelection("workbench") - 1;
+				var benchKey = Object.keys(WORKBENCH_REQS)[benchSel];
+				var workbenchReqs = WORKBENCH_REQS[benchKey];
+				toggleWorkbench();
 				if(this.inInv("Metal", parseInt(workbenchReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(workbenchReqs.split(";")[1])) && 
 				   this.inInv("Gravel", parseInt(workbenchReqs.split(";")[2]))) {
-					// TODO: reduce resources from inventory, create selected item and add to inventory.
+					// Reduce resources from inventory.
+					this.removeItemFromInventory("Metal", parseInt(workbenchReqs.split(";")[0]));
+					this.removeItemFromInventory("Wood", parseInt(workbenchReqs.split(";")[1]));
+					this.removeItemFromInventory("Gravel", parseInt(workbenchReqs.split(";")[2]));
+					// Create selected item and add to inventory.
+					var wbItemName = benchKey.toLowerCase();
+					wbItemName = wbItemName.charAt(0).toUpperCase() + wbItemName.slice(1);
+					var wbItem = new Item(wbItemName);
+					this.addItemsToInventory([wbItem]);
+					printToLog("You have built a " + wbItemName + ".");
 				} else {
 					printToLog("You don't have enough resources to build this.");
 					return;

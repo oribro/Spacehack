@@ -234,6 +234,18 @@ function toggleParts() {
 	}
 }
 
+/* Shows/hides the workbench window */
+function toggleWorkbench() {
+	var workbench = document.getElementById("workbench");
+	if(workbench.style.display != "block") {
+		hideLeftWindow();
+		workbench.style.display = "block";
+	} else {
+		workbench.style.display = "none";
+	}
+	return true;
+}
+
 /* Repopulates the player inventory */
 function repopInv(player) {
 	var invElement = document.getElementById("inventory");

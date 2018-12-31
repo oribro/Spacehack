@@ -75,6 +75,8 @@ const T_HAMMER = ASSETS + TILESET + "hammer.png";
 const T_METAL = ASSETS + TILESET + "metal.png";
 const T_WOOD = ASSETS + TILESET + "wood.png";
 const T_GRAVEL = ASSETS + TILESET + "gravel.png";
+const T_SLINGSHOT = ASSETS + TILESET + "slingshot.png";
+const T_SHIV = ASSETS + TILESET + "shiv.png";
 
 
 /*** Game sounds ***/
