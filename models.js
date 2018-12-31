@@ -716,6 +716,7 @@ class Player extends Character {
 				if(this.inInv("Metal", parseInt(workbenchReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(workbenchReqs.split(";")[1])) && 
 				   this.inInv("Gravel", parseInt(workbenchReqs.split(";")[2]))) {
+					createSound(BUILDING, false);
 					// Reduce resources from inventory.
 					this.removeItemFromInventory("Metal", parseInt(workbenchReqs.split(";")[0]));
 					this.removeItemFromInventory("Wood", parseInt(workbenchReqs.split(";")[1]));
@@ -855,6 +856,8 @@ class Player extends Character {
 	/* Prompts the player for a direction and if there's an NPC in that direction attacks it */
 	attack(direction) {
 		var target;
+		var xPos = this.xPos;
+		var yPos = this.yPos;
 		if(direction === undefined) {
 			promptDirection("attack");
 		} else {
@@ -862,8 +865,32 @@ class Player extends Character {
 			npcs.forEach(function(npc) {
 				var biDigTgtX = getTwoDigits(npc.xPos);
 				var biDigTgtY = getTwoDigits(npc.yPos);
-				if(cell == ("c" + biDigTgtY + biDigTgtX)) {
-					
+				// Check if player has a ranged weapon equipped.
+				if(document.getElementById("weapon-slot").innerHTML.search("Slingshot") != -1) {
+					for(i = 1; i <= RANGED_ATTACK; i++) {
+						if(parseInt(cell.slice(3)) > xPos) {
+							var biDigChkX = getTwoDigits(xPos + i);
+							var biDigChkY = cell.slice(1,3);
+						} else if(parseInt(cell.slice(3)) < xPos) {
+							var biDigChkX = getTwoDigits(xPos - i);
+							var biDigChkY = cell.slice(1,3);
+						} else if(parseInt(cell.slice(1, 3)) > yPos) {
+							var biDigChkX = cell.slice(3);
+							var biDigChkY = getTwoDigits(yPos + i);
+						} else if(parseInt(cell.slice(1, 3)) < yPos) {
+							var biDigChkX = cell.slice(3);
+							var biDigChkY = getTwoDigits(yPos - i);
+						}
+						// Check for the closest NPC. If cell is unwalkable - return because projectile is stopped.
+						if("c"+biDigChkY+biDigChkX == "c"+biDigTgtY+biDigTgtX) {
+							target = npc;
+							return;
+						} else if(document.getElementById("c"+biDigChkY+biDigChkX).getAttribute("walkable") == false) {
+							return;
+						}
+					}
+				// Weapon is melee.
+				} else if(cell == ("c" + biDigTgtY + biDigTgtX)) {
 					target = npc;
 				}
 			});

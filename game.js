@@ -5,6 +5,7 @@ const ASPECT_MUL 	= 2;
 const HEIGHT 		= Y_ASPECT * ASPECT_MUL;
 const WIDTH 		= X_ASPECT * ASPECT_MUL;
 const MAX_FIRE_RANGE = 11;
+const RANGED_ATTACK = 10;
 
 'use strict';
 
