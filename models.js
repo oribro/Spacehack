@@ -882,6 +882,9 @@ class Player extends Character {
 							var biDigChkY = getTwoDigits(yPos - i);
 						}
 						// Check for the closest NPC. If cell is unwalkable - return because projectile is stopped.
+						if(!inBounds("c"+biDigChkY+biDigChkX)) {
+							break;
+						}
 						if("c"+biDigChkY+biDigChkX == "c"+biDigTgtY+biDigTgtX) {
 							target = npc;
 							return;
