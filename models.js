@@ -933,19 +933,19 @@ class Player extends Character {
 					if(!inBounds("c"+biDigChkY+biDigChkX)) {
 						break;
 					}
-					for(npc in npcs) {
-						var biDigTgtX = getTwoDigits(npc.xPos);
-						var biDigTgtY = getTwoDigits(npc.yPos);
+					for(var npc = 0; npc < npcs.length; npc++) {
+						var biDigTgtX = getTwoDigits(npcs[npc].xPos);
+						var biDigTgtY = getTwoDigits(npcs[npc].yPos);
 						if("c"+biDigChkY+biDigChkX == "c"+biDigTgtY+biDigTgtX) {
-							target = npc;
-							return;
+							target = npcs[npc];
+							break;
 						}
 					}
-					if(document.getElementById("c"+biDigChkY+biDigChkX).getAttribute("walkable") == "false") {
+					if(target === undefined && document.getElementById("c"+biDigChkY+biDigChkX).getAttribute("walkable") == "false") {
 						printToLog("Your " + projectile.name + " hit something and broke.");
 						return;
 					}
-					if(i == RANGED_ATTACK) {
+					if(target === undefined && i == RANGED_ATTACK) {
 						let fallenProj = new Item(projectile.name);
 						fallenProj.value = 1;
 						setItemsOntoCell("c"+biDigChkY+biDigChkX, [fallenProj]);
@@ -953,9 +953,12 @@ class Player extends Character {
 				}
 			}
 			// Weapon is melee.
-			for(npc in npcs) {
+			
+			for(var npc = 0; npc < npcs.length; npc++) {
+				var biDigTgtX = getTwoDigits(npcs[npc].xPos);
+				var biDigTgtY = getTwoDigits(npcs[npc].yPos);
 				if(cell == ("c" + biDigTgtY + biDigTgtX)) {
-					target = npc;
+					target = npcs[npc];
 				}
 			}
 			if(target != undefined) {
