@@ -38,7 +38,7 @@ h2 {
 	display: none;
 }
 
-.left-window-list {
+ul.left-window-list {
 	padding-left: 20px;
 	list-style-type: square;
 }
