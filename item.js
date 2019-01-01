@@ -3,6 +3,7 @@ const DEFAULT_COINS_VALUE = 10;
 const DEFAULT_RATION_VALUE = 100;
 const DEFAULT_FIRSTAID_VALUE = 10;
 const DEFAULT_MEAT_VALUE = 50;
+const PROJECTILE_STACK = 10;
 
 // Constant slots for item properties.
 const NAME_SLOT = 0;
@@ -58,8 +59,8 @@ const ITEMS = {
 		"Shiv": `Shiv;Weapon;10;false;3;T_SHIV;Melee`,
 		"Bow": `Bow;Weapon;20;false;4;T_BOW;Ranged;Arrows`,
 		"Crossbow": `Crossbow;Weapon;30;false;5;T_CROSSBOW;Ranged;Arrows`,
-		"Stoneballs": `Stoneballs;Projectile;10;true;0;T_STONEBALLS`,
-		"Arrows": `Arrows;Projectile;0;true;10;T_ARROWS`
+		"Stoneballs": `Stoneballs;Projectile;1;true;0;T_STONEBALLS`,
+		"Arrows": `Arrows;Projectile;0;true;1;T_ARROWS`
 	};
 
 // List of poisonous food

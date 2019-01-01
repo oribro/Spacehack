@@ -750,6 +750,9 @@ class Player extends Character {
 					var wbItemName = benchKey.toLowerCase();
 					wbItemName = wbItemName.charAt(0).toUpperCase() + wbItemName.slice(1);
 					var wbItem = new Item(wbItemName);
+					if(wbItem.type == "Projectile") {
+						wbItem.value = PROJECTILE_STACK;
+					}
 					this.addItemsToInventory([wbItem]);
 					printToLog("You have built a " + wbItemName + ".");
 				} else {
@@ -902,51 +905,59 @@ class Player extends Character {
 			if(weapon != null) {
 				weaponType = weapon.weaponType;
 			}
+			// Check if player has a ranged weapon equipped.
 			if(weaponType == "Ranged") {
 				if(!this.inInv(weapon.projectile, 1)) {
 						printToLog("You are out of " + weapon.projectile + ".");
 						return;
 				} else {
-					let projectile = this.getInvItem(weapon.projectile);
+					var projectile = this.getInvItem(weapon.projectile);
 					projectile.value = projectile.value - 1;
 					repopInv(this);
 				}
-			}
-			npcs.forEach(function(npc) {
-				var biDigTgtX = getTwoDigits(npc.xPos);
-				var biDigTgtY = getTwoDigits(npc.yPos);
-				// Check if player has a ranged weapon equipped.
-				if(weaponType == "Ranged") {
-					for(i = 1; i <= RANGED_ATTACK; i++) {
-						if(parseInt(cell.slice(3)) > xPos) {
-							var biDigChkX = getTwoDigits(xPos + i);
-							var biDigChkY = cell.slice(1,3);
-						} else if(parseInt(cell.slice(3)) < xPos) {
-							var biDigChkX = getTwoDigits(xPos - i);
-							var biDigChkY = cell.slice(1,3);
-						} else if(parseInt(cell.slice(1, 3)) > yPos) {
-							var biDigChkX = cell.slice(3);
-							var biDigChkY = getTwoDigits(yPos + i);
-						} else if(parseInt(cell.slice(1, 3)) < yPos) {
-							var biDigChkX = cell.slice(3);
-							var biDigChkY = getTwoDigits(yPos - i);
-						}
-						// Check for the closest NPC. If cell is unwalkable - return because projectile is stopped.
-						if(!inBounds("c"+biDigChkY+biDigChkX)) {
-							break;
-						}
+				for(i = 1; i <= RANGED_ATTACK; i++) {
+					if(parseInt(cell.slice(3)) > xPos) {
+						var biDigChkX = getTwoDigits(xPos + i);
+						var biDigChkY = cell.slice(1,3);
+					} else if(parseInt(cell.slice(3)) < xPos) {
+						var biDigChkX = getTwoDigits(xPos - i);
+						var biDigChkY = cell.slice(1,3);
+					} else if(parseInt(cell.slice(1, 3)) > yPos) {
+						var biDigChkX = cell.slice(3);
+						var biDigChkY = getTwoDigits(yPos + i);
+					} else if(parseInt(cell.slice(1, 3)) < yPos) {
+						var biDigChkX = cell.slice(3);
+						var biDigChkY = getTwoDigits(yPos - i);
+					}
+					// Check for the closest NPC. If cell is unwalkable - return because projectile is stopped.
+					if(!inBounds("c"+biDigChkY+biDigChkX)) {
+						break;
+					}
+					for(npc in npcs) {
+						var biDigTgtX = getTwoDigits(npc.xPos);
+						var biDigTgtY = getTwoDigits(npc.yPos);
 						if("c"+biDigChkY+biDigChkX == "c"+biDigTgtY+biDigTgtX) {
 							target = npc;
 							return;
-						} else if(document.getElementById("c"+biDigChkY+biDigChkX).getAttribute("walkable") == false) {
-							return;
 						}
 					}
-				// Weapon is melee.
-				} else if(cell == ("c" + biDigTgtY + biDigTgtX)) {
+					if(document.getElementById("c"+biDigChkY+biDigChkX).getAttribute("walkable") == "false") {
+						printToLog("Your " + projectile.name + " hit something and broke.");
+						return;
+					}
+					if(i == RANGED_ATTACK) {
+						let fallenProj = new Item(projectile.name);
+						fallenProj.value = 1;
+						setItemsOntoCell("c"+biDigChkY+biDigChkX, [fallenProj]);
+					}
+				}
+			}
+			// Weapon is melee.
+			for(npc in npcs) {
+				if(cell == ("c" + biDigTgtY + biDigTgtX)) {
 					target = npc;
 				}
-			});
+			}
 			if(target != undefined) {
 				target.getHit(this.dmg);
 				var punch = new sound(PUNCH);
