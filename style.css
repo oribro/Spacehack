@@ -258,7 +258,6 @@ p.stat {
 .inv-list {
 	list-style-type: decimal;
 	text-align: left;
-	padding-left: 30px;
 }
 .inv-list > li {
 	padding-bottom: 5px;
