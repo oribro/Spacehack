@@ -77,6 +77,8 @@ const T_WOOD = ASSETS + TILESET + "wood.png";
 const T_GRAVEL = ASSETS + TILESET + "gravel.png";
 const T_SLINGSHOT = ASSETS + TILESET + "slingshot.png";
 const T_SHIV = ASSETS + TILESET + "shiv.png";
+const T_BOW = ASSETS + TILESET + "bow.png";
+const T_CROSSBOW = ASSETS + TILESET + "crossbow.png";
 
 
 /*** Game sounds ***/

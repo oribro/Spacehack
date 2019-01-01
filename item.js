@@ -23,8 +23,10 @@ const PARTS_REQS = {
 	
 // Constants for workbench items requirements. String format: "metal;wood;gravel".
 const WORKBENCH_REQS = {
-		SLINGSHOT: "0;2;10",
-		SHIV:	   "1;1;0"
+		SLINGSHOT: 	"0;2;10",
+		SHIV:	   	"1;1;0",
+		BOW:	   	"0;10;0",
+		CROSSBOW:	"5;10;0"
 	};
 
 // Other constants.
@@ -49,7 +51,9 @@ const ITEMS = {
 		"Hammer": `Hammer;Utility;1;false;0;T_HAMMER`,
 		"Pickaxe": `Pickaxe;Utility;1;false;0;T_PICKAXE`,
 		"Slingshot": `Slingshot;Weapon;5;false;2;T_SLINGSHOT`,
-		"Shiv": `Shiv;Weapon;10;false;3;T_SHIV`
+		"Shiv": `Shiv;Weapon;10;false;3;T_SHIV`,
+		"Bow": `Bow;Weapon;20;false;4;T_BOW`,
+		"Crossbow": `Crossbow;Weapon;30;false;5;T_CROSSBOW`
 	};
 
 // List of poisonous food
