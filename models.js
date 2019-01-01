@@ -94,11 +94,11 @@ class Player extends Character {
 						  new Item("Std. Mask"),
 						  new Item("Std. Suit"),
 						  // Uncomment to test workbench.
-						  
+						  /*
 						  new Item("Metal", "Resource", 999),
 						  new Item("Wood", "Resource", 999),
 						  new Item("Gravel", "Resource", 999)
-						  
+						  */
 						 ];
 		this.dmg = SPAWN_DMG;
 		this.xp = SPAWN_XP;
