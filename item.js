@@ -11,6 +11,8 @@ const VALUE_SLOT = 2;
 const STACKABLE_SLOT = 3;
 const LVL_SLOT = 4;
 const TILE_SLOT = 5;
+const WEAPON_TYPE_SLOT = 6;
+const PROJECTILE_SLOT = 7;
 
 // Constants for ship parts requirements. String format: "metal;wood;gravel".
 const PARTS_REQS = {
@@ -26,7 +28,9 @@ const WORKBENCH_REQS = {
 		SLINGSHOT: 	"0;2;10",
 		SHIV:	   	"1;1;0",
 		BOW:	   	"0;10;0",
-		CROSSBOW:	"5;10;0"
+		CROSSBOW:	"5;10;0",
+		STONEBALLS: "0;0;1",
+		ARROWS:		"1;1;0"
 	};
 
 // Other constants.
@@ -39,7 +43,7 @@ const ITEMS = {
 		"Bucket": `Bucket;Utility;Empty;false;0;T_BUCKET`,
 		"FirstAid": `FirstAid;Health;${DEFAULT_FIRSTAID_VALUE};true;0;T_FIRSTAID`,
 		"Meat": `Meat;Food;${DEFAULT_MEAT_VALUE};true;0;T_MEAT`,
-		"Bones": `Bones;Weapon;5;false;2;T_BONES`,
+		"Bones": `Bones;Weapon;5;false;2;T_BONES;Melee`,
 		"Std. Mask": `Std. Mask;Mask;3;false;1;T_STD_MASK`,
 		"Std. Suit": `Std. Suit;Suit;7;false;1;T_STD_SUIT`,
 		"Green fruit": `Green fruit;Food;50;true;0;T_FRUIT1`,
@@ -50,10 +54,12 @@ const ITEMS = {
 		"Axe": `Axe;Utility;1;false;0;T_AXE`,
 		"Hammer": `Hammer;Utility;1;false;0;T_HAMMER`,
 		"Pickaxe": `Pickaxe;Utility;1;false;0;T_PICKAXE`,
-		"Slingshot": `Slingshot;Weapon;5;false;2;T_SLINGSHOT`,
-		"Shiv": `Shiv;Weapon;10;false;3;T_SHIV`,
-		"Bow": `Bow;Weapon;20;false;4;T_BOW`,
-		"Crossbow": `Crossbow;Weapon;30;false;5;T_CROSSBOW`
+		"Slingshot": `Slingshot;Weapon;5;false;2;T_SLINGSHOT;Ranged;Stoneballs`,
+		"Shiv": `Shiv;Weapon;10;false;3;T_SHIV;Melee`,
+		"Bow": `Bow;Weapon;20;false;4;T_BOW;Ranged;Arrows`,
+		"Crossbow": `Crossbow;Weapon;30;false;5;T_CROSSBOW;Ranged;Arrows`,
+		"Stoneballs": `Stoneballs;Projectile;10;true;0;T_STONEBALLS`,
+		"Arrows": `Arrows;Projectile;0;true;10;T_ARROWS`
 	};
 
 // List of poisonous food
@@ -95,6 +101,13 @@ class Item {
 			// This is a good way to convert string to boolean in JS.
 			this.isItemStackable = itemProperties[STACKABLE_SLOT] === "true";
 			this.equipped = false;
+			if(this.itemType == "Weapon") {
+				this.weaponType = itemProperties[WEAPON_TYPE_SLOT];
+				if(itemProperties[WEAPON_TYPE_SLOT] == "Ranged") {
+					this.projectile = itemProperties[PROJECTILE_SLOT];
+				}
+			}
+			
 
 		/* TODO: This should be deprecated soon */
 		} else {

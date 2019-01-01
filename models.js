@@ -89,10 +89,13 @@ class Player extends Character {
 		
 		super(x, y);
 		this.hunger = 100;
+		var weapon = null;
+		var mask = new Item("Std. Mask");
+		var suit = new Item("Std. Suit");
 		this.inventory = [new Item("Ration"),
 						  new Item("Ration"),
-						  new Item("Std. Mask"),
-						  new Item("Std. Suit"),
+						  mask,
+						  suit,
 						  // Uncomment to test workbench.
 						  
 						  new Item("Metal", "Resource", 999),
@@ -104,6 +107,12 @@ class Player extends Character {
 		this.xp = SPAWN_XP;
 		this.lvl = SPAWN_LVL;
 		this.def = 0;
+		
+		this.equipment = {
+				Weapon: null,
+				Mask: mask,
+				Suit: suit
+			};
 		
 		this.equip(this.inventory[2], false);
 		this.equip(this.inventory[3], false);
@@ -560,6 +569,16 @@ class Player extends Character {
 		}
 		return false;
 	}
+	
+	/* Takes item name and returns the item from the inventory. If not in inventory returns null */
+	getInvItem(itemName) {
+		for(i = 0; i < this.inventory.length; i++) {
+			if(this.inventory[i].name == itemName) {
+				return this.inventory[i];
+			}
+		}
+		return null;
+	}
 
 	/* Prompts the player for a selection number and returns the input.
 	 * category: the name of the list from which the player selects.
@@ -768,19 +787,26 @@ class Player extends Character {
 		// Remove currently equipped item.
 		this.unequip(item.type);
 		
-		updateEquipment(item.name);
+		updateEquipment(item.name, this);
 		item.isEquipped = true;
 		if(item.type == "Weapon") {
+			this.equipment.Weapon = item;
 			this.dmg += parseInt(item.value);
 			document.getElementById("dmg-value").innerHTML = this.dmg;
 			createSound(EQUIP_WEAPON, false);
 		} else {
+			if(item.type == "Mask") {
+				this.equipment.Mask = item;
+			} else {
+				this.equipment.Suit = item;
+			}
 			this.def += parseInt(item.value);
 			document.getElementById("def-value").innerHTML = this.def;
 			if(playSound === undefined) {
 				createSound(EQUIP_CLOTHING, false);
 			}
 		}
+		
 		repopInv(this);
 		
 		if(this.mapX !== undefined) {
@@ -800,12 +826,15 @@ class Player extends Character {
 			switch (typeNum) {
 				case 1:
 					type = "Weapon";
+					this.equipment.Weapon = null;
 					break;
 				case 2:
 					type = "Mask";
+					this.equipment.Mask = null;
 					break;
 				case 3:
 					type = "Suit";
+					this.equipment.Suit = null;
 					break;
 				default:
 					return;
@@ -868,11 +897,26 @@ class Player extends Character {
 			promptDirection("attack");
 		} else {
 			var cell = this.getCellFromDirection(direction);
+			var weapon = this.equipment.Weapon;
+			var weaponType = "Melee";
+			if(weapon != null) {
+				weaponType = weapon.weaponType;
+			}
+			if(weaponType == "Ranged") {
+				if(!this.inInv(weapon.projectile, 1)) {
+						printToLog("You are out of " + weapon.projectile + ".");
+						return;
+				} else {
+					let projectile = this.getInvItem(weapon.projectile);
+					projectile.value = projectile.value - 1;
+					repopInv(this);
+				}
+			}
 			npcs.forEach(function(npc) {
 				var biDigTgtX = getTwoDigits(npc.xPos);
 				var biDigTgtY = getTwoDigits(npc.yPos);
 				// Check if player has a ranged weapon equipped.
-				if(document.getElementById("weapon-slot").innerHTML.search("Slingshot") != -1) {
+				if(weaponType == "Ranged") {
 					for(i = 1; i <= RANGED_ATTACK; i++) {
 						if(parseInt(cell.slice(3)) > xPos) {
 							var biDigChkX = getTwoDigits(xPos + i);

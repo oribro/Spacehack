@@ -280,16 +280,32 @@ function repopInv(player) {
 		}
 	}
 	
+	// Checks whether player equips a ranged weapon and if so updates the equipment window to update the projectile amount.
+	if(player.equipment.Weapon != null) {
+		if(player.equipment.Weapon.weaponType == "Ranged") {
+			updateEquipment(player.equipment.Weapon.name, player);
+		}
+	}
 }
 
 /* Takes an item name and sets its information in the relevant equipment slot */
-function updateEquipment(name) {
+function updateEquipment(name, player) {
 	let type = ITEMS[name].split(";")[1];
 	let value = ITEMS[name].split(";")[2];
 	
 	switch (type) {
 		case "Weapon":
 			var equipmentSlot = document.getElementById("weapon-slot");
+			if(ITEMS[name].split(";")[WEAPON_TYPE_SLOT] == "Ranged") {
+				let projectile = ITEMS[name].split(";")[PROJECTILE_SLOT];
+				let projItem = player.getInvItem(projectile);
+				let projValue = 0;
+				if(projItem) {
+					projValue = projItem.value;
+				}
+				equipmentSlot.innerHTML = name + " (" + value + "), " + projectile + ": " + projValue;
+				return;
+			}
 			break;
 		case "Mask":
 			var equipmentSlot = document.getElementById("mask-slot");
