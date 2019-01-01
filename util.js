@@ -301,6 +301,32 @@ function updateEquipment(name) {
 	equipmentSlot.innerHTML = name + " (" + value + ")";
 }
 
+/* Takes a requirements list (e.g.: PARTS_REQS) and populates the suitable window */
+function popBuildList(reqList) {
+	for(let [key, value] of Object.entries(reqList)) {
+		var elementId = key.toLowerCase() + "-reqs";
+		var metal = value.split(";")[0];
+		var wood = value.split(";")[1];
+		var gravel = value.split(";")[2];
+		var reqString = "";
+		if(metal != 0) {
+			reqString += "Metal: " + metal;
+		}
+		if(wood != 0) {
+			if(reqString != "") {
+				reqString += "; ";
+			}
+			reqString += "Wood: " + wood;
+		}
+		if(gravel != 0) {
+			if(reqString != "") {
+				reqString += "; ";
+			}
+			reqString += "Gravel: " + gravel;
+		}
+		document.getElementById(elementId).innerHTML = reqString;
+	}
+}
 
 /******************* SOUND *******************/
 

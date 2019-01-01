@@ -94,11 +94,11 @@ class Player extends Character {
 						  new Item("Std. Mask"),
 						  new Item("Std. Suit"),
 						  // Uncomment to test workbench.
-						  /*
+						  
 						  new Item("Metal", "Resource", 999),
 						  new Item("Wood", "Resource", 999),
 						  new Item("Gravel", "Resource", 999)
-						  */
+						  
 						 ];
 		this.dmg = SPAWN_DMG;
 		this.xp = SPAWN_XP;
@@ -665,7 +665,7 @@ class Player extends Character {
 	}
 	
 	/* Use acquired resources for constructing beneficial items and spaceship parts */
-	build(direction) {
+	async build(direction) {
 		if(direction === undefined) {
 			promptDirection("build");
 		} else {
@@ -679,8 +679,12 @@ class Player extends Character {
 					printToLog("\"I should probably extinguish the fire before I worry about fixing the ship.\"");
 					return;
 				}
+				toggleParts();
+				// For now this has to be done for the toggleParts to execute before the prompt.
+				await sleep(100);
 				// Prompt user for ship part selection.
 				var partSel = this.itemSelection("parts");
+				toggleParts();
 				if(partSel == 0) {
 					printToLog("You cannot build a workbench inside the ship.");
 					return;
@@ -708,6 +712,8 @@ class Player extends Character {
 			// Build from workbench.
 			} else if(env && env.search("workbench") != -1) {
 				toggleWorkbench();
+				// For now this has to be done for the toggleWorkbench to execute before the prompt.
+				await sleep(100);
 				// Prompt user for workbench item selection.
 				var benchSel = this.itemSelection("workbench") - 1;
 				var benchKey = Object.keys(WORKBENCH_REQS)[benchSel];
