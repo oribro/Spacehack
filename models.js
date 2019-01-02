@@ -942,8 +942,10 @@ class Player extends Character {
 						}
 					}
 					if(target === undefined && document.getElementById("c"+biDigChkY+biDigChkX).getAttribute("walkable") == "false") {
-						printToLog("Your " + projectile.name + " hit something and broke.");
-						return;
+						if(getItemsInCell("c"+biDigChkY+biDigChkX).length == 0) {
+							printToLog("Your " + projectile.name + " hit something and broke.");
+							return;
+						}
 					}
 					if(target === undefined && i == RANGED_ATTACK) {
 						let fallenProj = new Item(projectile.name);

@@ -83,11 +83,14 @@ window.onload = () => {
 		document.getElementById("xp-value").innerHTML = SPAWN_XP;
 		document.getElementById("lvl-value").innerHTML = SPAWN_LVL;
 		document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
-
+		
 		/* Uncomment this for testing */
-		//godmode(player);
-		//plot = 2;
-	
+		/*
+		godmode(player);
+		plot = 2;
+		player.lvl = 5;
+		document.getElementById("lvl-value").innerHTML = player.lvl;
+		*/
 	}
 	
 	// Populate build lists.
