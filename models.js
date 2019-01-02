@@ -615,8 +615,11 @@ class Player extends Character {
 	/* Prompts the player for an item number and uses the item.
 	*	drop: boolean. Determines whether to use the item or drop it.
 	*/
-	use() {
+	async use() {
+		toggleWindow("inventory", this, true);
+		await sleep(100);
 		var itemSel = this.itemSelection("inventory");
+		toggleWindow("inventory", this);
 		// Ilegal selection. Nothing to do here.
 		if (!itemSel)
 			return;
@@ -820,9 +823,12 @@ class Player extends Character {
 	/* Removes an equipped item from player's equipment 
 	 * type: item type or 'true' for user prompt.
 	 */
-	unequip(type) {
+	async unequip(type) {
 		if(type == true) {
+			toggleWindow("equipment", null, true);
+			await sleep(100);
 			var typeNum = this.itemSelection("equipment");
+			toggleWindow("equipment");
 			// Illegal selection. Nothing to do here.
 			if (!typeNum)
 				return;
@@ -872,8 +878,11 @@ class Player extends Character {
 	}
 	
 	/* Prompts the player for an item number and drops the item. */
-	drop() {
+	async drop() {
+		toggleWindow("inventory", this, true);
+		await sleep(100);
 		var itemSel = this.itemSelection("inventory");
+		toggleWindow("inventory", this);
 		// Check for ilegal item selection.
 		if (!itemSel)
 			return;
