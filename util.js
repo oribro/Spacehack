@@ -183,7 +183,8 @@ function hideLeftWindow() {
 /* Shows/hides the given window.
  * name: string. The name of the window to toggle.
  * player: Optional. The player object.
- * force: Optional. If set opens the window even if it is already opened. 
+ * force: Optional. If set opens the window even if it is already opened.
+ * Returns true if window was open when called, false otherwise.
  */
 function toggleWindow(name, player, force) {
 	var window = document.getElementById(name);
@@ -194,9 +195,11 @@ function toggleWindow(name, player, force) {
 			hideLeftWindow();
 		}
 		window.style.display = "block";
+		return false;
 	} else if (force === undefined) {
 		window.style.display = "none";
 	}
+	return true;
 }
 
 /* Repopulates the player inventory */

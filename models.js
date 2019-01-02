@@ -616,10 +616,12 @@ class Player extends Character {
 	*	drop: boolean. Determines whether to use the item or drop it.
 	*/
 	async use() {
-		toggleWindow("inventory", this, true);
+		var persist = toggleWindow("inventory", this, true);
 		await sleep(100);
 		var itemSel = this.itemSelection("inventory");
-		toggleWindow("inventory", this);
+		if(!persist) {
+			toggleWindow("inventory", this);
+		}
 		// Ilegal selection. Nothing to do here.
 		if (!itemSel)
 			return;
@@ -701,12 +703,14 @@ class Player extends Character {
 					printToLog("\"I should probably extinguish the fire before I worry about fixing the ship.\"");
 					return;
 				}
-				toggleWindow("parts", null, true);
+				var persist = toggleWindow("parts", null, true);
 				// For now this has to be done for the toggleParts to execute before the prompt.
 				await sleep(100);
 				// Prompt user for ship part selection.
 				var partSel = this.itemSelection("parts");
-				toggleWindow("parts");
+				if(!persist) {
+					toggleWindow("parts");
+				}
 				if(partSel == 0) {
 					printToLog("You cannot build a workbench inside the ship.");
 					return;
@@ -733,14 +737,16 @@ class Player extends Character {
 				}
 			// Build from workbench.
 			} else if(env && env.search("workbench") != -1) {
-				toggleWindow("workbench", null, true);
+				var persist = toggleWindow("workbench", null, true);
 				// For now this has to be done for the toggleWorkbench to execute before the prompt.
 				await sleep(100);
 				// Prompt user for workbench item selection.
 				var benchSel = this.itemSelection("workbench") - 1;
 				var benchKey = Object.keys(WORKBENCH_REQS)[benchSel];
 				var workbenchReqs = WORKBENCH_REQS[benchKey];
-				toggleWindow("workbench");
+				if(!persist) {
+					toggleWindow("workbench");
+				}
 				if(this.inInv("Metal", parseInt(workbenchReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(workbenchReqs.split(";")[1])) && 
 				   this.inInv("Gravel", parseInt(workbenchReqs.split(";")[2]))) {
@@ -825,10 +831,12 @@ class Player extends Character {
 	 */
 	async unequip(type) {
 		if(type == true) {
-			toggleWindow("equipment", null, true);
+			var persist = toggleWindow("equipment", null, true);
 			await sleep(100);
 			var typeNum = this.itemSelection("equipment");
-			toggleWindow("equipment");
+			if(!persist) {
+				toggleWindow("equipment");
+			}
 			// Illegal selection. Nothing to do here.
 			if (!typeNum)
 				return;
@@ -879,10 +887,12 @@ class Player extends Character {
 	
 	/* Prompts the player for an item number and drops the item. */
 	async drop() {
-		toggleWindow("inventory", this, true);
+		var persist = toggleWindow("inventory", this, true);
 		await sleep(100);
 		var itemSel = this.itemSelection("inventory");
-		toggleWindow("inventory", this);
+		if(!persist) {
+			toggleWindow("inventory", this);
+		}
 		// Check for ilegal item selection.
 		if (!itemSel)
 			return;
