@@ -180,70 +180,23 @@ function hideLeftWindow() {
 	});
 }
 
-/* Shows/hides the controls window */
-function toggleExtStats() {
-	var stats = document.getElementById("extended-stats");
-	if(stats.style.display != "block") {
-		stats.style.display = "block";
-	} else {
-		stats.style.display = "none";
+/* Shows/hides the given window.
+ * name: string. The name of the window to toggle.
+ * player: Optional. The player object.
+ * force: Optional. If set opens the window even if it is already opened. 
+ */
+function toggleWindow(name, player, force) {
+	var window = document.getElementById(name);
+	if(window.style.display != "block") {
+		if(window.getAttribute("id") == "inventory") {
+			repopInv(player);
+		} else if (window.getAttribute("class") == "left-window") {
+			hideLeftWindow();
+		}
+		window.style.display = "block";
+	} else if (force === undefined) {
+		window.style.display = "none";
 	}
-}
-
-/* Shows/hides the extended stats window */
-function toggleControls() {
-	var controls = document.getElementById("controls");
-	if(controls.style.display != "block") {
-		hideLeftWindow();
-		controls.style.display = "block";
-	} else {
-		controls.style.display = "none";
-	}
-}
-
-/* Shows/hides the inventory window */
-function toggleInventory(player) {
-	var inventory = document.getElementById("inventory");
-	if(inventory.style.display != "block") {
-		repopInv(player);
-		inventory.style.display = "block";
-	} else {
-		inventory.style.display = "none";
-	}
-}
-
-/* Shows/hides the equipment window */
-function toggleEquipment() {
-	var equipment = document.getElementById("equipment");
-	if(equipment.style.display != "block") {
-		hideLeftWindow();
-		equipment.style.display = "block";
-	} else {
-		equipment.style.display = "none";
-	}
-}
-
-/* Shows/hides the parts window */
-function toggleParts() {
-	var parts = document.getElementById("parts");
-	if(parts.style.display != "block") {
-		hideLeftWindow();
-		parts.style.display = "block";
-	} else {
-		parts.style.display = "none";
-	}
-}
-
-/* Shows/hides the workbench window */
-function toggleWorkbench() {
-	var workbench = document.getElementById("workbench");
-	if(workbench.style.display != "block") {
-		hideLeftWindow();
-		workbench.style.display = "block";
-	} else {
-		workbench.style.display = "none";
-	}
-	return true;
 }
 
 /* Repopulates the player inventory */

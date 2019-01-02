@@ -98,7 +98,7 @@ function control(event, player) {
 			player.examine();
 			break;
 		case INVENTORY:
-			toggleInventory(player);
+			toggleWindow("inventory", player);
 			break;
 		case USE:
 			player.use();
@@ -107,7 +107,7 @@ function control(event, player) {
 			player.pickup();
 			break;
 		case CONTROLS:
-			toggleControls();
+			toggleWindow("controls");
 			break;
 		case DROP:
 			player.drop();
@@ -116,16 +116,16 @@ function control(event, player) {
 			player.attack();
 			break;
 		case EQUIPMENT:
-			toggleEquipment();
+			toggleWindow("equipment");
 			break;
 		case REMOVE:
 			player.unequip(true);
 			break;
 		case STATS:
-			toggleExtStats();
+			toggleWindow("extended-stats");
 			break;
 		case PARTS:
-			toggleParts();
+			toggleWindow("parts");
 			break;
 		case BUILD:
 			player.build();

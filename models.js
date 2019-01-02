@@ -698,12 +698,12 @@ class Player extends Character {
 					printToLog("\"I should probably extinguish the fire before I worry about fixing the ship.\"");
 					return;
 				}
-				toggleParts();
+				toggleWindow("parts", null, true);
 				// For now this has to be done for the toggleParts to execute before the prompt.
 				await sleep(100);
 				// Prompt user for ship part selection.
 				var partSel = this.itemSelection("parts");
-				toggleParts();
+				toggleWindow("parts");
 				if(partSel == 0) {
 					printToLog("You cannot build a workbench inside the ship.");
 					return;
@@ -730,14 +730,14 @@ class Player extends Character {
 				}
 			// Build from workbench.
 			} else if(env && env.search("workbench") != -1) {
-				toggleWorkbench();
+				toggleWindow("workbench", null, true);
 				// For now this has to be done for the toggleWorkbench to execute before the prompt.
 				await sleep(100);
 				// Prompt user for workbench item selection.
 				var benchSel = this.itemSelection("workbench") - 1;
 				var benchKey = Object.keys(WORKBENCH_REQS)[benchSel];
 				var workbenchReqs = WORKBENCH_REQS[benchKey];
-				toggleWorkbench();
+				toggleWindow("workbench");
 				if(this.inInv("Metal", parseInt(workbenchReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(workbenchReqs.split(";")[1])) && 
 				   this.inInv("Gravel", parseInt(workbenchReqs.split(";")[2]))) {
