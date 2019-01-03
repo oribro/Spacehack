@@ -17,7 +17,6 @@ const PROJECTILE_SLOT = 7;
 
 // Constants for ship parts requirements. String format: "metal;wood;gravel".
 const PARTS_REQS = {
-		WORKBENCH: "5;5;3",
 		HULL:	   "20;10;0",
 		WHEELS:	   "10;10;0",
 		TAIL:	   "20;5;0",
@@ -32,6 +31,11 @@ const WORKBENCH_REQS = {
 		CROSSBOW:	"5;10;0",
 		STONEBALLS: "0;0;1",
 		ARROWS:		"1;1;0"
+	};
+	
+// Constants for workbench items requirements. String format: "metal;wood;gravel".
+const BIG_OBJECTS_REQS = {
+		WORKBENCH: "5;5;3"
 	};
 
 // Other constants.

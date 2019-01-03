@@ -592,6 +592,10 @@ class Player extends Character {
 				var itemSel = parseInt(prompt("Choose item number from the workbench list:"), 10);
 				listLength = Object.keys(WORKBENCH_REQS).length;
 				break;
+			case "big-objects":
+				var itemSel = parseInt(prompt("Choose item number from the big objects list:"), 10);
+				listLength = Object.keys(BIG_OBJECTS_REQS).length;
+				break;
 		}
 		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
@@ -697,13 +701,9 @@ class Player extends Character {
 				// For now this has to be done for the toggleParts to execute before the prompt.
 				await sleep(100);
 				// Prompt user for ship part selection.
-				var partSel = this.itemSelection("parts");
+				var partSel = this.itemSelection("parts") - 1;
 				if(!persist) {
 					toggleWindow("parts");
-				}
-				if(partSel == 0) {
-					printToLog("You cannot build a workbench inside the ship.");
-					return;
 				}
 				var partKey = Object.keys(PARTS_REQS)[partSel];
 				var partReqs = PARTS_REQS[partKey];
@@ -758,23 +758,32 @@ class Player extends Character {
 					printToLog("You don't have enough resources to build this.");
 					return;
 				}
-			// Build a workbench.
-			} else if(this.inInv("Metal", parseInt(PARTS_REQS.WORKBENCH.split(";")[0])) && 
-					  this.inInv("Wood", parseInt(PARTS_REQS.WORKBENCH.split(";")[1])) && 
-					  this.inInv("Gravel", parseInt(PARTS_REQS.WORKBENCH.split(";")[2]))) {
-				if(confirm(`Do you want to build a workbench there?`)) {
+			// Build a big object (e.g.: workbench).
+			} else if(cellElement.getAttribute("walkable") == "true") {
+				var persist = toggleWindow("big-objects", null, true);
+				await sleep(100);
+				// Prompt user for big object selection.
+				var objectSel = this.itemSelection("big-objects") - 1;
+				if(!persist) {
+					toggleWindow("big-objects");
+				}
+				var objectKey = Object.keys(BIG_OBJECTS_REQS)[objectSel];
+				var objectReqs = BIG_OBJECTS_REQS[objectKey];
+				if(this.inInv("Metal", parseInt(objectReqs.split(";")[0])) && 
+				   this.inInv("Wood", parseInt(objectReqs.split(";")[1])) && 
+				   this.inInv("Gravel", parseInt(objectReqs.split(";")[2]))) {
 					createSound(BUILDING, false);
 					setTileOnTop(cell, T_WORKBENCH, false);
 					// Reduce resources from inventory.
-					this.removeItemFromInventory("Metal", parseInt(PARTS_REQS.WORKBENCH.split(";")[0]));
-					this.removeItemFromInventory("Wood", parseInt(PARTS_REQS.WORKBENCH.split(";")[1]));
-					this.removeItemFromInventory("Gravel", parseInt(PARTS_REQS.WORKBENCH.split(";")[2]));
-					printToLog("You have built a workbench.");
+					this.removeItemFromInventory("Metal", parseInt(objectReqs.split(";")[0]));
+					this.removeItemFromInventory("Wood", parseInt(objectReqs.split(";")[1]));
+					this.removeItemFromInventory("Gravel", parseInt(objectReqs.split(";")[2]));
+					printToLog("You have built a " + objectKey.toLowerCase() + ".");
 				} else {
-					printToLog("You built nothing.");
+					printToLog("You don't have enough resources to build this.");
 				}
 			} else {
-				printToLog("You don't have enough resources to build.");
+				printToLog("You cannot build there.");
 			}
 		}
 	}
