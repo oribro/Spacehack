@@ -96,6 +96,7 @@ window.onload = () => {
 	// Populate build lists.
 	popBuildList(PARTS_REQS);
 	popBuildList(WORKBENCH_REQS);
+	popBuildList(BIG_OBJECTS_REQS);
 	
 	promptContinue(player);
 }
@@ -118,7 +119,6 @@ function spawnGameObjects(map, initial) {
 		case "0,0":
 			document.getElementById("map-value").innerHTML = "Crash site";
 			// Spawn terrain environment elements.
-			//var i, j, biDigI, biDigJ;
 			for(i = 0; i < HEIGHT; i++) {
 				biDigI = getTwoDigits(i);
 				var div = document.createElement("div");
@@ -283,6 +283,40 @@ function spawnGameObjects(map, initial) {
 				spawnItems(T_FRUIT2, ITEMS["Red fruit"], "c0302", "c0707", "c0513", "c1309", "c1214", "c0218");
 			}
 			
+			break;
+			
+		// Map 0,-1 (Above spawn).
+		case "0,-1":
+			document.getElementById("map-value").innerHTML = "Beach";
+			// Spawn terrain environment elements.
+			for(i = 0; i < HEIGHT; i++) {
+				biDigI = getTwoDigits(i);
+				var div = document.createElement("div");
+				div.setAttribute("id", "r"+biDigI);
+				div.setAttribute("class", "tileline");
+				document.getElementById("game-board").appendChild(div);
+				for(j = 0; j < WIDTH; j++) {
+					biDigJ = getTwoDigits(j);
+					let cell = "c"+biDigI+biDigJ;
+					var span = document.createElement("span");
+					span.setAttribute("id", cell);
+					document.getElementById("r"+biDigI).appendChild(span);
+					if(j == 0) {
+						setCell(cell, T_WATER1, "false");
+					} else if (j == 1) {
+						setCell(cell, T_BEACH1, "false");
+						span.lastElementChild.setAttribute("class", "water");
+					} else if (j == 2) {
+						setCell(cell, T_SAND_G, "true");
+					} else if(j == WIDTH - 5) {
+						setCell(cell, T_VEGETATION2, "true");
+					} else if(j >= WIDTH - 4) {
+						setCell(cell, T_VEGETATION1, "true");
+					} else {
+						setCell(cell, T_GROUND, "true");
+					}
+				}
+			}
 			break;
 	}
 }
