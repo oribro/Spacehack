@@ -29,6 +29,8 @@ const PLOT = {
 	INTRO: 0,
 	DOGFISH: 1,
 	RIVER_AMBUSH: 2,
+	CHICK_MEETING: 3,
+	CHICK_CARNAGE: 4
 }
 
 /* Plot advancement counter */
@@ -85,12 +87,12 @@ window.onload = () => {
 		document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
 		
 		/* Uncomment this for testing */
-		/*
-		godmode(player);
-		plot = 2;
+		
+		//godmode(player);
+		plot = 3;
 		player.lvl = 5;
 		document.getElementById("lvl-value").innerHTML = player.lvl;
-		*/
+
 	}
 	
 	// Populate build lists.
@@ -359,6 +361,27 @@ function managePlot(player) {
 				createSound(WATER_SPLASH, false);
 				createSound(DOGFISH_SNARL, false);
 				printToLog("\"Not this thing again...\"");
+			}
+			break;
+		case PLOT.CHICK_MEETING:
+			if(player.mapX == 0 && player.mapY == -1) {
+				plot++;
+				npcs.push(new NPC(16, 9, "Chick", "enemy"));
+				createSound(CHICK_CHIRP, false);
+				printToLog("\"Look at that cute little chick!\"");
+			}
+			break;
+		case PLOT.CHICK_CARNAGE:
+			if(player.mapX == 0 && player.mapY == -1 && player.nextTo(npcs[npcs.length-1])) {
+				plot++;
+				for(i = 2; i < WIDTH; i++) {
+					npcs.push(new NPC(i, 0, "Chick", "enemy"));
+				}
+				for(i = 0; i < HEIGHT; i++) {
+					npcs.push(new NPC(WIDTH-1, i, "Chick", "enemy"));
+				}
+				createSound(CHICK_CHIRP, false);
+				printToLog("\"Oh no.\"");
 			}
 			break;
 	}

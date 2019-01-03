@@ -9,7 +9,8 @@ const XP_MULTIPLIER = 10;
 const POISON_PERIOD = 10;
 
 const NPC_LIST = {
-				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;11;500"
+				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;11;500",
+				"Chick": T_CHICK_R + ";" + CHICK_CHIRP + ";50;13;800"
 				 };
 
 /* Constants for the different statuses the player can be at */
@@ -76,7 +77,24 @@ class Character {
 			yPos
 		];
 	}
-
+	
+	/* Checks whether the character is standing next to the given character. */
+	nextTo(character) {
+		var xOffset,yOffset;
+		var biDigThisX, biDigThisY;
+		for(xOffset = -1; xOffset <= 1; xOffset++) {
+			biDigThisX = getTwoDigits(this.xPos + xOffset);
+			for(yOffset = -1; yOffset <= 1; yOffset++) {
+				biDigThisY = getTwoDigits(this.yPos + yOffset);
+				if(inBounds("c"+biDigThisY+biDigThisX)) {
+					if(this.xPos + xOffset == character.xPos && this.yPos + yOffset == character.yPos) {
+						return true;
+					}	
+				}
+			}
+		}
+		return false;
+	}
 }
 
 

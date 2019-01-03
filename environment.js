@@ -18,6 +18,8 @@ const T_PLAYER = ASSETS + TILESET + "player1.png";
 const T_NON_PLAYER = ASSETS + TILESET + "npc1.png";
 const T_DOGFISH_R = ASSETS + TILESET + "dogfish_r.png";
 const T_DOGFISH_L = ASSETS + TILESET + "dogfish_l.png";
+const T_CHICK_R = ASSETS + TILESET + "chick.png";
+const T_CHICK_L = ASSETS + TILESET + "chick.png";
 
 /* Object tiles */
 const T_SHIP2 = ASSETS + TILESET + "ship2.png";
@@ -98,6 +100,7 @@ const GRUNT = ASSETS + SOUNDS + "grunt.wav";
 /* Character sounds */
 const DOGFISH_SNARL = ASSETS + SOUNDS + "dogfish-snarl.wav";
 const DOGFISH_WHINE = ASSETS + SOUNDS + "dogfish-whine.wav";
+const CHICK_CHIRP = ASSETS + SOUNDS + "chick-chirp.mp3";
 
 /* Object sounds */
 const CONTAINER_OPEN = ASSETS + SOUNDS + "container-open.wav";
