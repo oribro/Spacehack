@@ -160,45 +160,35 @@ class Player extends Character {
 			if(plot < PLOT.RIVER_AMBUSH) {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
+				saveMapItems(this.mapX+","+this.mapY, true);
 				if(newPos[0] >= WIDTH) {
-					saveMapItems(this.mapX+","+this.mapY, true);
 					this.mapX++;
-					currMap = this.mapX+","+this.mapY;
-					if(isInitialVisit(this.mapX+","+this.mapY)) {
-						spawnGameObjects(this.mapX+","+this.mapY, true);
-					} else {
-						spawnGameObjects(this.mapX+","+this.mapY);
-					}
-					loadMapItems(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(0, newPos[1]);
-					// Draw the character symbol at the updated location.
-					this.draw(...newBiDig);
-					this.getHungrier();
-					// Increment the turn counter.
-					incrementTurnCounter(this);
-					// Increase XP on every turn.
-					this.xp += XP_TURN;
-					document.getElementById("xp-value").innerHTML = this.xp;
 				} else if (newPos[0] < 0) {
-					saveMapItems(this.mapX+","+this.mapY, true);
 					this.mapX--;
-					currMap = this.mapX+","+this.mapY;
-					if(isInitialVisit(this.mapX+","+this.mapY)) {
-						spawnGameObjects(this.mapX+","+this.mapY, true);
-					} else {
-						spawnGameObjects(this.mapX+","+this.mapY);
-					}
-					loadMapItems(this.mapX+","+this.mapY);
 					newBiDig = this.moveChar(WIDTH-1, newPos[1]);
-					// Draw the character symbol at the updated location.
-					this.draw(...newBiDig);
-					this.getHungrier();
-					// Increment the turn counter.
-					incrementTurnCounter(this);
-					// Increase XP on every turn.
-					this.xp += XP_TURN;
-					document.getElementById("xp-value").innerHTML = this.xp;
+				} else if(newPos[1] < 0) {
+					this.mapY--;
+					newBiDig = this.moveChar(newPos[0], HEIGHT-1);
+				} else {
+					this.mapY++;
+					newBiDig = this.moveChar(newPos[0], 0);
 				}
+				currMap = this.mapX+","+this.mapY;
+				if(isInitialVisit(this.mapX+","+this.mapY)) {
+					spawnGameObjects(this.mapX+","+this.mapY, true);
+				} else {
+					spawnGameObjects(this.mapX+","+this.mapY);
+				}
+				loadMapItems(this.mapX+","+this.mapY);
+				// Draw the character symbol at the updated location.
+				this.draw(...newBiDig);
+				this.getHungrier();
+				// Increment the turn counter.
+				incrementTurnCounter(this);
+				// Increase XP on every turn.
+				this.xp += XP_TURN;
+				document.getElementById("xp-value").innerHTML = this.xp;
 				document.getElementById("coords-value").innerHTML = "(" + this.mapX + "," + this.xPos + " ; " + this.mapY + "," + this.yPos + ")";
 			}
 		}
