@@ -112,10 +112,10 @@ function spawnGameObjects(map, initial) {
 	var i, j, biDigI, biDigJ;
 	// Delete and recreate the game-board DOM element.
 	var board = document.getElementById("game-board");
-	document.getElementById("game").removeChild(board);
+	document.getElementById("game-board-wrapper").removeChild(board);
 	board = document.createElement("div");
 	board.setAttribute("id", "game-board");
-	document.getElementById("game").appendChild(board);
+	document.getElementById("game-board-wrapper").appendChild(board);
 	switch (map) {
 		// Map 0,0 (Spawn map).
 		case "0,0":
