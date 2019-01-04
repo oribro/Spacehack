@@ -35,7 +35,8 @@ const WORKBENCH_REQS = {
 	
 // Constants for workbench items requirements. String format: "metal;wood;gravel".
 const BIG_OBJECTS_REQS = {
-		WORKBENCH: "5;5;3"
+		WORKBENCH: "5;5;3",
+		BRIDGE: "1;5;0"
 	};
 
 // Other constants.

@@ -9,7 +9,12 @@
 function setTileOnTop(cell, tile, walkable) {
 	var img = document.createElement("img");
 	var cellElement = document.getElementById(cell);
-	cellElement.appendChild(img);
+	var lastChild = cellElement.lastElementChild;
+	if(lastChild.getAttribute("src").search("player") != -1) {
+		cellElement.insertBefore(img, lastChild);
+	} else {
+		cellElement.appendChild(img);
+	}
 	cellElement.style.position = "relative";
 	img.setAttribute("id", cell.replace('c', 'o'));
 	img.setAttribute("src", tile);
@@ -32,12 +37,12 @@ function setTilesOnTop(tile, walkable) {
 /* Removes the tile that covers another tile and set the 'env' attribute to the value of the bottom tile.
  * walkable: boolean. optional parameter to set the walkable attribute of the cell */
 function removeTileOnTop(cell, walkable) {
-	var overTile = document.getElementById(cell.replace('c','o'));
+	var overTile = document.getElementById(cell).lastElementChild;
 	if(overTile) {
 		var cellElement = document.getElementById(cell);
 		cellElement.removeChild(overTile);
 		
-		let bottomTile = cellElement.getElementsByTagName("img")[0].getAttribute("src");
+		let bottomTile = cellElement.lastElementChild.getAttribute("src");
 		setEnv(cell, bottomTile);
 		
 		if(walkable != undefined) {
@@ -45,6 +50,11 @@ function removeTileOnTop(cell, walkable) {
 				document.getElementById(cell).setAttribute("walkable", "true");
 			} else {
 				document.getElementById(cell).setAttribute("walkable", "false");
+			}
+		}
+		if(document.getElementById(cell).lastElementChild != null) {
+			if(document.getElementById(cell).lastElementChild.getAttribute("src").search("player") != -1) {
+				removeTileOnTop(cell, walkable);
 			}
 		}
 	}

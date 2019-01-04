@@ -777,7 +777,7 @@ class Player extends Character {
 					return;
 				}
 			// Build a big object (e.g.: workbench).
-			} else if(cellElement.getAttribute("walkable") == "true") {
+			} else if(cellElement.getAttribute("walkable") == "true" || env.search("water") != -1) {
 				var persist = toggleWindow("big-objects", null, true);
 				await sleep(100);
 				// Prompt user for big object selection.
@@ -787,15 +787,23 @@ class Player extends Character {
 				}
 				var objectKey = Object.keys(BIG_OBJECTS_REQS)[objectSel];
 				var objectReqs = BIG_OBJECTS_REQS[objectKey];
+				if(objectKey != "BRIDGE" && env.search("water") != -1) {
+					printToLog("You cannot build there.");
+					return;
+				}
 				if(this.inInv("Metal", parseInt(objectReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(objectReqs.split(";")[1])) && 
 				   this.inInv("Gravel", parseInt(objectReqs.split(";")[2]))) {
 					createSound(BUILDING, false);
-					setTileOnTop(cell, T_WORKBENCH, false);
+					setTileOnTop(cell, eval("T_"+objectKey.toUpperCase()), false);
 					// Reduce resources from inventory.
 					this.removeItemFromInventory("Metal", parseInt(objectReqs.split(";")[0]));
 					this.removeItemFromInventory("Wood", parseInt(objectReqs.split(";")[1]));
 					this.removeItemFromInventory("Gravel", parseInt(objectReqs.split(";")[2]));
+					// If bridge set to walkable.
+					if(objectKey == "BRIDGE") {
+						cellElement.setAttribute("walkable", "true");
+					}
 					printToLog("You have built a " + objectKey.toLowerCase() + ".");
 				} else {
 					printToLog("You don't have enough resources to build this.");

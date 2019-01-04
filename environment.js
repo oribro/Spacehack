@@ -36,6 +36,7 @@ const T_DEBRIS2 = ASSETS + TILESET + "debris2.png";
 const T_CONTAINER = ASSETS + TILESET + "container1.png";
 const T_CONTAINER2 = ASSETS + TILESET + "container2.png";
 const T_WORKBENCH = ASSETS + TILESET + "workbench.png";
+const T_BRIDGE = ASSETS + TILESET + "bridge.png";
 
 /* Environment tiles */
 const T_GROUND 	= ASSETS + TILESET + "ground1.png";
@@ -163,7 +164,8 @@ const ENV = {
 		
 		"rock": `T_ROCK;${STRINGS["examine_rock"]}`,
 		
-		"workbench": `T_WORKBENCH;${STRINGS["examine_workbench"]}`
+		"workbench": `T_WORKBENCH;${STRINGS["examine_workbench"]}`,
+		"bridge": `T_BRIDGE;${STRINGS["examine_bridge"]}`
 }
 
 

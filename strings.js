@@ -79,6 +79,8 @@ const STRINGS = {
 	
 	"examine_workbench": "\"I can build very useful equipment with this workbench.\"",
 	
+	"examine_bridge":  "\"This looks stable enough to walk on.\"",
+	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
 	"hungry1": "You are getting hungry.",
