@@ -97,6 +97,7 @@ const SOUNDS = "sounds/"
 /* Player sounds */
 const PUNCH = ASSETS + SOUNDS + "punch.wav";
 const GRUNT = ASSETS + SOUNDS + "grunt.wav";
+const WAKEUP = ASSETS + SOUNDS + "wakeup.mp3";
 
 /* Character sounds */
 const DOGFISH_SNARL = ASSETS + SOUNDS + "dogfish-snarl.wav";

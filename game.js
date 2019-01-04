@@ -69,9 +69,6 @@ window.onload = () => {
 		// Create the board and fill environment.
 		spawnGameObjects("0,0", true);
 
-		// Print first text to log.
-		printToLog(STRINGS[EVENT.WAKEUP]);
-
 		// Create a new player character.
 		// Places the character at the top left.
 		player = new Player(6, 5);
@@ -93,6 +90,8 @@ window.onload = () => {
 		player.lvl = 5;
 		document.getElementById("lvl-value").innerHTML = player.lvl;
 
+		// Play game start cinematic.
+		playGameIntro(player);
 	}
 	
 	// Populate build lists.
@@ -100,7 +99,6 @@ window.onload = () => {
 	popBuildList(WORKBENCH_REQS);
 	popBuildList(BIG_OBJECTS_REQS);
 	
-	promptContinue(player);
 }
 
 /* Draws a map on the game board according to the map parameter.
@@ -115,7 +113,7 @@ function spawnGameObjects(map, initial) {
 	document.getElementById("game-board-wrapper").removeChild(board);
 	board = document.createElement("div");
 	board.setAttribute("id", "game-board");
-	document.getElementById("game-board-wrapper").appendChild(board);
+	document.getElementById("game-board-wrapper").insertBefore(board, document.getElementById("game-board-wrapper").lastElementChild);
 	switch (map) {
 		// Map 0,0 (Spawn map).
 		case "0,0":
@@ -321,22 +319,6 @@ function spawnGameObjects(map, initial) {
 			}
 			break;
 	}
-}
-
-/* Deletes the prompt message and prints next string */
-function exitShip(player) {
-	const playerPos = [player.xPos, player.yPos];
-	player.draw(...playerPos);
-	log = log.slice(0, log.lastIndexOf("\n") - 1);
-	printToLog(STRINGS[EVENT.EXIT_SHIP]);
-	fireSound.play();
-	document.body.onkeydown = function(event) {
-		control(event, player);
-		// Check if the player is within a reasonable distance from the fire
-		// such that he can still hear it burning.
-		shouldFirePlay(fireSound, player, 5, 7);
-	};
-	
 }
 
 /* Manages plot events */

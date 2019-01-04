@@ -12,9 +12,11 @@ const CHOICE = {
 };
 
 const STRINGS = {	
-	"wakeup": "You wake up. \"Ughh my head... Are you ok?\"\n" +
-	"...\n" +
-	"\"" + PARTNER_NAME + "? " + PARTNER_NAME + "???\"",
+	"wakeup1": "You wake up. \"Ughh my head... Are you ok?\"\n",
+
+	"wakeup2": "...\n",
+
+	"wakeup3": "\"" + PARTNER_NAME + "? " + PARTNER_NAME + "???\"",
 	
 	"exit_ship": "You turn your head around to the backseat where " + PARTNER_NAME + " was sitting a few seconds ago. There's a huge hole in the ship hull and there's no sign of her or her seat.\n" +
 	"\"Ship must have broken apart while crashing. The dynamic crash protection system should have landed her safely though.\"",
