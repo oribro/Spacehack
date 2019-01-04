@@ -31,6 +31,7 @@ class Character {
 		this.x = x;
 		this.y = y;
 		this.hp = SPAWN_HP;
+		this.alive = true;
 	}
 
 	get xPos() {
@@ -42,6 +43,9 @@ class Character {
 	get health() {
 		return this.hp;
 	}
+	get isAlive() {
+		return this.alive;
+	}
 	set xPos(n) {
 		this.x = n;
 	}
@@ -51,6 +55,10 @@ class Character {
 	set health(hp){
 		this.hp = hp;
 	}
+	set isAlive(newIsAlive) {
+		this.alive = newIsAlive;
+	}
+
 	/* Redraws the ground and sets character at new position.
 	*  Returns the new position to draw the character symbol at.
 	*/
@@ -1032,6 +1040,7 @@ class Player extends Character {
 	*  cause: string. The reason why the player died.
 	*/
 	async die(cause) {
+		this.isAlive = false;
 		// Disable player movement. The syntax could be improved with JQuery.
 		document.body.onkeydown = null;
 		await sleep(700);
@@ -1272,7 +1281,7 @@ class NPC extends Character{
 		let yDist = Math.abs(player.yPos - this.y);
 		if(xDist < 2 && yDist < 2) {
 			player.getHit(this.dmg);
-			if (player.health <= 0) {
+			if (player.health <= 0 && player.isAlive) {
 				player.die(`Killed by ${this.type}`);
 			}
 			printToLog("The " + this.type.toLowerCase() + " attacks!");
@@ -1289,6 +1298,7 @@ class NPC extends Character{
 	/* When NPC's HP reaches zero, remove it from the game */
 	die() {
 		if(this.hp <= 0) {
+			this.isAlive = false;
 			var biDigCurX = getTwoDigits(this.x);
 			var biDigCurY = getTwoDigits(this.y);
 			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
