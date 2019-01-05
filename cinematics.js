@@ -4,6 +4,10 @@
 
 /* Plays the cinematic where the player wakes up and starts looking for his partner */ 
 async function playGameIntro(player) {
+	let eyelids = Array.from(document.getElementsByClassName("board-cover"));
+	eyelids.forEach(
+		eyelid => eyelid.style.display = "block"
+	);
 	printToLog(STRINGS["wakeup1"]);
 	await sleep(3000);
 	printToLog(STRINGS["wakeup2"]);

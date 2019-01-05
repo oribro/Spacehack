@@ -65,6 +65,8 @@ window.onload = () => {
 		document.getElementById("xp-value").innerHTML = player.xp;
 		document.getElementById("lvl-value").innerHTML = player.lvl;
 		document.getElementById("coords-value").innerHTML = "(" + player.mapX + "," + player.xPos + " ; " + player.mapY + "," + player.yPos + ")";
+
+		promptContinue(player);
 	} else {
 		// Create the board and fill environment.
 		spawnGameObjects("0,0", true);
