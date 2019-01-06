@@ -749,6 +749,7 @@ class Player extends Character {
 					document.getElementById(partKey.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
 					// Add part to ship visually.
 					repairShip(partKey);
+					saveGame(this);
 					printToLog("You have built and repaired the " + partKey.toLowerCase() + ".");
 				} else {
 					printToLog("You don't have enough resources to build this.");
@@ -782,6 +783,7 @@ class Player extends Character {
 						wbItem.value = PROJECTILE_STACK;
 					}
 					this.addItemsToInventory([wbItem]);
+					saveGame(this);
 					printToLog("You have built a " + wbItemName + ".");
 				} else {
 					printToLog("You don't have enough resources to build this.");
@@ -815,6 +817,12 @@ class Player extends Character {
 					if(objectKey == "BRIDGE") {
 						cellElement.setAttribute("walkable", "true");
 					}
+					// Save object in the big objects list.
+					if(!bigObjects[this.mapX+","+this.mapY]) {
+						bigObjects[this.mapX+","+this.mapY] = [];
+					}
+					bigObjects[this.mapX+","+this.mapY].push([cell, objectKey]);
+					saveGame(this);
 					printToLog("You have built a " + objectKey.toLowerCase() + ".");
 				} else {
 					printToLog("You don't have enough resources to build this.");

@@ -484,6 +484,9 @@ function saveGame(player) {
 	localStorage.setItem("playerLvl", player.lvl);
 	localStorage.setItem("playerMapX", player.mapX);
 	localStorage.setItem("playerMapY", player.mapY);
+	
+	// Save big objects.
+	localStorage.setItem("bigObjects", JSON.stringify(bigObjects));
 }
 
 /* Loads the game state from the localStorage object.
@@ -520,6 +523,9 @@ function loadGame(afterGameDraw) {
 			
 			// Load current map items.
 			mapItems = JSON.parse(localStorage.getItem("mapItems"));
+			
+			// Load big objects.
+			bigObjects = JSON.parse(localStorage.getItem("bigObjects"));
 			
 			// Load inventory items.
 			var restoredInv = JSON.parse(localStorage.getItem("playerInv"));
@@ -571,5 +577,19 @@ function repairShip(part) {
 			break;
 		default:
 			break;
+	}
+}
+
+/* Spawns the big objects that were built in the given map */
+function loadMapBigObjects(map) {
+	if(bigObjects[map]) {
+		for(bigObject = 0; bigObject < bigObjects[map].length; bigObject++) {
+			let cell = bigObjects[map][bigObject][0];
+			let object = bigObjects[map][bigObject][1];
+			setTileOnTop(cell, eval("T_"+object.toUpperCase()), false);
+			if(object == "BRIDGE") {
+				document.getElementById(cell).setAttribute("walkable", "true");
+			}
+		}
 	}
 }

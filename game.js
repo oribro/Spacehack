@@ -36,6 +36,9 @@ const PLOT = {
 /* Plot advancement counter */
 var plot = PLOT.INTRO;
 
+/* Saves the "big objects" built in each map */
+var bigObjects = {};
+
 /*
 * Game setup
 */
@@ -322,6 +325,7 @@ function spawnGameObjects(map, initial) {
 			}
 			break;
 	}
+	loadMapBigObjects(map);
 }
 
 /* Manages plot events */
