@@ -423,6 +423,7 @@ function setItemsOntoCell(cell, itemsArr) {
 					itemTile = child;
 				}
 			});
+			console.log(itemTile);
 			itemTile.setAttribute("item", item.toString());
 		}
 	)
@@ -612,7 +613,15 @@ function loadMapItems(map) {
 		
 		// For each item check if already spawned, if not - spawn it.
 		for(var itemCell in items) {
-			if(document.getElementById(itemCell.replace("c", "o")) == null) {
+			let itemCellChildren = document.getElementById(itemCell).childNodes;
+			let spawned = false;
+			itemCellChildren.forEach(function (child) {
+				if(child.hasAttribute("item") && child.getAttribute("item").search(items[itemCell].name.toLowerCase() != -1)) {
+					spawned = true;
+					return;
+				}
+			});
+			if(!spawned) {
 				cellItems = items[itemCell].map(
 					itemString => {
 						const itemProperties = itemString.split(";");

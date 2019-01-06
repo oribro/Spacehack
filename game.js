@@ -93,7 +93,8 @@ window.onload = () => {
 		document.getElementById("lvl-value").innerHTML = player.lvl;
 
 		// Play game start cinematic.
-		playGameIntro(player);
+		//playGameIntro(player);
+		promptContinue(player);
 	}
 	
 	// Populate build lists.
