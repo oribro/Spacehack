@@ -350,3 +350,10 @@ footer {
 .footer-left {
 	float: left;
 }
+
+#skip-cinematic {
+	position: absolute;
+	right: 14vw;
+	bottom: 1vh;
+	font-size: 2em;
+}

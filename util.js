@@ -2,6 +2,8 @@
    * File for utility functions.
  ***/
 
+// Variable for keeping track of sleep function calls.
+var sleepNum;
  
 /******************* TILES *******************/ 
 
@@ -399,7 +401,7 @@ function incrementTurnCounter(player) {
 */
 function sleep(duration){
 	return new Promise(
-		resolve => setTimeout(resolve, duration)
+		resolve => sleepNum = setTimeout(resolve, duration)
 	);
 }
  

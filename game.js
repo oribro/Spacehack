@@ -90,14 +90,13 @@ window.onload = () => {
 		
 		/* Uncomment this for testing */
 		
-		godmode(player);
-		plot = 3;
-		player.lvl = 5;
-		document.getElementById("lvl-value").innerHTML = player.lvl;
+		// godmode(player);
+		// plot = 3;
+		// player.lvl = 5;
+		// document.getElementById("lvl-value").innerHTML = player.lvl;
 		
 		// Play game start cinematic.
-		//playGameIntro(player);
-		promptContinue(player);
+		playGameIntro(player);
 	}
 	
 	// Populate build lists.
