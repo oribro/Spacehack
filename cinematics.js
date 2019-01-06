@@ -4,6 +4,8 @@
 
 /* Plays the cinematic where the player wakes up and starts looking for his partner */ 
 async function playGameIntro(player) {
+	// Add option for skipping the cinematic.
+	document.getElementById("skip-cinematic").style.display = "block";
 	let eyelids = Array.from(document.getElementsByClassName("board-cover"));
 	eyelids.forEach(
 		eyelid => eyelid.style.display = "block"

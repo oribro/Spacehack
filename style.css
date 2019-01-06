@@ -352,6 +352,7 @@ footer {
 }
 
 #skip-cinematic {
+	display: none;
 	position: absolute;
 	right: 14vw;
 	bottom: 1vh;
