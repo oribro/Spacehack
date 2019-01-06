@@ -61,19 +61,22 @@ class Character {
 
 	/* Redraws the ground and sets character at new position.
 	*  Returns the new position to draw the character symbol at.
+	*  noTile: Optional. If set does not remove tile.
 	*/
-	moveChar(xPos, yPos) {
+	moveChar(xPos, yPos, noTile) {
 
 		var biDigCurX = getTwoDigits(this.xPos);
 		var biDigCurY = getTwoDigits(this.yPos);
 		
 		// Check if the player just dropped an item on the current cell.
-		var items = getItemsInCell("c"+biDigCurY+biDigCurX);
-		if(items.length > 0) {
-			removeTileOnTop("c"+biDigCurY+biDigCurX, false);
-		} else {
-		// Move the char from the current position.
-			removeTileOnTop("c"+biDigCurY+biDigCurX, true);
+		if(noTile === undefined) {
+			var items = getItemsInCell("c"+biDigCurY+biDigCurX);
+			if(items.length > 0) {
+				removeTileOnTop("c"+biDigCurY+biDigCurX, false);
+			} else {
+			// Move the char from the current position.
+				removeTileOnTop("c"+biDigCurY+biDigCurX, true);
+			}
 		}
 
 		// Set character position properties to new position.
@@ -1204,11 +1207,11 @@ class NPC extends Character{
 					} else if(yDest < 0) {
 						yDest = HEIGHT-1;
 					}
-					this.moveChar(xDest, yDest);
+					this.moveChar(xDest, yDest, true);
 					this.draw(this.x, this.y);
 					return;
 				} else {
-					this.moveChar(xDest, yDest);
+					this.moveChar(xDest, yDest, true);
 					return;
 				}
 			}

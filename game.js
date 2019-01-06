@@ -91,7 +91,7 @@ window.onload = () => {
 		plot = 3;
 		player.lvl = 5;
 		document.getElementById("lvl-value").innerHTML = player.lvl;
-
+		
 		// Play game start cinematic.
 		//playGameIntro(player);
 		promptContinue(player);
