@@ -413,12 +413,17 @@ function createItemsFromCell(cell, itemIndices) {
 */
 function setItemsOntoCell(cell, itemsArr) {
 	let cellElement = document.getElementById(cell);
-
+	let itemTile;
 	itemsArr.forEach(
 		item => {
 			setTileOnTop(cell, item.tile, "false");
-			let tileOnTop = cellElement.lastElementChild;
-			tileOnTop.setAttribute("item", item.toString());
+			let cellChildNodes = cellElement.childNodes;
+			cellChildNodes.forEach(function (child) {
+				if(!child.hasAttribute("item") && child.getAttribute("src").search(item.name.toLowerCase()) != -1) {
+					itemTile = child;
+				}
+			});
+			itemTile.setAttribute("item", item.toString());
 		}
 	)
 
