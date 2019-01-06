@@ -419,11 +419,10 @@ function setItemsOntoCell(cell, itemsArr) {
 			setTileOnTop(cell, item.tile, "false");
 			let cellChildNodes = cellElement.childNodes;
 			cellChildNodes.forEach(function (child) {
-				if(!child.hasAttribute("item") && child.getAttribute("src").search(item.name.toLowerCase()) != -1) {
+				if(!child.hasAttribute("item") && child.getAttribute("src") == item.tile) {
 					itemTile = child;
 				}
 			});
-			console.log(itemTile);
 			itemTile.setAttribute("item", item.toString());
 		}
 	)
@@ -616,7 +615,7 @@ function loadMapItems(map) {
 			let itemCellChildren = document.getElementById(itemCell).childNodes;
 			let spawned = false;
 			itemCellChildren.forEach(function (child) {
-				if(child.hasAttribute("item") && child.getAttribute("item").search(items[itemCell].name.toLowerCase() != -1)) {
+				if(child.hasAttribute("item") && child.getAttribute("item") == items[itemCell].toString) {
 					spawned = true;
 					return;
 				}
