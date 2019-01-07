@@ -10,7 +10,8 @@ const POISON_PERIOD = 10;
 
 const NPC_LIST = {
 				"Dogfish": T_DOGFISH_L + ";" + DOGFISH_WHINE + ";20;11;500",
-				"Chick": T_CHICK_R + ";" + CHICK_CHIRP + ";50;13;800"
+				"Chick": T_CHICK_R + ";" + CHICK_CHIRP + ";50;13;800",
+				"Three Headed Humanoid": T_TRIHEADHUMANOID + ";" + PUNCH + ";300;100;10000",
 				 };
 
 /* Constants for the different statuses the player can be at */

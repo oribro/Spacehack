@@ -71,7 +71,7 @@ const STRINGS = {
 	
 	"examine_red fruit": "\"Looks like the fruit from the red trees.\"",
 	
-	"examine_container": "\"It's the container from the ship! It must have fallen while we crashed. There should be useful things inside.\"",
+	"examine_container": "\"It's a container from the ship! It must have fallen while we crashed. There should be useful things inside.\"",
 	
 	"examine_items": "There are several items here.",
 	
@@ -79,9 +79,15 @@ const STRINGS = {
 	
 	"examine_dogfish_l": "It's a creature with a head of a fish and body of a dog. It's a dogfish. It seems angry.",
 	
+	"examine_chick": "\"It's a little chick. Looks harmless from afar but that thing can bite...\"",
+	
+	"examine_triheadhumanoid": "\"It's a... man... with... three heads...\"",
+	
 	"examine_workbench": "\"I can build very useful equipment with this workbench.\"",
 	
 	"examine_bridge":  "\"This looks stable enough to walk on.\"",
+	
+	"examine_sign":  "\"It's a road sign! So there must be intelligent life on this planet. I can't read what it says but it points to the river, maybe there's something interesting on the other side?\"",
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	

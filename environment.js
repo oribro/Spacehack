@@ -20,6 +20,7 @@ const T_DOGFISH_R = ASSETS + TILESET + "dogfish_r.png";
 const T_DOGFISH_L = ASSETS + TILESET + "dogfish_l.png";
 const T_CHICK_R = ASSETS + TILESET + "chick.png";
 const T_CHICK_L = ASSETS + TILESET + "chick.png";
+const T_TRIHEADHUMANOID = ASSETS + TILESET + "triheadhumanoid.png";
 
 /* Object tiles */
 const T_SHIP2 = ASSETS + TILESET + "ship2.png";
@@ -37,6 +38,7 @@ const T_CONTAINER = ASSETS + TILESET + "container1.png";
 const T_CONTAINER2 = ASSETS + TILESET + "container2.png";
 const T_WORKBENCH = ASSETS + TILESET + "workbench.png";
 const T_BRIDGE = ASSETS + TILESET + "bridge.png";
+const T_SIGN_R = ASSETS + TILESET + "sign_r.png";
 
 /* Environment tiles */
 const T_GROUND 	= ASSETS + TILESET + "ground1.png";
@@ -158,6 +160,10 @@ const ENV = {
 		"dogfish_r": `T_DOGFISH;${STRINGS["examine_dogfish_r"]}`,
 		"dogfish_l": `T_DOGFISH;${STRINGS["examine_dogfish_l"]}`,
 		
+		"chick": `T_CHICK;${STRINGS["examine_chick"]}`,
+		
+		"triheadhumanoid": `T_TRIHEADHUMANOID;${STRINGS["examine_triheadhumanoid"]}`,
+		
 		"tree1": `T_TREE1;${STRINGS["examine_tree1"]}`,
 		"tree2": `T_TREE2;${STRINGS["examine_tree2"]}`,
 		
@@ -166,7 +172,9 @@ const ENV = {
 		"rock": `T_ROCK;${STRINGS["examine_rock"]}`,
 		
 		"workbench": `T_WORKBENCH;${STRINGS["examine_workbench"]}`,
-		"bridge": `T_BRIDGE;${STRINGS["examine_bridge"]}`
+		"bridge": `T_BRIDGE;${STRINGS["examine_bridge"]}`,
+		
+		"sign_r": `T_SIGN;${STRINGS["examine_sign"]}`,
 }
 
 

@@ -281,6 +281,12 @@ function spawnGameObjects(map, initial) {
 				"c1725", "c0925", "c0024"			
 			);
 			
+			// Sign.
+			setTileOnTop("c0624", T_SIGN_R, "false");
+			
+			// Three headed man.
+			npcs.push(new NPC(30, 4, "Three Headed Humanoid", "friend"));
+			
 			if(initial) {
 				// Green fruit.
 				spawnItems(T_FRUIT1, ITEMS["Green fruit"], "c0703", "c1202", "c0810", "c1413", "c1018", "c0114");
@@ -322,6 +328,41 @@ function spawnGameObjects(map, initial) {
 					}
 				}
 			}
+			
+			// Ship debris.
+			setTilesOnTop(T_DEBRIS1, "false", "c1506", "c1004", "c0706", "c0412", "c1108", "c0519");
+			setTilesOnTop(T_DEBRIS2, "false", "c0610", "c0811", "c0112", "c1404", "c0308", "c1314");
+				
+			// Green trees.
+			setTilesOnTop(T_TREE1, "false", "c0428", "c0730", "c1029", "c0129");
+			setTilesOnTop(T_TREE2, "false", "c1330", "c1529");
+			
+			// Rocks.
+			setTilesOnTop(T_ROCK, "false", "c0404", "c0714", "c1218", "c0721", "c0317", "c1525");
+			
+			// Container
+			containers["c0205"] = new Container([
+				new Item("FirstAid"),
+				new Item("FirstAid"),
+				new Item("FirstAid"),
+				new Item("Ration"),
+				new Item("Ration"),
+				new Item("Ration"),
+				new Item("Metal"),
+				new Item("Wood"),
+				new Item("Gravel"),
+			],
+				"c0205",
+				true
+			);
+			
+			if(initial) {
+				// Green fruit.
+				spawnItems(T_FRUIT1, ITEMS["Green fruit"], "c1129", "c0729", "c0229");
+				// Red fruit.
+				spawnItems(T_FRUIT2, ITEMS["Red fruit"], "c1528");
+			}
+			
 			break;
 	}
 	loadMapBigObjects(map);
@@ -362,11 +403,8 @@ function managePlot(player) {
 		case PLOT.CHICK_CARNAGE:
 			if(player.mapX == 0 && player.mapY == -1 && player.nextTo(npcs[npcs.length-1])) {
 				plot++;
-				for(i = 2; i < WIDTH; i++) {
+				for(i = 10; i < 20; i++) {
 					npcs.push(new NPC(i, 0, "Chick", "enemy"));
-				}
-				for(i = 0; i < HEIGHT; i++) {
-					npcs.push(new NPC(WIDTH-1, i, "Chick", "enemy"));
 				}
 				createSound(CHICK_CHIRP, false);
 				printToLog("\"Oh no.\"");
