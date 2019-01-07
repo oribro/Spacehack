@@ -32,7 +32,7 @@ async function exitShip(player) {
 	// Player exits ship.
 	spawnPlayer(player);
 	// Hide the Skip button as the cinematic finished.
-	document.getElementById("skip-cinematic").style.display = "none";	
+	document.getElementById("skip-cinematic-container").style.display = "none";	
 }
 
 /* Introduce the player character to the planet as he exists the ship */
@@ -74,6 +74,6 @@ function skipCinematic() {
 	}
 
 	// Hide the Skip button after we skipped the cinematic.
-	document.getElementById("skip-cinematic").style.display = "none";	
+	document.getElementById("skip-cinematic-container").style.display = "none";	
 }
 

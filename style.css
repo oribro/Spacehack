@@ -351,10 +351,16 @@ footer {
 	float: left;
 }
 
+#skip-cinematic-container {
+	grid-column-start: 2;
+	grid-column-end: 3;
+	grid-row-start: 5;
+	grid-row-end: 6;
+	border-top: 2px solid orange;
+	padding: 10px;
+}
+
 #skip-cinematic {
 	display: none;
-	position: absolute;
-	right: 14vw;
-	bottom: 1vh;
-	font-size: 2em;
+	font-size: 1.5em;
 }
