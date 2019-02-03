@@ -387,12 +387,12 @@ class Player extends Character {
 				if (choice) {
 					if (parseInt(choice) < 1 || 
 						parseInt(choice) > itemList.length) {
-							alert("The number you've entered is invalid. " +
+							printToLog("The number you've entered is invalid. " +
 							"Please select a number from the list and try again.");
 							return;
 						}
 					else if (isNaN(choice)) {
-						alert("Ilegal choice. Please follow the instructions and try again");
+						printToLog("Ilegal choice. Please follow the instructions and try again");
 						return;
 					}
 
@@ -413,7 +413,7 @@ class Player extends Character {
 
 	/* On key press of matching key, prompts the player whether to pick up an item
 	*  in the given direction and picks up the item if player decides to. */
-	pickup(direction) {
+	async pickup(direction) {
 		if(direction === undefined) {
 			promptDirection("pickup");
 		} else {
@@ -430,7 +430,7 @@ class Player extends Character {
 				let items = createItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
 				let item = items[SINGLE_ITEM_INDEX - 1];
 				if (item) {
-					if (confirm(`Do you want to pick-up ${item.name}?`)) {
+					if (await promptInput(`Do you want to pick-up ${item.name}?`, true)) {
 						// Adds the item to player's inventory and removes it from the cell.
 						this.inventory = [...this.inventory, item];
 						removeItemsFromCell(cell, [SINGLE_ITEM_INDEX]);
@@ -450,7 +450,7 @@ class Player extends Character {
 			// Multiple item case: prompt the user to choose items.
 			else if (numItems > 1) {
 				let itemList = createItemsFromCell(cell, range(1, numItems));
-				let choice = promptMultItemsChoice(cell, itemList);
+				let choice = await promptMultItemsChoice(cell, itemList);
 				let method = validateMultItemsChoice(choice, itemList);
 				let itemIndices;
 				let items;
@@ -497,7 +497,7 @@ class Player extends Character {
 
 				let itemList = container.content;
 				let numItems = container.content.length;
-				let choice = promptMultItemsChoice(cell, itemList);
+				let choice = await promptMultItemsChoice(cell, itemList);
 				let method = validateMultItemsChoice(choice, itemList);
 
 				if (method !== "") {
@@ -603,27 +603,27 @@ class Player extends Character {
 	/* Prompts the player for a selection number and returns the input.
 	 * category: the name of the list from which the player selects.
 	 */
-	itemSelection(category) {
+	async itemSelection(category) {
 		var listLength;
 		switch(category) {
 			case "inventory":
-				var itemSel = parseInt(prompt("Choose item number from the inventory:"), 10);
+				var itemSel = parseInt(await promptInput("Choose item number from the inventory:"));
 				listLength = this.getInventory().length;
 				break;
 			case "equipment":
-				var itemSel = parseInt(prompt("Choose type number from the equipment list:"), 10);
+				var itemSel = parseInt(await promptInput("Choose type number from the equipment list:"));
 				listLength = 3;
 				break;
 			case "parts":
-				var itemSel = parseInt(prompt("Choose part number from the ship parts list:"), 10);
+				var itemSel = parseInt(await promptInput("Choose part number from the ship parts list:"));
 				listLength = Object.keys(PARTS_REQS).length;
 				break;
 			case "workbench":
-				var itemSel = parseInt(prompt("Choose item number from the workbench list:"), 10);
+				var itemSel = parseInt(await promptInput("Choose item number from the workbench list:"));
 				listLength = Object.keys(WORKBENCH_REQS).length;
 				break;
 			case "big-objects":
-				var itemSel = parseInt(prompt("Choose item number from the big objects list:"), 10);
+				var itemSel = parseInt(await promptInput("Choose item number from the big objects list:"));
 				listLength = Object.keys(BIG_OBJECTS_REQS).length;
 				break;
 		}
@@ -641,8 +641,7 @@ class Player extends Character {
 	*/
 	async use() {
 		var persist = toggleWindow("inventory", this, true);
-		await sleep(100);
-		var itemSel = this.itemSelection("inventory");
+		var itemSel = await this.itemSelection("inventory");
 		if(!persist) {
 			toggleWindow("inventory", this);
 		}
@@ -728,10 +727,8 @@ class Player extends Character {
 					return;
 				}
 				var persist = toggleWindow("parts", null, true);
-				// For now this has to be done for the toggleParts to execute before the prompt.
-				await sleep(100);
 				// Prompt user for ship part selection.
-				var partSel = this.itemSelection("parts") - 1;
+				var partSel = await this.itemSelection("parts") - 1;
 				if(!persist) {
 					toggleWindow("parts");
 				}
@@ -759,10 +756,8 @@ class Player extends Character {
 			// Build from workbench.
 			} else if(env && env.search("workbench") != -1) {
 				var persist = toggleWindow("workbench", null, true);
-				// For now this has to be done for the toggleWorkbench to execute before the prompt.
-				await sleep(100);
 				// Prompt user for workbench item selection.
-				var benchSel = this.itemSelection("workbench") - 1;
+				var benchSel = await this.itemSelection("workbench") - 1;
 				var benchKey = Object.keys(WORKBENCH_REQS)[benchSel];
 				var workbenchReqs = WORKBENCH_REQS[benchKey];
 				if(!persist) {
@@ -793,9 +788,8 @@ class Player extends Character {
 			// Build a big object (e.g.: workbench).
 			} else if(cellElement.getAttribute("walkable") == "true" || env.search("water") != -1) {
 				var persist = toggleWindow("big-objects", null, true);
-				await sleep(100);
 				// Prompt user for big object selection.
-				var objectSel = this.itemSelection("big-objects") - 1;
+				var objectSel = await this.itemSelection("big-objects") - 1;
 				if(!persist) {
 					toggleWindow("big-objects");
 				}
@@ -933,8 +927,7 @@ class Player extends Character {
 	/* Prompts the player for an item number and drops the item. */
 	async drop() {
 		var persist = toggleWindow("inventory", this, true);
-		await sleep(100);
-		var itemSel = this.itemSelection("inventory");
+		var itemSel = await this.itemSelection("inventory");
 		if(!persist) {
 			toggleWindow("inventory", this);
 		}
@@ -1075,7 +1068,7 @@ class Player extends Character {
 		await sleep(2500);
 		image.style.display = "none";
 		// ES6 style for writing multiline strings with variables.
-		alert(`Oh no! You died.\n` +
+		printToLog(`Oh no! You died.\n` +
 		`Sadly, this is where your journey ends.\n` +
 		`You survived for ${ turn } turns.\n` +
 		`Cause of death: ${ cause }.`

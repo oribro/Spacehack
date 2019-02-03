@@ -160,9 +160,11 @@ function promptContinue(player) {
 	}
 }
 
-/* Prints string to game log */
-function printToLog(string) {
-	if(log === "") {
+/* Prints string to game log 
+ * inline: Optional. If set, prints string in the same line as last string.
+ */
+function printToLog(string, inline) {
+	if(log === "" || inline) {
 		log += string;
 	} else {
 		log += "\n\n" + string;
@@ -181,6 +183,78 @@ function promptDirection(action) {
 	printToLog("In what direction do you want to perform the action?");
 }
 
+/* Prints a message and prompts the user for input. 
+ * confirm: Optional. If set, acts as a confirm prompt. Will only return Y/N. 
+ */
+async function promptInput(message, confirm) {
+	if(confirm === undefined) {
+		printToLog(message + " ");
+	} else {
+		printToLog(message + " (Y/n): ");
+	}
+	
+	var inputLength = 0; // Counts the number of characters the user has entered.
+	var enterPressed = false; // Changes to true when user pressed the enter key.
+	
+	var handler;
+	document.addEventListener("keydown", handler = function(event) {
+		event.stopPropagation();
+		if(confirm && isConfirmInput(event.key)) {
+			printToLog(event.key, true); // Echo key to log.
+			inputLength++;
+			enterPressed = true;
+		} else if (confirm === undefined) {
+			// If key pressed is a number, letter, or a valid character, echo it to the log.
+			if(isNumOrAlphabetKey(event.keyCode)) {
+				printToLog(event.key, true); // Echo key to log.
+				inputLength++;
+			}
+			// keyCode 13 is enter.
+			if(event.keyCode == 13) {
+				enterPressed = true;
+			} 
+			// keyCode 8 is backspace.
+			else if (event.keyCode == 8) {
+				if(inputLength > 0) {
+					// Remove one inputted character from the log.
+					log = log.slice(0, -1);
+					inputLength--;
+					printToLog("", true);
+				}
+			}
+		}
+	}, true);
+	
+	// Function will not return until user presses enter.
+	while(!enterPressed) {
+		await sleep(100); // This is needed because the loop hangs the browser.
+	}
+	
+	document.removeEventListener("keydown", handler, true);
+	
+	// Returns the inputted string.
+	return log.slice(-inputLength);
+}
+
+/* Takes a keyCode (ASCII value of a key pressed) and returns whether the key is a number or a letter. */
+function isNumOrAlphabetKey(keyCode) {
+	if(keyCode >= '0'.charCodeAt(0) && keyCode <= '9'.charCodeAt(0) || 
+	   keyCode >= 'A'.charCodeAt(0) && keyCode <= 'Z'.charCodeAt(0) || 
+	   keyCode >= 'a'.charCodeAt(0) && keyCode <= 'z'.charCodeAt(0) ||
+	   keyCode == 188 || keyCode == 189)
+	{
+		return true;
+	}
+	return false;
+}
+
+/* Takes a key and returns whether the key is a valid confirmation input (Y/y/N/n). */
+function isConfirmInput(key) {
+	if(key == 'y' || key == 'Y' || key == 'n' || key == 'N') {
+		return true;
+	}
+	return false;
+}
 
 /******************* INTERFACE *******************/
 

@@ -484,16 +484,9 @@ function promptMultItemsChoice(cell, itemList) {
 		")\n";
 	}
 
-	lootText += `\nPlease pick the item(s) you wish to take.\n` +
-				`Enter item numbers seperated by comma (,)\n` +
-				`or two numbers seperated by dash (-) for a range of items.\n` +
-				`If you want to take all of them, enter the word: ALL\n` +
-				`Examples of item choices:\n` + 
-				`1,2,3\n` +
-				`2-5\n` + 
-				`ALL`; 
+	lootText += `\nSelect the item(s) you wish to pick up (x,y / x-y / "ALL"):`;
 
-	return prompt(lootText);
+	return promptInput(lootText);
 }
 
 /*
@@ -519,7 +512,7 @@ function validateMultItemsChoice(choice, itemList) {
 				index => parseInt(index) < 1 || parseInt(index) > itemList.length
 			);
 			if (ilegalIndices.length > 0) {
-				alert("Numbers are not in range. Please enter numbers from the specified list.");
+				printToLog("Numbers are not in range. Please enter numbers from the specified list.");
 				return "";
 			}
 
@@ -533,7 +526,7 @@ function validateMultItemsChoice(choice, itemList) {
 				parseInt(start) < 1 || 
 				parseInt(end) > itemList.length
 			) {
-				alert("The range you've entered is invalid. " +
+				printToLog("The range you've entered is invalid. " +
 					"Please select numbers from the list and try again.");
 				return "";
 			}
@@ -545,7 +538,7 @@ function validateMultItemsChoice(choice, itemList) {
 		}
 		// No match -> ilegal input
 		else {
-			alert("Ilegal choice. Please follow the instructions and try again");
+			printToLog("Illegal choice. Please follow the instructions and try again.");
 			return "";
 		}
 
