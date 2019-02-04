@@ -280,7 +280,7 @@ function utilItem(item, player, direction) {
 					setEnv("c0805", T_SHIP7);					
 					item.value = "Empty";
 					repopInv(player);
-					plot++;
+					PLOT.FIRE.complete();
 				} else {
 					printToLog("\"How can I use the " + item.name + " with that?\"");
 				}

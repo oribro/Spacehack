@@ -36,7 +36,9 @@ async function exitShip(player) {
 	// Player exits ship.
 	spawnPlayer(player);
 	// Hide the Skip button as the cinematic finished.
-	document.getElementById("skip-cinematic-container").style.display = "none";	
+	document.getElementById("skip-cinematic-container").style.display = "none";
+	
+	PLOT.INTRO.complete();
 }
 
 /* Introduce the player character to the planet as he exists the ship */
@@ -56,25 +58,24 @@ function spawnPlayer(player) {
 
 /* On button click, skips the current playing cinematic depends on the current plot */
 function skipCinematic() {
-	switch(plot) {
-		case PLOT.INTRO:
-			// Interrupt the sleep delay that the cinematic uses.
-			if (sleepNum) {
-				// This JS built-in function stops the sleep timeout from executing AND stops further
-				// code execution inside the function the sleep was set in.
-				clearTimeout(sleepNum);
-				// Remove the covers aka show the board.
-				let eyelids = Array.from(document.getElementsByClassName("board-cover"));
-				eyelids.forEach(
-					eyelid => {
-						eyelid.style.display = "none";
-					}
-				);
-				// Resume normal gameplay flow.
-				player = new Player(6, 5);
-				spawnPlayer(player);
-			}
-			break;
+	if(!PLOT.INTRO.isCompleted) {
+		// Interrupt the sleep delay that the cinematic uses.
+		if (sleepNum) {
+			// This JS built-in function stops the sleep timeout from executing AND stops further
+			// code execution inside the function the sleep was set in.
+			clearTimeout(sleepNum);
+			// Remove the covers aka show the board.
+			let eyelids = Array.from(document.getElementsByClassName("board-cover"));
+			eyelids.forEach(
+				eyelid => {
+					eyelid.style.display = "none";
+				}
+			);
+			// Resume normal gameplay flow.
+			player = new Player(6, 5);
+			spawnPlayer(player);
+		}
+		PLOT.INTRO.complete();
 	}
 
 	// Hide the Skip button after we skipped the cinematic.

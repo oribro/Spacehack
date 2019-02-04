@@ -24,17 +24,22 @@ var currMap = "0,0";
 /* Sound of fire burning */
 var fireSound = new sound(FIRE_SOUND);
 
+const INTRO = new PlotNode("Intro", null);
+const FIRE = new PlotNode("Fire", INTRO);
+const DOGFISH = new PlotNode("Dogfish", FIRE);
+const RIVER_AMBUSH = new PlotNode("River Ambush", DOGFISH);
+const CHICK_MEETING = new PlotNode("Chick Meeting", DOGFISH);
+const CHICK_CARNAGE = new PlotNode("Chick Carnage", CHICK_MEETING);
+
 /* Plot constants */
 const PLOT = {
-	INTRO: 0,
-	DOGFISH: 1,
-	RIVER_AMBUSH: 2,
-	CHICK_MEETING: 3,
-	CHICK_CARNAGE: 4
+	INTRO: INTRO,
+	FIRE: FIRE,
+	DOGFISH: DOGFISH,
+	RIVER_AMBUSH: RIVER_AMBUSH,
+	CHICK_MEETING: CHICK_MEETING,
+	CHICK_CARNAGE: CHICK_CARNAGE
 }
-
-/* Plot advancement counter */
-var plot = PLOT.INTRO;
 
 /* Saves the "big objects" built in each map */
 var bigObjects = {};
@@ -43,7 +48,7 @@ var bigObjects = {};
 * Game setup
 */
 window.onload = () => {
-	
+	//console.log(PLOT.FIRE);
 	var player;
 	
 	if(localStorage.length != 0) {
@@ -212,7 +217,7 @@ function spawnGameObjects(map, initial) {
 			}
 			
 			// Draw fire on ship only if it hadn't been put out yet.
-			if(plot <= PLOT.DOGFISH) {
+			if(!PLOT.FIRE.isCompleted) {
 				// Fire on ship.
 				["c0604", "c0705", "c0805"].forEach(
 					cell => {
@@ -370,45 +375,40 @@ function spawnGameObjects(map, initial) {
 
 /* Manages plot events */
 function managePlot(player) {
-	switch(plot) {
-		case PLOT.DOGFISH:
-			fireSound.stop();
-			plot++;
-			npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
-			/*var dogfishSnarl = new sound(DOGFISH_SNARL);
-			dogfishSnarl.loop(false);
-			dogfishSnarl.play();*/
+	if(PLOT.DOGFISH.parentNode.isCompleted && !PLOT.DOGFISH.isCompleted) {
+		fireSound.stop();
+		PLOT.DOGFISH.complete();
+		npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
+		createSound(DOGFISH_SNARL, false);
+		printToLog("\"What was that?!\"");
+	}
+	if(PLOT.RIVER_AMBUSH.parentNode.isCompleted && !PLOT.RIVER_AMBUSH.isCompleted) {
+		if(player.mapX == 1 && player.mapY == 0 && player.xPos == 19) {
+			PLOT.RIVER_AMBUSH.complete();
+			npcs.push(new NPC(24, 1, "Dogfish", "enemy"));
+			npcs.push(new NPC(24, 8, "Dogfish", "enemy"));
+			npcs.push(new NPC(25, 15, "Dogfish", "enemy"));
+			createSound(WATER_SPLASH, false);
 			createSound(DOGFISH_SNARL, false);
-			printToLog("\"What was that?!\"");
-			break;
-		case PLOT.RIVER_AMBUSH:
-			if(player.mapX == 1 && player.mapY == 0 && player.xPos == 19) {
-				plot++;
-				npcs.push(new NPC(24, 1, "Dogfish", "enemy"));
-				npcs.push(new NPC(24, 8, "Dogfish", "enemy"));
-				npcs.push(new NPC(25, 15, "Dogfish", "enemy"));
-				createSound(WATER_SPLASH, false);
-				createSound(DOGFISH_SNARL, false);
-				printToLog("\"Not this thing again...\"");
+			printToLog("\"Not this thing again...\"");
+		}
+	}
+	if(PLOT.CHICK_MEETING.parentNode.isCompleted && !PLOT.CHICK_MEETING.isCompleted) {
+		if(player.mapX == 0 && player.mapY == -1) {
+			PLOT.CHICK_MEETING.complete();
+			npcs.push(new NPC(16, 9, "Chick", "enemy"));
+			createSound(CHICK_CHIRP, false);
+			printToLog("\"Look at that cute little chick!\"");
+		}
+	}
+	if(PLOT.CHICK_CARNAGE.parentNode.isCompleted && !PLOT.CHICK_CARNAGE.isCompleted) {
+		if(player.mapX == 0 && player.mapY == -1 && player.nextTo(npcs[npcs.length-1])) {
+			PLOT.CHICK_CARNAGE.complete();
+			for(i = 10; i < 20; i++) {
+				npcs.push(new NPC(i, 0, "Chick", "enemy"));
 			}
-			break;
-		case PLOT.CHICK_MEETING:
-			if(player.mapX == 0 && player.mapY == -1) {
-				plot++;
-				npcs.push(new NPC(16, 9, "Chick", "enemy"));
-				createSound(CHICK_CHIRP, false);
-				printToLog("\"Look at that cute little chick!\"");
-			}
-			break;
-		case PLOT.CHICK_CARNAGE:
-			if(player.mapX == 0 && player.mapY == -1 && player.nextTo(npcs[npcs.length-1])) {
-				plot++;
-				for(i = 10; i < 20; i++) {
-					npcs.push(new NPC(i, 0, "Chick", "enemy"));
-				}
-				createSound(CHICK_CHIRP, false);
-				printToLog("\"Oh no.\"");
-			}
-			break;
+			createSound(CHICK_CHIRP, false);
+			printToLog("\"Oh no.\"");
+		}
 	}
 }

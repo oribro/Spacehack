@@ -146,7 +146,7 @@ function promptContinue(player) {
 	// If game is loaded from storage, pass keydown event straight to control.
 	if(localStorage.length != 0) {
 		document.body.onkeydown = function(event) {
-			if(plot <= PLOT.DOGFISH) {
+			if(!PLOT.FIRE.isCompleted) {
 				fireSound.play();
 			}
 			control(event, player);
@@ -538,7 +538,7 @@ function saveGame(player) {
 	// Save main game variables.
 	localStorage.setItem("turn", turn);
 	localStorage.setItem("log", log);
-	localStorage.setItem("plot", plot);
+	localStorage.setItem("plot", JSON.stringify(PLOT));
 	localStorage.setItem("movement", movement);
 	localStorage.setItem("currMap", currMap);
 	localStorage.setItem("npcs", JSON.stringify(npcs));
@@ -580,11 +580,19 @@ function loadGame(afterGameDraw) {
 			// Load main game variables.
 			turn = parseInt(localStorage.getItem("turn"));
 			log = localStorage.getItem("log");
-			plot = parseInt(localStorage.getItem("plot"));
 			movement = JSON.parse(localStorage.getItem("movement"));
 			currMap = localStorage.getItem("currMap");
 			containers = JSON.parse(localStorage.getItem("containers"));
 			items = JSON.parse(localStorage.getItem("items"));
+			
+			// Load plot tree.
+			var loadedPlotTree = JSON.parse(localStorage.getItem("plot"));
+			for(plotNode in PLOT) {
+				if(loadedPlotTree[plotNode].completed == true) {
+					PLOT[plotNode].complete();
+				}
+			}
+			
 			
 			// Load player properties.
 			var player = new Player(localStorage.getItem("playerX"), localStorage.getItem("playerY"));

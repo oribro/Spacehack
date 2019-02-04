@@ -187,7 +187,7 @@ class Player extends Character {
 		
 		// If out of bounds change map
 		if(!inBounds("c" + biDigY + biDigX)) {
-			if(plot < PLOT.RIVER_AMBUSH) {
+			if(!PLOT.DOGFISH.isCompleted) {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
 				saveMapItems(this.mapX+","+this.mapY, true);
@@ -722,7 +722,7 @@ class Player extends Character {
 			
 			// Build ship parts.
 			if (env && env.search("ship") != -1) {
-				if(plot < 1) {
+				if(!PLOT.FIRE.isCompleted) {
 					printToLog("\"I should probably extinguish the fire before I worry about fixing the ship.\"");
 					return;
 				}
@@ -1068,7 +1068,7 @@ class Player extends Character {
 		await sleep(2500);
 		image.style.display = "none";
 		// ES6 style for writing multiline strings with variables.
-		printToLog(`Oh no! You died.\n` +
+		alert(`Oh no! You died.\n` +
 		`Sadly, this is where your journey ends.\n` +
 		`You survived for ${ turn } turns.\n` +
 		`Cause of death: ${ cause }.`
