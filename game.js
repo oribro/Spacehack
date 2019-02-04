@@ -24,6 +24,7 @@ var currMap = "0,0";
 /* Sound of fire burning */
 var fireSound = new sound(FIRE_SOUND);
 
+/* Plot nodes */
 const INTRO = new PlotNode("Intro", null);
 const FIRE = new PlotNode("Fire", INTRO);
 const DOGFISH = new PlotNode("Dogfish", FIRE);
@@ -31,7 +32,7 @@ const RIVER_AMBUSH = new PlotNode("River Ambush", DOGFISH);
 const CHICK_MEETING = new PlotNode("Chick Meeting", DOGFISH);
 const CHICK_CARNAGE = new PlotNode("Chick Carnage", CHICK_MEETING);
 
-/* Plot constants */
+/* Plot tree */
 const PLOT = {
 	INTRO: INTRO,
 	FIRE: FIRE,
