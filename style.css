@@ -351,6 +351,10 @@ footer {
 	float: left;
 }
 
+#speaker-emoji {
+	vertical-align: top;
+}
+
 #skip-cinematic-container {
 	grid-column-start: 2;
 	grid-column-end: 3;

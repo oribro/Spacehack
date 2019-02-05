@@ -47,12 +47,12 @@ function spawnPlayer(player) {
 	player.draw(...playerPos);
 	//log = log.slice(0, log.lastIndexOf("\n") - 1);
 	printToLog(STRINGS[EVENT.EXIT_SHIP]);
-	fireSound.play();
+	createSound(FIRE_SOUND, true);
 	document.body.onkeydown = function(event) {
 		control(event, player);
 		// Check if the player is within a reasonable distance from the fire
 		// such that he can still hear it burning.
-		shouldFirePlay(fireSound, player, 5, 7);
+		shouldFirePlay(player, 5, 7);
 	};
 }
 

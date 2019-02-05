@@ -274,7 +274,9 @@ function utilItem(item, player, direction) {
 					});
 					fireElements = document.getElementsByClassName("fire");
 					fireElements[0].parentNode.removeChild(fireElements[0]);
-					fireSound.stop();
+					activeSounds[0].stop();
+					activeSounds[0].sound.parentNode.removeChild(activeSounds[0].sound);
+					activeSounds.splice(0,1);
 					setEnv("c0604", T_SHIP5);
 					setEnv("c0705", T_SHIP6);
 					setEnv("c0805", T_SHIP7);					

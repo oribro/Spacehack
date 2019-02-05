@@ -21,8 +21,10 @@ var movement = true;
 /* Current game map */
 var currMap = "0,0";
 
-/* Sound of fire burning */
-var fireSound = new sound(FIRE_SOUND);
+
+var allowSounds = true;
+
+var activeSounds = [];
 
 /* Plot nodes */
 const INTRO = new PlotNode("Intro", null);
@@ -377,7 +379,6 @@ function spawnGameObjects(map, initial) {
 /* Manages plot events */
 function managePlot(player) {
 	if(PLOT.DOGFISH.parentNode.isCompleted && !PLOT.DOGFISH.isCompleted) {
-		fireSound.stop();
 		PLOT.DOGFISH.complete();
 		npcs.push(new NPC(31, 9, "Dogfish", "enemy"));
 		createSound(DOGFISH_SNARL, false);

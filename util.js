@@ -147,12 +147,12 @@ function promptContinue(player) {
 	if(localStorage.length != 0) {
 		document.body.onkeydown = function(event) {
 			if(!PLOT.FIRE.isCompleted) {
-				fireSound.play();
+				createSound(FIRE_SOUND, true);
 			}
 			control(event, player);
 			// Check if the player is within a reasonable distance from the fire
 			// such that he can still hear it burning.
-			shouldFirePlay(fireSound, player, 5, 7);
+			shouldFirePlay(player, 5, 7);
 		};
 	} else {
 		printToLog(CONTINUE_PROMPT);
@@ -422,35 +422,71 @@ function sound(path) {
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
     this.play = function(){
-        this.sound.play();
+		if(allowSounds) {
+			this.sound.play();
+		}
     }
     this.stop = function(){
         this.sound.pause();
     }
 	this.volume = function(vol) {
-		this.sound.volume = vol;
+		if(allowSounds) {
+			this.sound.volume = vol;
+		}
 	}
 	this.loop = function(shouldLoop) {
 		this.sound.loop = shouldLoop;
 	}
 }
 
+/* Creates and plays a new sound */
 function createSound(soundPath, isLoop) {
 	let newSound = new sound(soundPath);
 	newSound.loop(isLoop);
 	newSound.play();
+	if(isLoop) {
+		activeSounds.push(newSound);
+	}
 	return newSound;
 }
 
+/* Mute a singular HTML5 element */
+function toggleMuteSound(elem) {
+	if(elem.muted == false) {
+		elem.muted = true;
+		elem.pause();
+	} else {
+		elem.muted = false;
+		if(elem.loop) {
+			elem.play();
+		}
+	}
+}
+
+/* Mutes/unmutes all sounds */
+function toggleSounds() {
+	if(allowSounds) {
+		allowSounds = false;
+		document.getElementById("speaker-emoji").innerHTML = "&#x1f507;";
+	} else {
+		allowSounds = true;
+		document.getElementById("speaker-emoji").innerHTML = "&#x1f50a;";
+	}
+	document.querySelectorAll("audio").forEach( elem => toggleMuteSound(elem) );
+	document.getElementById("toggle-sounds").blur();
+}
+
 /* Plays fire sound in a volume according to player position */
-function shouldFirePlay(fireSound, player, fireXPos, fireYPos) {
+function shouldFirePlay(player, fireXPos, fireYPos) {
 	let fire = document.getElementsByClassName("fire")[0];
 	// Distance between player and source of fire.
 	var distance = Math.sqrt(Math.pow((player.xPos - fireXPos), 2) + Math.pow((player.yPos - fireYPos), 2));
 	// Volume to reduce.
 	var distVolOffset = distance/10;
 	// Reduce volume by distVolOffset+FIRE_DIST_OFFSET but stay within 0 and 1.
-	fireSound.volume(Math.max(Math.min(1, 1-distVolOffset+FIRE_DIST_OFFSET), 0));
+	if(activeSounds[0] && activeSounds[0].sound.src.search("fire.mp3") != -1) {
+		activeSounds[0].volume(Math.max(Math.min(1, 1-distVolOffset+FIRE_DIST_OFFSET), 0));
+	}
 }
 
 
