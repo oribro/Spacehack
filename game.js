@@ -49,7 +49,7 @@ var bigObjects = {};
 * Game setup
 */
 window.onload = () => {
-	//console.log(PLOT.FIRE);
+
 	var player;
 	
 	if(localStorage.length != 0) {

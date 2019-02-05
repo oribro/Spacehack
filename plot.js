@@ -6,7 +6,6 @@ class PlotNode {
 	 * PlotNodes are constructed as uncompleted.
 	 */
 	constructor(name, parent) {
-		console.log(parent);
 		this.name = name;
 		this.parent = parent;
 		this.completed = false;
