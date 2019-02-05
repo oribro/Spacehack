@@ -194,7 +194,8 @@ async function promptInput(message, confirm) {
 	}
 	
 	var inputLength = 0; // Counts the number of characters the user has entered.
-	var enterPressed = false; // Changes to true when user pressed the enter key.
+	var enterPressed = false; // Changes to true when user presses the enter key.
+	var escPressed = false; // Changes to true when user presses the esc key.
 	
 	var handler;
 	document.addEventListener("keydown", handler = function(event) {
@@ -222,18 +223,29 @@ async function promptInput(message, confirm) {
 					printToLog("", true);
 				}
 			}
+			// keyCode 27 is escape.
+			else if (event.keyCode == 27) {
+				if(inputLength > 0) {
+					log = log.slice(0, -inputLength);
+				}
+				escPressed = true;
+			}
 		}
 	}, true);
 	
-	// Function will not return until user presses enter.
-	while(!enterPressed) {
+	// Function will not return until user presses enter or esc.
+	while(!enterPressed && !escPressed) {
 		await sleep(100); // This is needed because the loop hangs the browser.
 	}
 	
 	document.removeEventListener("keydown", handler, true);
 	
-	// Returns the inputted string.
-	return log.slice(-inputLength);
+	// Returns the inputted string or false if esc was pressed.
+	if(!escPressed) {
+		return log.slice(-inputLength);
+	} else {
+		return false;
+	}
 }
 
 /* Takes a keyCode (ASCII value of a key pressed) and returns whether the key is a number or a letter. */

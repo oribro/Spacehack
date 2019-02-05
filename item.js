@@ -524,6 +524,7 @@ async function promptMultItemsChoice(itemList, source) {
 */
 function validateMultItemsChoice(choice, itemList) {
 	// Check for legal input
+	console.log(choice);
 	if (choice) {
 		// Regex patterns to check if the user entered valid input.
 		const individuals = /^[0-9]+(,[0-9]+)*$/;
@@ -568,8 +569,10 @@ function validateMultItemsChoice(choice, itemList) {
 
 	}
 	// Player aborted the choice prompt process.
-	else
+	else {
+		printToLog("You chose nothing.");
 		return "";
+	}
 }
 
 /* Return item indices from the user choice given the user method of choosing items 
