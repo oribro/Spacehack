@@ -442,6 +442,8 @@ class Player extends Character {
 						printToLog("You picked up the " + item.name + ".");
 						repopInv(this);
 						saveGame(this);
+					} else {
+						printToLog("You did not pick up the " + item.name + ".");
 					}
 					return;
 				}

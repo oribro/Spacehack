@@ -196,6 +196,7 @@ async function promptInput(message, confirm) {
 	var inputLength = 0; // Counts the number of characters the user has entered.
 	var enterPressed = false; // Changes to true when user presses the enter key.
 	var escPressed = false; // Changes to true when user presses the esc key.
+	var confirmChoice; // True if Y/y, false if N/n.
 	
 	var handler;
 	document.addEventListener("keydown", handler = function(event) {
@@ -203,6 +204,11 @@ async function promptInput(message, confirm) {
 		if(confirm && isConfirmInput(event.key)) {
 			printToLog(event.key, true); // Echo key to log.
 			inputLength++;
+			if(event.key == 'n' || event.key == 'N') {
+				confirmChoice = false;
+			} else {
+				confirmChoice = true;
+			}
 			enterPressed = true;
 		} else if (confirm === undefined) {
 			// If key pressed is a number, letter, or a valid character, echo it to the log.
@@ -241,10 +247,14 @@ async function promptInput(message, confirm) {
 	document.removeEventListener("keydown", handler, true);
 	
 	// Returns the inputted string or false if esc was pressed.
-	if(!escPressed) {
+	if(!escPressed && confirm === undefined) {
 		return log.slice(-inputLength);
 	} else {
-		return false;
+		if (escPressed || !confirmChoice) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
 

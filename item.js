@@ -524,7 +524,6 @@ async function promptMultItemsChoice(itemList, source) {
 */
 function validateMultItemsChoice(choice, itemList) {
 	// Check for legal input
-	console.log(choice);
 	if (choice) {
 		// Regex patterns to check if the user entered valid input.
 		const individuals = /^[0-9]+(,[0-9]+)*$/;
