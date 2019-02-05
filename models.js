@@ -450,7 +450,7 @@ class Player extends Character {
 			// Multiple item case: prompt the user to choose items.
 			else if (numItems > 1) {
 				let itemList = createItemsFromCell(cell, range(1, numItems));
-				let choice = await promptMultItemsChoice(cell, itemList);
+				let choice = await promptMultItemsChoice(itemList, 1);
 				let method = validateMultItemsChoice(choice, itemList);
 				let itemIndices;
 				let items;
@@ -497,7 +497,7 @@ class Player extends Character {
 
 				let itemList = container.content;
 				let numItems = container.content.length;
-				let choice = await promptMultItemsChoice(cell, itemList);
+				let choice = await promptMultItemsChoice(itemList, 2);
 				let method = validateMultItemsChoice(choice, itemList);
 
 				if (method !== "") {

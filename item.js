@@ -473,20 +473,44 @@ function getItemsInCell(cell) {
 /*
 *  On encounter of multiple items choice, ask the player
 *  which items he would like to choose from the given item list.
+*  itemList: List of items in the inspected cell.
+*  source: The source of items. 1 for ground, 2 for container.
 */
-function promptMultItemsChoice(cell, itemList) {
-	let lootText = "There are several items here:\n\n";
+async function promptMultItemsChoice(itemList, source) {
 	
-	for (let itemEntry of itemList.entries()) {
-		let [number, item] = [...itemEntry]; 
-		lootText += number + 1 + ". " + item.name + " (" + 
-		item.type + ", " + item.value + 
-		")\n";
+	// Set list window title according to source.
+	var windowTitle = document.getElementById("multiple-items-title");
+	if(source == 1) {
+		windowTitle.innerHTML = "Items on ground";
+	} else if (source == 2) {
+		windowTitle.innerHTML = "Container";
 	}
+	
+	// Create list of items.
+	var listElement = document.getElementById("multiple-items-list");
+	for (let itemEntry of itemList.entries()) {
+		let [number, item] = [...itemEntry];
+		let itemDesc = item.name + " (" + item.type + ", " + item.value + ")";
+		let liElement = document.createElement("li");
+		liElement.innerHTML = itemDesc;
+		listElement.appendChild(liElement);
+	}
+	
+	toggleWindow("multiple-items");
+	
+	let lootText = "There are several items here.\n";
+	lootText += `Select the item(s) you wish to pick up (x,y / x-y / "ALL"):`;
 
-	lootText += `\nSelect the item(s) you wish to pick up (x,y / x-y / "ALL"):`;
-
-	return promptInput(lootText);
+	let input = await promptInput(lootText);
+	
+	toggleWindow("multiple-items");
+	
+	// Remove all list items.
+	while(listElement.firstChild) {
+		listElement.removeChild(listElement.firstChild);
+	}
+	
+	return input;
 }
 
 /*
