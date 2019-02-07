@@ -162,8 +162,11 @@ function promptContinue(player) {
 
 /* Prints string to game log 
  * inline: Optional. If set, prints string in the same line as last string.
+ * Returns the starting index of the printed string in the log string.
  */
 function printToLog(string, inline) {
+	var startIndex = log.length;
+	
 	if(log === "" || inline) {
 		log += string;
 	} else {
@@ -174,6 +177,8 @@ function printToLog(string, inline) {
 	logElement.innerHTML = log;
 	// Automatic scroll log to bottom.
 	logElement.scrollTop = logElement.scrollHeight;
+	
+	return startIndex;
 }
 
 /* Stops movement and prompts the user to input a direction for the action */
@@ -194,6 +199,7 @@ async function promptInput(message, confirm) {
 	}
 	
 	var inputLength = 0; // Counts the number of characters the user has entered.
+	var inputString = ""; // Stores the inputted string.
 	var enterPressed = false; // Changes to true when user presses the enter key.
 	var escPressed = false; // Changes to true when user presses the esc key.
 	var confirmChoice; // True if Y/y, false if N/n.
@@ -204,6 +210,7 @@ async function promptInput(message, confirm) {
 		if(confirm && isConfirmInput(event.key)) {
 			printToLog(event.key, true); // Echo key to log.
 			inputLength++;
+			inputString += event.key;
 			if(event.key == 'n' || event.key == 'N') {
 				confirmChoice = false;
 			} else {
@@ -215,6 +222,7 @@ async function promptInput(message, confirm) {
 			if(isNumOrAlphabetKey(event.keyCode)) {
 				printToLog(event.key, true); // Echo key to log.
 				inputLength++;
+				inputString += event.key;
 			}
 			// keyCode 13 is enter.
 			if(event.keyCode == 13) {
@@ -224,8 +232,13 @@ async function promptInput(message, confirm) {
 			else if (event.keyCode == 8) {
 				if(inputLength > 0) {
 					// Remove one inputted character from the log.
-					log = log.slice(0, -1);
+					inputString = inputString.slice(0, -1);
 					inputLength--;
+					if(log.charAt(log.length-1) != "|") {
+						log = log.slice(0, -1);
+					} else {
+						log = log.slice(0, -2);
+					}
 					printToLog("", true);
 				}
 			}
@@ -241,14 +254,14 @@ async function promptInput(message, confirm) {
 	
 	// Function will not return until user presses enter or esc.
 	while(!enterPressed && !escPressed) {
-		await sleep(100); // This is needed because the loop hangs the browser.
+		await vbarFlash(500); // Flashes a '|' to indicate user input. The sleep is also needed because the loop hangs the browser.
 	}
 	
 	document.removeEventListener("keydown", handler, true);
 	
 	// Returns the inputted string or false if esc was pressed.
 	if(!escPressed && confirm === undefined) {
-		return log.slice(-inputLength);
+		return inputString;
 	} else {
 		if (escPressed || !confirmChoice) {
 			return false;
@@ -256,6 +269,17 @@ async function promptInput(message, confirm) {
 			return true;
 		}
 	}
+}
+
+/* Flashes a '|' character at the end of the log to indicate user input.
+ * time: specifies the frequency of flashing in ms.
+ */
+async function vbarFlash(time) {
+	printToLog("|", true);
+	await sleep(time);
+	log = log.replace("|", "");
+	printToLog("", true);
+	await sleep(time);
 }
 
 /* Takes a keyCode (ASCII value of a key pressed) and returns whether the key is a number or a letter. */
