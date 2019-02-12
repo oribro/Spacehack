@@ -107,8 +107,10 @@ const STRINGS = {
 
 	"pickup_nothing": "There is nothing to pick up here.",
 
-	"poisoned": "Yikes! You have become poisoned and are losing health."
+	"poisoned": "Yikes! You have become poisoned and are losing health.",
 	
+	"poisonous_tree": "You can sense that something about the nearby tree is not right. You are poisoned!"
+
 };
 
 const CONTINUE_PROMPT = "Press any key to continue...";

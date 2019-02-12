@@ -132,7 +132,7 @@ function setEnv(cell, tile) {
 /* Takes a cell and returns its env attribute, or null if it doesn't have it */
 function getEnv(cell) {
 	var cellElement = document.getElementById(cell);
-	if(cellElement.hasAttribute("env")) {
+	if(cellElement !== null && cellElement.hasAttribute("env")) {
 		return cellElement.getAttribute("env");
 	}
 	return null;

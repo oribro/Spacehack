@@ -248,6 +248,13 @@ class Player extends Character {
 
 	/* Checks if the player is poisoned and updates the remaining time left until cured */
 	poisonCheck() {
+		// Check if the player is poisoned and update poison status.
+		this.updateIfPoisoned();
+		// Check for poisonous environment
+		this.checkForPoisonousEnv();
+	}
+
+	updateIfPoisoned() {
 		if (this.pStatus === PLAYER_STATUS.POISONED) {
 			if (this.poisonCounter === POISON_PERIOD) {
 				document.getElementById("status-value").innerHTML = PLAYER_STATUS.HEALTHY;
@@ -264,6 +271,35 @@ class Player extends Character {
 		}
 	}
 
+	checkForPoisonousEnv() {
+		let toxicTreeCell = this.searchPerimeterFor("tree2");
+		if (toxicTreeCell !== null) {
+			this.pStatus = PLAYER_STATUS.POISONED;
+			document.getElementById("status-value").innerHTML = this.pStatus;
+			printToLog(STRINGS["poisonous_tree"]);
+		}
+		else {
+			this.pStatus = PLAYER_STATUS.HEALTHY;
+			document.getElementById("status-value").innerHTML = this.pStatus;
+		}
+	}
+
+	/* Check if the surroundings of the player contain some enviorment object.
+	 Return the matching cell if found, null otherwise   */ 
+	searchPerimeterFor(env) {
+		for (let i = -1; i <= 1; i++) {
+			for (let j = -1; j <= 1; j++) {
+				// The player cell isn't on the perimeter.
+				if (j == 0 && i == 0)
+					continue;
+				let cell = getCell(this.yPos + i, this.xPos + j);
+				if (getEnv(cell) === env)
+					return cell;
+			}
+		}
+		return null;
+	}
+	
 	/*
 	*	Draws the character at the given position. 
 	*/
