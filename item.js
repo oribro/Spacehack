@@ -477,8 +477,9 @@ function getItemsInCell(cell) {
 *  which items he would like to choose from the given item list.
 *  itemList: List of items in the inspected cell.
 *  source: The source of items. 1 for ground, 2 for container.
+*  action: The action the user performed.
 */
-async function promptMultItemsChoice(itemList, source) {
+async function promptMultItemsChoice(itemList, source, action) {
 	
 	// Set list window title according to source.
 	var windowTitle = document.getElementById("multiple-items-title");
@@ -501,7 +502,10 @@ async function promptMultItemsChoice(itemList, source) {
 	toggleWindow("multiple-items");
 	
 	let lootText = "There are several items here.\n";
-	lootText += `Select the item(s) you wish to pick up (x,y / x-y / "ALL"):`;
+	if (action === USER_ACTION.PICKUP)
+		lootText += `Select the item(s) you wish to pick up (x,y / x-y / "ALL"):`;
+	else if (action === USER_ACTION.EXAMINE)
+		lootText += `Please enter the item number you would like to examine.`;
 
 	let input = await promptInput(lootText);
 	

@@ -21,6 +21,12 @@ const PLAYER_STATUS = {
 	"MALNOURISHED": "Malnourished"
 }
 
+/* Constants for user actions */
+const USER_ACTION = {
+	"PICKUP": "pickup",
+	"EXAMINE": "examine"
+}
+
 var npcs = [];
 
 /*
@@ -352,7 +358,7 @@ class Player extends Character {
 	/* On key press of matching key, examines the perimeter in the given direction
 	* and prints information to log. 
 	*/
-	examine(direction) {
+	async examine(direction) {
 		if(direction === undefined) {
 			promptDirection("examine");
 		} else {
@@ -373,17 +379,7 @@ class Player extends Character {
 			// Examine multiple items.
 			} else if (numItems > 1) {
 				let itemList = createItemsFromCell(cell, range(1, numItems));
-				let examineText = "There are several items here:\n\n";
-	
-				for (let itemEntry of itemList.entries()) {
-					let [number, item] = [...itemEntry]; 
-					examineText += number + 1 + ". " + item.name + " (" + 
-					item.type + ", " + item.value + 
-					")\n";
-				}
-
-				examineText += "\nPlease enter the item number you would like to examine.\n";
-				let choice = prompt(examineText);
+				let choice = await promptMultItemsChoice(itemList, 1, USER_ACTION.EXAMINE);
 				if (choice) {
 					if (parseInt(choice) < 1 || 
 						parseInt(choice) > itemList.length) {
@@ -397,6 +393,10 @@ class Player extends Character {
 					}
 
 					printToLog(itemList[parseInt(choice) - 1].description);
+					return;
+				}
+				else{
+					printToLog("You chose nothing.");
 					return;
 				}
 
@@ -452,7 +452,7 @@ class Player extends Character {
 			// Multiple item case: prompt the user to choose items.
 			else if (numItems > 1) {
 				let itemList = createItemsFromCell(cell, range(1, numItems));
-				let choice = await promptMultItemsChoice(itemList, 1);
+				let choice = await promptMultItemsChoice(itemList, 1, USER_ACTION.PICKUP);
 				let method = validateMultItemsChoice(choice, itemList);
 				let itemIndices;
 				let items;
