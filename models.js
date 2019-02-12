@@ -337,21 +337,13 @@ class Player extends Character {
 	getCellFromDirection(direction) {		
 		switch (direction) {
 			case MOVE_RIGHT:
-				var biDigCurX = getTwoDigits(this.xPos + 1);
-				var biDigCurY = getTwoDigits(this.yPos);
-				return "c" + biDigCurY + biDigCurX;
+				return getCell(this.yPos, this.xPos + 1);
 			case MOVE_UP:
-				var biDigCurX = getTwoDigits(this.xPos);
-				var biDigCurY = getTwoDigits(this.yPos - 1);
-				return "c" + biDigCurY + biDigCurX;
+				return getCell(this.yPos - 1, this.xPos);
 			case MOVE_LEFT:
-				var biDigCurX = getTwoDigits(this.xPos - 1);
-				var biDigCurY = getTwoDigits(this.yPos);
-				return "c" + biDigCurY + biDigCurX;
+				return getCell(this.yPos, this.xPos - 1);
 			case MOVE_DOWN:
-				var biDigCurX = getTwoDigits(this.xPos);
-				var biDigCurY = getTwoDigits(this.yPos + 1);
-				return "c" + biDigCurY + biDigCurX;
+				return getCell(this.yPos + 1, this.xPos);
 		}
 	}
 	

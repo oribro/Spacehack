@@ -138,6 +138,14 @@ function getEnv(cell) {
 	return null;
 }
 
+/* Returns a string representing the cell given it's position.
+    For consistency, the string cell will be refered to as "cell" in the rest of the program */
+function getCell(row, col) {
+	var biDigCurX = getTwoDigits(col);
+	var biDigCurY = getTwoDigits(row);
+	return "c" + biDigCurY + biDigCurX;
+}
+
 
 /******************* LOG *******************/
 
