@@ -653,6 +653,7 @@ function saveGame(player) {
 	localStorage.setItem("playerLvl", player.lvl);
 	localStorage.setItem("playerMapX", player.mapX);
 	localStorage.setItem("playerMapY", player.mapY);
+	localStorage.setItem("playerHunger", player.hunger);
 	
 	// Save big objects.
 	localStorage.setItem("bigObjects", JSON.stringify(bigObjects));
@@ -686,7 +687,16 @@ function loadGame(afterGameDraw) {
 				}
 			}
 			
-			
+			// Load fire sound if fire exists.
+			// Since Chrome throws Uncaught (in promise) DOMException for play
+			// on sounds when the window loads, this is a temporary bypass.
+			if(!PLOT.FIRE.isCompleted) {
+				let newSound = new sound(FIRE_SOUND);
+				newSound.loop(true);
+				activeSounds.push(newSound);
+				newSound.sound.setAttribute("autoplay", "true");
+			}
+
 			// Load player properties.
 			var player = new Player(localStorage.getItem("playerX"), localStorage.getItem("playerY"));
 			player.xPos = parseInt(localStorage.getItem("playerX"));
@@ -697,6 +707,7 @@ function loadGame(afterGameDraw) {
 			player.lvl = parseInt(localStorage.getItem("playerLvl"));
 			player.mapX = parseInt(localStorage.getItem("playerMapX"));
 			player.mapY = parseInt(localStorage.getItem("playerMapY"));
+			player.hunger = parseInt(localStorage.getItem("playerHunger"));
 			
 			// Load current map items.
 			mapItems = JSON.parse(localStorage.getItem("mapItems"));
