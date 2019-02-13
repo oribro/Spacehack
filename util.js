@@ -642,6 +642,8 @@ function saveGame(player) {
 	// Save current map items.
 	saveMapItems(player.mapX+","+player.mapY);
 	localStorage.setItem("mapItems", JSON.stringify(mapItems));
+	// Save current ship state.
+	localStorage.setItem("builtShipParts", [...builtShipParts].join(','));
 
 	// Save player properties.
 	localStorage.setItem("playerX", player.xPos);
@@ -740,7 +742,27 @@ function loadGame(afterGameDraw) {
 					npcs[i].currMap = currMap;
 				}
 			}
+
+			loadShipStateIfInitialMap();
 		}
+	}
+}
+
+function loadShipStateIfInitialMap() { 
+	let mapX = parseInt(localStorage.getItem("playerMapX"));
+	let mapY = parseInt(localStorage.getItem("playerMapY"));
+	if (mapX === mapY && mapY === 0) {
+		// Load and restore ship state.
+		builtShipParts = new Set(localStorage.getItem("builtShipParts").split(','));
+		if (builtShipParts.has(""))
+			builtShipParts = new Set();
+		builtShipParts.forEach(
+			part => {
+				document.getElementById(part.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
+				// Add part to ship visually.
+				repairShip(part);
+			}
+		);
 	}
 }
 

@@ -668,8 +668,10 @@ class Player extends Character {
 		}
 		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
+			return null;
 		} else if (itemSel < 1 || itemSel > listLength) {
 			printToLog(STRINGS["not_in_range"]);
+			return null;
 		} else {
 			return itemSel;
 		}
@@ -771,8 +773,15 @@ class Player extends Character {
 				if(!persist) {
 					toggleWindow("parts");
 				}
+				
 				var partKey = Object.keys(PARTS_REQS)[partSel];
 				var partReqs = PARTS_REQS[partKey];
+
+				// If the player has already repaired the part, it is already working.
+				if (builtShipParts.has(partKey)) {
+					printToLog("You have already repaired the " + partKey.toLowerCase() +".");
+					return;
+				}
 
 				if(this.inInv("Metal", parseInt(partReqs.split(";")[0])) && 
 				   this.inInv("Wood", parseInt(partReqs.split(";")[1])) && 
@@ -786,6 +795,8 @@ class Player extends Character {
 					document.getElementById(partKey.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
 					// Add part to ship visually.
 					repairShip(partKey);
+					// Mark that the part was built and save for later.
+					builtShipParts.add(partKey);
 					saveGame(this);
 					printToLog("You have built and repaired the " + partKey.toLowerCase() + ".");
 				} else {

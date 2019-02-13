@@ -83,6 +83,9 @@ var itemCells = new Set();
 // Object containing items and containers found in map identified by their unique cell.
 var mapItems = {};
 
+// Set of already built ship parts.
+var builtShipParts = new Set();
+
 /*
  *	Class for game items.
  */
