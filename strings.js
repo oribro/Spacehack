@@ -109,7 +109,9 @@ const STRINGS = {
 
 	"poisoned": "Yikes! You have become poisoned and are losing health.",
 	
-	"poisonous_tree": "You can sense that something about the nearby tree is not right. You are poisoned!"
+	"poisonous_tree": "You can sense that something about the nearby tree is not right. You are poisoned!",
+
+	"poisonous_tree_withdrawal": "You have escaped the grasp of the toxic tree."
 
 };
 

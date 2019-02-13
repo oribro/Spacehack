@@ -274,21 +274,30 @@ class Player extends Character {
 	checkForPoisonousEnv() {
 		let toxicTreeCell = this.searchPerimeterFor("tree2");
 		if (toxicTreeCell !== null) {
-			this.pStatus = PLAYER_STATUS.POISONED;
-			document.getElementById("status-value").innerHTML = this.pStatus;
-			printToLog(STRINGS["poisonous_tree"]);
-		}
-		else {
-			this.pStatus = PLAYER_STATUS.HEALTHY;
-			document.getElementById("status-value").innerHTML = this.pStatus;
+			let treePos = getRowAndColFromCell(toxicTreeCell);
+			let distanceFromTree = getDistanceBetweenTwoPoints(this.xPos, this.yPos, treePos.col, treePos.row);
+			// Check if the player is around the poisonous tree.
+			if (distanceFromTree < 2) {
+				this.pStatus = PLAYER_STATUS.POISONED;
+				document.getElementById("status-value").innerHTML = this.pStatus;
+				printToLog(STRINGS["poisonous_tree"]);
+			}
+
+			// Check if the player escaped the poisonous tree.
+			else if (distanceFromTree >= 2 && distanceFromTree < 3 &&
+				this.pStatus === PLAYER_STATUS.POISONED) {
+				this.pStatus = PLAYER_STATUS.HEALTHY;
+				document.getElementById("status-value").innerHTML = this.pStatus;
+				printToLog(STRINGS["poisonous_tree_withdrawal"]);
+			}
 		}
 	}
 
 	/* Check if the surroundings of the player contain some enviorment object.
 	 Return the matching cell if found, null otherwise   */ 
 	searchPerimeterFor(env) {
-		for (let i = -1; i <= 1; i++) {
-			for (let j = -1; j <= 1; j++) {
+		for (let i = -2; i <= 2; i++) {
+			for (let j = -2; j <= 2; j++) {
 				// The player cell isn't on the perimeter.
 				if (j == 0 && i == 0)
 					continue;

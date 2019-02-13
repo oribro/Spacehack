@@ -512,7 +512,7 @@ function toggleSounds() {
 function shouldFirePlay(player, fireXPos, fireYPos) {
 	let fire = document.getElementsByClassName("fire")[0];
 	// Distance between player and source of fire.
-	var distance = Math.sqrt(Math.pow((player.xPos - fireXPos), 2) + Math.pow((player.yPos - fireYPos), 2));
+	var distance = getDistanceBetweenTwoPoints(player.xPos, player.yPos, fireXPos, fireYPos);
 	// Volume to reduce.
 	var distVolOffset = distance/10;
 	// Reduce volume by distVolOffset+FIRE_DIST_OFFSET but stay within 0 and 1.
@@ -523,6 +523,11 @@ function shouldFirePlay(player, fireXPos, fireYPos) {
 
 
 /******************* OTHER *******************/
+
+/* Math formula for calculating the distance between two points */
+function getDistanceBetweenTwoPoints(firstXPos, firstYPos, secondXPos, secondYPos) {
+	return Math.sqrt(Math.pow((firstXPos - secondXPos), 2) + Math.pow((firstYPos - secondYPos), 2));
+}
 
 /* Returns a 2 digit number of a 1-2 digits number */
 function getTwoDigits(n) {
