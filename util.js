@@ -146,26 +146,24 @@ function getCell(row, col) {
 	return "c" + biDigCurY + biDigCurX;
 }
 
+/* Returns a pair of row and col from the given cell */
+function getRowAndColFromCell(cell) {
+	var row = parseInt(cell.substring(1, 3));
+	var col = parseInt(cell.substring(3, 5));
+	return {
+		'row': row,
+		'col': col
+	};
+}
+
 
 /******************* LOG *******************/
 
 /* Prompts the player to press a key */
 function promptContinue(player) {
-	// If game is loaded from storage, pass keydown event straight to control.
-	if(localStorage.length != 0) {
-		document.body.onkeydown = function(event) {
-			if(!PLOT.FIRE.isCompleted) {
-				createSound(FIRE_SOUND, true);
-			}
-			control(event, player);
-			// Check if the player is within a reasonable distance from the fire
-			// such that he can still hear it burning.
-			shouldFirePlay(player, 5, 7);
-		};
-	} else {
-		printToLog(CONTINUE_PROMPT);
-		document.body.onkeydown = function(event) {exitShip(player)};
-	}
+
+	printToLog(CONTINUE_PROMPT);
+	document.body.onkeydown = function(event) {exitShip(player)};
 }
 
 /* Prints string to game log 
@@ -771,4 +769,16 @@ function loadMapBigObjects(map) {
 			}
 		}
 	}
+}
+
+/* Resume player movement and check for fire sound after game was loaded */
+function resumePlayerMovementAndCheckFireOnLoad(player) {
+	// Initial check on load.
+	shouldFirePlay(player, 5, 7);
+	document.body.onkeydown = function(event) {
+			control(event, player);
+			// Check if the player is within a reasonable distance from the fire
+			// such that he can still hear it burning.
+			shouldFirePlay(player, 5, 7);
+		};
 }
