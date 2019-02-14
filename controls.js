@@ -19,6 +19,7 @@ const REMOVE = "r";
 const STATS = "s";
 const PARTS = "m";
 const BUILD = "b";
+const TALK = "t";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -33,6 +34,7 @@ document.getElementById("remove-key").innerHTML = "'"+REMOVE+"'";
 document.getElementById("stats-key").innerHTML = "'"+STATS+"'";
 document.getElementById("parts-key").innerHTML = "'"+PARTS+"'";
 document.getElementById("build-key").innerHTML = "'"+BUILD+"'";
+document.getElementById("talk-key").innerHTML = "'"+TALK+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -55,6 +57,8 @@ function passToAction(direction, player) {
 		case "build":
 			player.build(direction);
 			break;
+		case "talk":
+			player.talk(direction);
 	}
 }
 
@@ -129,6 +133,9 @@ function control(event, player) {
 			break;
 		case BUILD:
 			player.build();
+			break;
+		case TALK:
+			player.talk();
 			break;
 	}
 }

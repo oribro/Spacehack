@@ -878,6 +878,30 @@ class Player extends Character {
 		}
 	}
 
+	/* Starts a conversation with the target in the given direction */
+	talk(direction) {
+		if(direction === undefined) {
+			promptDirection("talk");
+		} else {
+			var cell = this.getCellFromDirection(direction);
+			var cellElement = document.getElementById(cell);
+			var env = cellElement.getAttribute("env");
+			
+			if (!env) 
+				return;
+
+			switch (env) {
+				case "triheadhumanoid":
+					talkToTriHeadHumanoid(this);
+					break;
+
+				default:
+					printToLog(STRINGS["talk_to_yourself"]);
+					break;
+			}
+		}
+	}
+
 	/* Takes an item and equips it 
 	 * playSound: boolean, optional. if defined doesnt play the equip sound. necessary for player construction */
 	equip(item, playSound) {

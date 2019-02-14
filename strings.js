@@ -111,8 +111,22 @@ const STRINGS = {
 	
 	"poisonous_tree": "You can sense that something about the nearby tree is not right. You are poisoned!",
 
-	"poisonous_tree_withdrawal": "You have escaped the grasp of the toxic tree."
+	"poisonous_tree_withdrawal": "You have escaped the grasp of the toxic tree.",
+
+	"talk_to_yourself": "You start a monologue with yourself. Unfortunately, no one is around to listen."
 
 };
 
 const CONTINUE_PROMPT = "Press any key to continue...";
+
+async function talkToTriHeadHumanoid(player) {
+	document.body.onkeydown = null;
+	printToLog("Three headed man: \"blurghrlurghlurghrulgh ruhlgruh ruh...\"");
+	await sleep(3000);
+	printToLog("You: \"Sigh. I guess talking to him will be of little use for me.\"");
+	await sleep(4000);
+	printToLog("You: \"Unless...\"");
+	await sleep(4000);
+	printToLog("You: \"Maybe I can find a way to translate this language.\"");
+	resumePlayerMovementAndCheckFireOnLoad(player);
+}
