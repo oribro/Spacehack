@@ -536,7 +536,7 @@ class Player extends Character {
 
 				let itemList = container.content;
 				let numItems = container.content.length;
-				let choice = await promptMultItemsChoice(itemList, 2);
+				let choice = await promptMultItemsChoice(itemList, 2, USER_ACTION.PICKUP);
 				let method = validateMultItemsChoice(choice, itemList);
 
 				if (method !== "") {
