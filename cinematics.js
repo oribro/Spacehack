@@ -8,7 +8,7 @@ async function playGameIntro(player) {
 		skipCinematic();
 	}
 	// Add option for skipping the cinematic.
-	document.getElementById("skip-cinematic-container").style.display = "block";
+	document.getElementById("cinematic-control-container").style.display = "block";
 	document.getElementById("skip-cinematic").style.display = "block";
 	let eyelids = Array.from(document.getElementsByClassName("board-cover"));
 	eyelids.forEach(
@@ -36,8 +36,8 @@ async function exitShip(player) {
 	// Player exits ship.
 	spawnPlayer(player);
 	// Hide the Skip button as the cinematic finished.
-	document.getElementById("skip-cinematic-container").style.display = "none";
-	
+	document.getElementById("cinematic-control-container").style.display = "none";
+	document.getElementById("skip-cinematic").style.display = "none";
 	PLOT.INTRO.complete();
 }
 
@@ -79,6 +79,7 @@ function skipCinematic() {
 	}
 
 	// Hide the Skip button after we skipped the cinematic.
-	document.getElementById("skip-cinematic-container").style.display = "none";	
+	document.getElementById("cinematic-control-container").style.display = "none";
+	document.getElementById("skip-cinematic").style.display = "none";
 }
 

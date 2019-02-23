@@ -355,7 +355,7 @@ footer {
 	vertical-align: top;
 }
 
-#skip-cinematic-container {
+#cinematic-control-container {
 	grid-column-start: 2;
 	grid-column-end: 3;
 	grid-row-start: 5;
