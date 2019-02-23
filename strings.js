@@ -121,6 +121,8 @@ const CONTINUE_PROMPT = "Press any key to continue...";
 
 async function talkToTriHeadHumanoid(player) {
 	document.body.onkeydown = null;
+	let conversationPeriod = 11000;
+	showProgressBar(conversationPeriod);
 	printToLog("Three headed man: \"blurghrlurghlurghrulgh ruhlgruh ruh...\"");
 	await sleep(3000);
 	printToLog("You: \"Sigh. I guess talking to him will be of little use for me.\"");

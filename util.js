@@ -438,6 +438,27 @@ function popBuildList(reqList) {
 	}
 }
 
+/* Draws a progress bar underneath the log for the given period of time */ 
+function showProgressBar(period) {
+	const NUM_OF_INTERVALS = 100;
+	var container = document.getElementById("cinematic-control-container");
+	var bar = document.getElementById("conversation-progress-bar");
+	container.style.display = "block";
+	bar.style.display = "block";
+  	var width = 0;
+  	var id = setInterval(frame, period / NUM_OF_INTERVALS);
+  	function frame() {
+	    if (width >= 100) {
+	      clearInterval(id);
+	      container.style.display = "none";
+		  bar.style.display = "none";
+	    } else {
+	      width++; 
+	      bar.style.width = width + '%'; 
+	    }
+  	}
+}
+
 /******************* SOUND *******************/
 
 /* Function for adding sound files to the game.

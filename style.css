@@ -368,3 +368,10 @@ footer {
 #skip-cinematic {
 	display: none;
 }
+
+#conversation-progress-bar {
+	display: none;
+	background-color: orange;
+	text-align: center;
+  	color: black;
+}
