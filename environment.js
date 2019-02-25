@@ -86,6 +86,7 @@ const T_BOW = ASSETS + TILESET + "bow.png";
 const T_CROSSBOW = ASSETS + TILESET + "crossbow.png";
 const T_STONEBALLS = ASSETS + TILESET + "stoneballs.png";
 const T_ARROWS = ASSETS + TILESET + "arrows.png";
+const T_BABELFISH = ASSETS + TILESET + "babelfish.png";
 
 
 /*** Game sounds ***/
@@ -123,6 +124,7 @@ const RELIEF = ASSETS + SOUNDS + "relief.wav";
 const HAMMER = ASSETS + SOUNDS + "hammer.wav";
 const PICKAXE = ASSETS + SOUNDS + "pickaxe.wav";
 const AXE = ASSETS + SOUNDS + "axe.wav";
+const BABELFISH_SQUEAK = ASSETS + SOUNDS + "babelfish-squeak.wav";
 
 /* Other sounds */
 const SAD_TROMBONE = ASSETS + SOUNDS + "sad-trombone.wav";
@@ -175,6 +177,8 @@ const ENV = {
 		"bridge": `T_BRIDGE;${STRINGS["examine_bridge"]}`,
 		
 		"sign_r": `T_SIGN;${STRINGS["examine_sign"]}`,
+
+		"babelfish": `T_BABELFISH;${STRINGS["examine_babelfish"]}`
 }
 
 

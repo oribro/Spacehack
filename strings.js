@@ -88,6 +88,9 @@ const STRINGS = {
 	"examine_bridge":  "\"This looks stable enough to walk on.\"",
 	
 	"examine_sign":  "\"It's a road sign! So there must be intelligent life on this planet. I can't read what it says but it points to the river, maybe there's something interesting on the other side?\"",
+
+	"examine_babelfish": `The Babel fish is small, yellow, leech-like - and probably the oddest thing in the universe. 
+	It feeds on brain wave energy, and if you stick one in your ear, you can instantly understand anything said to you in any form of language`,
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
@@ -121,7 +124,7 @@ const CONTINUE_PROMPT = "Press any key to continue...";
 
 async function talkToTriHeadHumanoid(player) {
 	document.body.onkeydown = null;
-	let conversationPeriod = 11000;
+	let conversationPeriod = 14000;
 	showProgressBar(conversationPeriod);
 	printToLog("Three headed man: \"blurghrlurghlurghrulgh ruhlgruh ruh...\"");
 	await sleep(3000);
@@ -130,5 +133,13 @@ async function talkToTriHeadHumanoid(player) {
 	printToLog("You: \"Unless...\"");
 	await sleep(4000);
 	printToLog("You: \"Maybe I can find a way to translate this language.\"");
+	await sleep(3000);
 	resumePlayerMovementAndCheckFireOnLoad(player);
+
+	//if (!PLOT.BABELFISH.isCompleted) {
+		setTileOnTop("c0130", T_BABELFISH, "false");
+		createSound(BABELFISH_SQUEAK, false);
+		printToLog("A wild Babelfish appears on the nearby shore");
+		//PLOT.BABELFISH.complete();
+	//}
 }

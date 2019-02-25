@@ -704,6 +704,7 @@ function loadGame(afterGameDraw) {
 			
 			// Load plot tree.
 			var loadedPlotTree = JSON.parse(localStorage.getItem("plot"));
+			
 			for(plotNode in PLOT) {
 				if(loadedPlotTree[plotNode].completed == true) {
 					PLOT[plotNode].complete();

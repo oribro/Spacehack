@@ -33,6 +33,7 @@ const DOGFISH = new PlotNode("Dogfish", FIRE);
 const RIVER_AMBUSH = new PlotNode("River Ambush", DOGFISH);
 const CHICK_MEETING = new PlotNode("Chick Meeting", DOGFISH);
 const CHICK_CARNAGE = new PlotNode("Chick Carnage", CHICK_MEETING);
+const BABELFISH = new PlotNode("Babelfish", RIVER_AMBUSH);
 
 /* Plot tree */
 const PLOT = {
@@ -42,6 +43,7 @@ const PLOT = {
 	RIVER_AMBUSH: RIVER_AMBUSH,
 	CHICK_MEETING: CHICK_MEETING,
 	CHICK_CARNAGE: CHICK_CARNAGE
+	//BABELFISH: BABELFISH
 }
 
 /* Saves the "big objects" built in each map */
