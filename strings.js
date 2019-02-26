@@ -128,7 +128,30 @@ const CONTINUE_PROMPT = "Press any key to continue...";
 
 async function talkToTriHeadHumanoid(player) {
 	document.body.onkeydown = null;
-	let conversationPeriod = 14000;
+	let mask = document.getElementById("mask-slot").innerHTML.split(" ")[0];
+	if (mask === "Babelfish") {
+		await startFriendlyConversation();
+	}
+	else { 
+		await startVagueConversation();
+	}
+	resumePlayerMovementAndCheckFireOnLoad(player);
+}
+
+async function startFriendlyConversation() {
+	let conversationPeriod = 5000;
+	showProgressBar(conversationPeriod);
+	printToLog("Three headed man: \"Hello stranger! What can I do for you today?\"");
+	await sleep(3000);
+	printToLog("You: \"You... You can talk! :O\"");
+	await sleep(2000);
+
+	// TODO: The TriHeadHumanoid will offer here a quest.
+	// The reward will be the access code to the gate leading to the alien city located in the next map.
+}
+
+async function startVagueConversation() {
+	let conversationPeriod = 11000;
 	showProgressBar(conversationPeriod);
 	printToLog("Three headed man: \"blurghrlurghlurghrulgh ruhlgruh ruh...\"");
 	await sleep(3000);
@@ -137,13 +160,4 @@ async function talkToTriHeadHumanoid(player) {
 	printToLog("You: \"Unless...\"");
 	await sleep(4000);
 	printToLog("You: \"Maybe I can find a way to translate this language.\"");
-	await sleep(3000);
-	resumePlayerMovementAndCheckFireOnLoad(player);
-
-	//if (!PLOT.BABELFISH.isCompleted) {
-		setTileOnTop("c0130", T_BABELFISH, "false");
-		createSound(BABELFISH_SQUEAK, false);
-		printToLog("A wild Babelfish appears on the nearby shore");
-		//PLOT.BABELFISH.complete();
-	//}
 }
