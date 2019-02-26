@@ -375,3 +375,27 @@ footer {
 	text-align: center;
   	color: black;
 }
+
+#o1126 {
+	z-index: 2;
+	-webkit-animation: none;
+}
+
+@-webkit-keyframes glitter {
+  0% {
+    -webkit-transform: scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    -webkit-transform: scale(0.85) rotate(360deg);
+    opacity: 1;
+  }
+  50% {
+    -webkit-transform: scale(0.3) rotate(720deg);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+}

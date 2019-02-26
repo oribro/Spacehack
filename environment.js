@@ -62,6 +62,7 @@ const T_LAKE6 = ASSETS + TILESET + "lake6.png";
 const T_LAKE7 = ASSETS + TILESET + "lake7.png";
 const T_LAKE8 = ASSETS + TILESET + "lake8.png";
 const T_ROCK = ASSETS + TILESET + "rock.png";
+const T_FISHING_SPOT = ASSETS + TILESET + "fishing_spot.png";
 
 /* Item tiles */
 const T_COINS = ASSETS + TILESET + "coins.png";
@@ -87,6 +88,7 @@ const T_CROSSBOW = ASSETS + TILESET + "crossbow.png";
 const T_STONEBALLS = ASSETS + TILESET + "stoneballs.png";
 const T_ARROWS = ASSETS + TILESET + "arrows.png";
 const T_BABELFISH = ASSETS + TILESET + "babelfish.png";
+const T_FISHING_ROD = ASSETS + TILESET + "fishing_rod.png";
 
 
 /*** Game sounds ***/
@@ -178,7 +180,7 @@ const ENV = {
 		
 		"sign_r": `T_SIGN;${STRINGS["examine_sign"]}`,
 
-		"babelfish": `T_BABELFISH;${STRINGS["examine_babelfish"]}`
+		"fishing_spot": `T_FISHING_SPOT;${STRINGS["examine_fishing_spot"]}`
 }
 
 

@@ -183,7 +183,8 @@ function spawnGameObjects(map, initial) {
 				new Item("Bucket"),
 				new Item("Axe"),
 				new Item("Pickaxe"),
-				new Item("Hammer")
+				new Item("Hammer"),
+				new Item("Fishing Rod")
 			],
 				"c1423",
 				true
@@ -283,6 +284,10 @@ function spawnGameObjects(map, initial) {
 													 "c"+biDigY+"28", "c"+biDigY+"29", "c"+biDigY+"30");
 				}
 			}
+			// Fishing spot with animation.
+			setTileOnTop("c1126", T_FISHING_SPOT, "false");
+			document.getElementById("o1126").style.webkitAnimation = "glitter 2s linear 0s infinite normal";
+			document.getElementById("c1126").lastElementChild.id = "f1126";
 
 			// Rocks.
 			setTilesOnTop(

@@ -65,7 +65,9 @@ const ITEMS = {
 		"Bow": `Bow;Weapon;20;false;4;T_BOW;Ranged;Arrows`,
 		"Crossbow": `Crossbow;Weapon;30;false;5;T_CROSSBOW;Ranged;Arrows`,
 		"Stoneballs": `Stoneballs;Projectile;1;true;0;T_STONEBALLS`,
-		"Arrows": `Arrows;Projectile;0;true;1;T_ARROWS`
+		"Arrows": `Arrows;Projectile;0;true;1;T_ARROWS`,
+		"Fishing Rod": `Fishing Rod;Utility;1;false;0;T_FISHING_ROD`,
+		"Babelfish": `Babelfish;Mask;1;false;0;T_BABELFISH`
 	};
 
 // List of poisonous food
@@ -323,6 +325,20 @@ function utilItem(item, player, direction) {
 					printToLog("\"How can I use the " + item.name + " with that?\"");
 				}
 				break;
+
+			case "Fishing Rod":
+				if (env === "beach1" || env === "water1") {
+					printToLog("\"I will have to find a special spot for fishing.\"");
+					break;
+				}
+				else if (env === "fishing_spot") {
+					spawnItem("c1025", T_BABELFISH, ITEMS["Babelfish"]);
+					createSound(BABELFISH_SQUEAK, false);
+					printToLog("You use the rod to catch a wild Babelfish. You put it on the nearby shore.");
+					removeTileOnTop(cell, false);
+					document.getElementById("o1126").style.webkitAnimation = "none";
+					break;
+				}
 
 			default:
 				printToLog("\"How can I use the " + item.name + " with that?\"");

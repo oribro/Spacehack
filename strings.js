@@ -91,6 +91,10 @@ const STRINGS = {
 
 	"examine_babelfish": `The Babel fish is small, yellow, leech-like - and probably the oddest thing in the universe. 
 	It feeds on brain wave energy, and if you stick one in your ear, you can instantly understand anything said to you in any form of language`,
+
+	"examine_fishing rod": `I can use it to catch fish`,
+
+	"examine_fishing_spot": `There are fish swimming in the water`,
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	
