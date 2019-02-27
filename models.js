@@ -746,6 +746,9 @@ class Player extends Character {
 			case "Suit":
 				this.equip(item);
 				break;
+			case "Accessory":
+				this.equip(item);
+				break;
 			default:
 				printToLog(STRINGS["not_implemented_err"]);
 		}
@@ -922,8 +925,11 @@ class Player extends Character {
 		} else {
 			if(item.type == "Mask") {
 				this.equipment.Mask = item;
-			} else {
+			} else if(item.type == "Suit") {
 				this.equipment.Suit = item;
+			}
+			else {
+				this,equipment.Accessory = item;
 			}
 			this.def += parseInt(item.value);
 			document.getElementById("def-value").innerHTML = this.def;
@@ -989,8 +995,10 @@ class Player extends Character {
 				document.getElementById("def-value").innerHTML = this.def;
 				if(item.type == "Mask") {
 					document.getElementById("mask-slot").innerHTML = "";
-				} else {
+				} else if(item.type == "Suit") {
 					document.getElementById("suit-slot").innerHTML = "";
+				} else {
+					document.getElementById("accessory-slot").innerHTML = "";
 				}
 			}
 			repopInv(this);

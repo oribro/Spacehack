@@ -407,6 +407,9 @@ function updateEquipment(name, player) {
 		case "Suit":
 			var equipmentSlot = document.getElementById("suit-slot");
 			break;
+		case "Accessory":
+			var equipmentSlot = document.getElementById("accessory-slot");
+			break;
 	}
 	equipmentSlot.innerHTML = name + " (" + value + ")";
 }

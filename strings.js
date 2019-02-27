@@ -129,8 +129,8 @@ const CONTINUE_PROMPT = "Press any key to continue...";
 async function talkToTriHeadHumanoid(player) {
 	document.body.onkeydown = null;
 	enableSkip(player);
-	let mask = document.getElementById("mask-slot").innerHTML.split(" ")[0];
-	if (mask === "Babelfish") {
+	let accessory = document.getElementById("accessory-slot").innerHTML.split(" ")[0];
+	if (accessory === "Babelfish") {
 		await startFriendlyConversation();
 	}
 	else { 
