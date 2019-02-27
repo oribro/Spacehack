@@ -332,11 +332,11 @@ function utilItem(item, player, direction) {
 					break;
 				}
 				else if (env === "fishing_spot") {
-					spawnItem("c1025", T_BABELFISH, ITEMS["Babelfish"]);
+					spawnItem("c1431", T_BABELFISH, ITEMS["Babelfish"]);
 					createSound(BABELFISH_SQUEAK, false);
 					printToLog("You use the rod to catch a wild Babelfish. You put it on the nearby shore.");
 					removeTileOnTop(cell, false);
-					document.getElementById("o1126").style.webkitAnimation = "none";
+					document.getElementById("o1330").style.webkitAnimation = "none";
 					break;
 				}
 

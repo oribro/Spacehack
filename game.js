@@ -285,9 +285,9 @@ function spawnGameObjects(map, initial) {
 				}
 			}
 			// Fishing spot with animation.
-			setTileOnTop("c1126", T_FISHING_SPOT, "false");
-			document.getElementById("o1126").style.webkitAnimation = "glitter 2s linear 0s infinite normal";
-			document.getElementById("c1126").lastElementChild.id = "f1126";
+			setTileOnTop("c1330", T_FISHING_SPOT, "false");
+			document.getElementById("o1330").style.webkitAnimation = "glitter 2s linear 0s infinite normal";
+			document.getElementById("c1330").lastElementChild.id = "f1331";
 
 			// Rocks.
 			setTilesOnTop(
