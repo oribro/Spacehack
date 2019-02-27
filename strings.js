@@ -128,6 +128,7 @@ const CONTINUE_PROMPT = "Press any key to continue...";
 
 async function talkToTriHeadHumanoid(player) {
 	document.body.onkeydown = null;
+	enableSkip(player);
 	let mask = document.getElementById("mask-slot").innerHTML.split(" ")[0];
 	if (mask === "Babelfish") {
 		await startFriendlyConversation();
@@ -136,11 +137,27 @@ async function talkToTriHeadHumanoid(player) {
 		await startVagueConversation();
 	}
 	resumePlayerMovementAndCheckFireOnLoad(player);
+	disableSkip();
+}
+
+function enableSkip(player) {
+	document.body.onkeydown = function() {
+		if (sleepNum) {
+			clearTimeout(sleepNum);
+		}
+		resumePlayerMovementAndCheckFireOnLoad(player);
+		disableSkip();
+	}
+	document.getElementById("cinematic-control-container").style.display = "block";
+	document.getElementById("skip-cinematic").style.display = "block";
+}
+
+function disableSkip() {
+	document.getElementById("cinematic-control-container").style.display = "none";
+	document.getElementById("skip-cinematic").style.display = "none";
 }
 
 async function startFriendlyConversation() {
-	let conversationPeriod = 5000;
-	showProgressBar(conversationPeriod);
 	printToLog("Three headed man: \"Hello stranger! What can I do for you today?\"");
 	await sleep(3000);
 	printToLog("You: \"You... You can talk! :O\"");
@@ -151,8 +168,6 @@ async function startFriendlyConversation() {
 }
 
 async function startVagueConversation() {
-	let conversationPeriod = 11000;
-	showProgressBar(conversationPeriod);
 	printToLog("Three headed man: \"blurghrlurghlurghrulgh ruhlgruh ruh...\"");
 	await sleep(3000);
 	printToLog("You: \"Sigh. I guess talking to him will be of little use for me.\"");
