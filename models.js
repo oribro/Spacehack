@@ -147,7 +147,8 @@ class Player extends Character {
 		this.equipment = {
 				Weapon: null,
 				Mask: mask,
-				Suit: suit
+				Suit: suit,
+				Accessory: null
 			};
 		
 		this.equip(this.inventory[2], false);
@@ -651,7 +652,7 @@ class Player extends Character {
 				break;
 			case "equipment":
 				var itemSel = parseInt(await promptInput("Choose type number from the equipment list:"));
-				listLength = 3;
+				listLength = Object.keys(this.equipment).length;
 				break;
 			case "parts":
 				var itemSel = parseInt(await promptInput("Choose part number from the ship parts list:"));
@@ -929,7 +930,7 @@ class Player extends Character {
 				this.equipment.Suit = item;
 			}
 			else {
-				this,equipment.Accessory = item;
+				this.equipment.Accessory = item;
 			}
 			this.def += parseInt(item.value);
 			document.getElementById("def-value").innerHTML = this.def;
@@ -952,7 +953,7 @@ class Player extends Character {
 		if(type == true) {
 			var persist = toggleWindow("equipment", null, true);
 			await sleep(100);
-			var typeNum = this.itemSelection("equipment");
+			var typeNum = await this.itemSelection("equipment");
 			if(!persist) {
 				toggleWindow("equipment");
 			}
@@ -972,6 +973,10 @@ class Player extends Character {
 					type = "Suit";
 					this.equipment.Suit = null;
 					break;
+				case 4:
+					type = "Accessory";
+					this.equipment.Accessory = null;
+					break;
 				default:
 					return;
 			}
@@ -982,7 +987,9 @@ class Player extends Character {
 				item = invItem;
 			}
 		});
+		
 		if(item) {
+			
 			item.isEquipped = false;
 			if(item.type == "Weapon") {
 				createSound(EQUIP_WEAPON, false);
