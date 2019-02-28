@@ -328,7 +328,7 @@ function utilItem(item, player, direction) {
 
 			case "Fishing Rod":
 				if (env === "beach1" || env === "water1") {
-					printToLog("\"I will have to find a special spot for fishing.\"");
+					printToLog("You cast your rod into the water and wait. After what seems to be forever you realize that there are no fish in this spot.");
 					break;
 				}
 				else if (env === "fishing_spot") {
