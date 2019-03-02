@@ -21,6 +21,8 @@ const T_DOGFISH_L = ASSETS + TILESET + "dogfish_l.png";
 const T_CHICK_R = ASSETS + TILESET + "chick.png";
 const T_CHICK_L = ASSETS + TILESET + "chick.png";
 const T_TRIHEADHUMANOID = ASSETS + TILESET + "triheadhumanoid.png";
+const T_SNAKE_R = ASSETS + TILESET + "snake_r.png";
+const T_SNAKE_L = ASSETS + TILESET + "snake_l.png";
 
 /* Object tiles */
 const T_SHIP2 = ASSETS + TILESET + "ship2.png";
@@ -89,6 +91,7 @@ const T_STONEBALLS = ASSETS + TILESET + "stoneballs.png";
 const T_ARROWS = ASSETS + TILESET + "arrows.png";
 const T_BABELFISH = ASSETS + TILESET + "babelfish.png";
 const T_FISHING_ROD = ASSETS + TILESET + "fishing_rod.png";
+const T_WALLET = ASSETS + TILESET + "wallet.png";
 
 
 /*** Game sounds ***/
@@ -108,6 +111,7 @@ const WAKEUP = ASSETS + SOUNDS + "wakeup.mp3";
 const DOGFISH_SNARL = ASSETS + SOUNDS + "dogfish-snarl.wav";
 const DOGFISH_WHINE = ASSETS + SOUNDS + "dogfish-whine.wav";
 const CHICK_CHIRP = ASSETS + SOUNDS + "chick-chirp.mp3";
+const SNAKE_HISS = ASSETS + SOUNDS + "snake_hiss.ogg";
 
 /* Object sounds */
 const CONTAINER_OPEN = ASSETS + SOUNDS + "container-open.wav";

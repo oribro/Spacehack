@@ -33,7 +33,8 @@ const DOGFISH = new PlotNode("Dogfish", FIRE);
 const RIVER_AMBUSH = new PlotNode("River Ambush", DOGFISH);
 const CHICK_MEETING = new PlotNode("Chick Meeting", DOGFISH);
 const CHICK_CARNAGE = new PlotNode("Chick Carnage", CHICK_MEETING);
-const BABELFISH = new PlotNode("Babelfish", RIVER_AMBUSH);
+const SNAKE_ISLAND = new PlotNode("Snake Ambush", DOGFISH);
+const RETURN_WALLET = new PlotNode("Return Wallet", SNAKE_ISLAND);
 
 /* Plot tree */
 const PLOT = {
@@ -42,8 +43,9 @@ const PLOT = {
 	DOGFISH: DOGFISH,
 	RIVER_AMBUSH: RIVER_AMBUSH,
 	CHICK_MEETING: CHICK_MEETING,
-	CHICK_CARNAGE: CHICK_CARNAGE
-	//BABELFISH: BABELFISH
+	CHICK_CARNAGE: CHICK_CARNAGE,
+	SNAKE_ISLAND: SNAKE_ISLAND,
+	RETURN_WALLET: RETURN_WALLET
 }
 
 /* Saves the "big objects" built in each map */
@@ -379,6 +381,74 @@ function spawnGameObjects(map, initial) {
 			}
 			
 			break;
+		
+		case "1,-1":
+			document.getElementById("map-value").innerHTML = "Plains";
+			for(i = 0; i < HEIGHT; i++) {
+				var div = document.createElement("div");
+				biDigI = getTwoDigits(i);
+				div.setAttribute("id", "r"+biDigI);
+				div.setAttribute("class", "tileline");
+				board.appendChild(div);
+				
+				// Fill the board with vegetation.
+				for(j = 0; j < WIDTH; j++) {
+					biDigJ = getTwoDigits(j);
+					let cell = "c"+biDigI+biDigJ;
+					var span = document.createElement("span");
+					span.setAttribute("id", cell);
+					document.getElementById("r"+biDigI).appendChild(span);
+					setCell(cell, T_VEGETATION1, "true");				
+				}	
+			}
+			
+			// Lake.
+			for(i = 0; i < HEIGHT; i++) {
+				let biDigY = getTwoDigits(i);
+				if(i >= 2 && i <= 8) {
+					for(j = 14; j <= 30; j++) {
+						if(!(i == 2 && j == 14) && !(i == 8 && j == 14)) {
+							// Island.
+							if(!(i >= 4 && i <= 6 && j >= 24 && j <= 26)) {
+								let biDigX = getTwoDigits(j);
+								setTileOnTop("c"+biDigY+biDigX, T_WATER1, "false");
+							}
+						}
+					}
+				} else {
+					setTilesOnTop(T_WATER1, "false", "c"+biDigY+"25", "c"+biDigY+"26", "c"+biDigY+"27", 
+													 "c"+biDigY+"28", "c"+biDigY+"29");
+				}
+			}
+			setTilesOnTop(T_WATER1, "false", "c0122", "c0123", "c0124");
+			setTilesOnTop(T_WATER1, "false", "c0922", "c0923", "c0924", "c0930", "c1030");
+			setTilesOnTop(T_WATER1, "false", "c0413", "c0513", "c0613");
+			setTileOnTop("c1024", T_WATER1, "false");
+			
+			// Green trees.
+			setTilesOnTop(T_TREE1, "false", "c0103", "c0105", "c0113",
+											"c0202", "c0206", "c0211", 
+											"c0302", "c0305", "c0308",
+											"c0401", "c0408", "c0411",
+											"c0502", "c0506", "c0508",
+											"c0603", "c0605", "c0610",
+											"c0702", "c0710", "c0809", 
+											"c0901", "c0909", "c0913",
+											"c1002", "c1004", "c1010",
+											"c1106", "c1111", "c1118",
+											"c1204", "c1210", "c1220",
+											"c1301", "c1308", "c1315",
+											"c1403", "c1412", "c1418",
+											"c1505", "c1510", "c1522",
+											"c0525"
+			);
+			
+			// Quest item.
+			if(initial) {
+				spawnItem("c0524", T_WALLET, ITEMS["Wallet"]);
+			}
+			
+			break;
 	}
 	loadMapBigObjects(map);
 }
@@ -418,6 +488,28 @@ function managePlot(player) {
 			}
 			createSound(CHICK_CHIRP, false);
 			printToLog("\"Oh no.\"");
+		}
+	}
+	if(!PLOT.SNAKE_ISLAND.isCompleted) {
+		if(player.mapX == 1 && player.mapY == -1) {
+			if((player.xPos >= 24 && player.xPos <= 26) && (player.yPos >= 4 && player.yPos <= 6)) {
+				PLOT.SNAKE_ISLAND.complete();
+				for(var i = -1; i <= 1; i++) {
+					for(var j = -1; j <= 1; j++) {
+						if(!(i == 0 && j == 0)) {
+							var biDigY = getTwoDigits(player.yPos + i);
+							var biDigX = getTwoDigits(player.xPos + j);
+							var playerAdj = document.getElementById("c"+biDigY+biDigX);
+							if(playerAdj.getAttribute("walkable") == "true" && playerAdj.getAttribute("env") == "vegetation1") {
+								npcs.push(new NPC(player.xPos + j, player.yPos + i, "Snake", "enemy"));
+								createSound(SNAKE_HISS, false);
+								return;
+							}
+						}
+					}
+				}
+				
+			}
 		}
 	}
 }

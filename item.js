@@ -67,7 +67,8 @@ const ITEMS = {
 		"Stoneballs": `Stoneballs;Projectile;1;true;0;T_STONEBALLS`,
 		"Arrows": `Arrows;Projectile;0;true;1;T_ARROWS`,
 		"Fishing Rod": `Fishing Rod;Utility;1;false;0;T_FISHING_ROD`,
-		"Babelfish": `Babelfish;Accessory;0;false;0;T_BABELFISH`
+		"Babelfish": `Babelfish;Accessory;1;false;0;T_BABELFISH`,
+		"Wallet": `Wallet;Quest item;1;false;0;T_WALLET`
 	};
 
 // List of poisonous food

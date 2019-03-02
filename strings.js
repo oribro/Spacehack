@@ -131,7 +131,15 @@ async function talkToTriHeadHumanoid(player) {
 	enableSkip(player);
 	let accessory = document.getElementById("accessory-slot").innerHTML.split(" ")[0];
 	if (accessory === "Babelfish") {
-		await startFriendlyConversation();
+		if(PLOT.RETURN_WALLET.isCompleted) {
+			await startFriendlyConversation(3);
+		} else if(player.inInv("Wallet", 1)) {
+			PLOT.RETURN_WALLET.complete();
+			player.removeItemFromInventory("Wallet", 1);
+			await startFriendlyConversation(2);
+		} else {
+			await startFriendlyConversation(1);
+		}
 	}
 	else { 
 		await startVagueConversation();
@@ -157,20 +165,65 @@ function disableSkip() {
 	document.getElementById("skip-cinematic").style.display = "none";
 }
 
-async function startFriendlyConversation() {
-	printToLog("Three headed man: \"Hello stranger! What can I do for you today?\"");
-	await sleep(3000);
-	printToLog("You: \"You... You can talk! :O\"");
-	await sleep(2000);
-
-	// TODO: The TriHeadHumanoid will offer here a quest.
-	// The reward will be the access code to the gate leading to the alien city located in the next map.
+async function startFriendlyConversation(state) {
+	switch (state) {
+		case 1:
+			printToLog("Head 1: \"Welcome back stranger. Are you going to just run away again?\"");
+			await sleep(3000);
+			printToLog("You: \"Hi. I'm sorry about before. I had to find a babelfish to be able to talk to you.\"");
+			await sleep(4000);
+			printToLog("Head 2: \"Who travels to a foreign planet without a babelfish?!\"");
+			await sleep(4000);
+			printToLog("Head 1: \"Don't be rude to our guest, Forgh. How can we help you sir?\"");
+			await sleep(4000);
+			printToLog("You: \"My ship crashed on the beach not far from here. My friend went missing. I need to fix the ship and find her so we could return home. Have you seen her maybe?\"");
+			await sleep(5000);
+			printToLog("Head 1: \"No, You're the first stranger I see today. How about you Forgh?\"");
+			await sleep(4000);
+			printToLog("Head 2: \"Nah. Maybe Raeibh saw something.\"");
+			await sleep(3000);
+			printToLog("Head 3: *Snoring*");
+			await sleep(3000);
+			printToLog("Head 1: \"I'm sorry we haven't seen anyone. You should try asking around in the city, you will also be able to find tools and parts to fix your ship there. You need the code to pass through the gate.\"");
+			await sleep(6000);
+			printToLog("You: \"What is the code?\"");
+			await sleep(3000);
+			printToLog("Head 1: \"We'll give you the code, but you need to help us with something first.\"");
+			await sleep(4000);
+			printToLog("You: \"Ok. What do you need?\"");
+			await sleep(3000);
+			printToLog("Head 2: \"Some big bird stole our wallet. It flew away and landed on a small island in the lake up the stream. We'd get it ourselves but Boiqf here is afraid of water.\"");
+			await sleep(5000);
+			printToLog("Head 1: \"*Sighs* Yes that's true. It should be easy for you though. Get our wallet back and we'll give you the code.\"");
+			await sleep(4000);
+			printToLog("You: \"Alright, sounds like a good deal. I'll be back.\"");
+			break;
+		case 2:
+			printToLog("You: \"Here you go, I almost died to get this.\"");
+			printToLog("You give the wallet to the three headed man.");
+			await sleep(4000);
+			printToLog("Head 1: \"Thank you so much. The code to the city gate is 8375.\"");
+			await sleep(5000);
+			printToLog("You: \"8375. Got it. Thanks.\"");
+			break;
+		case 3:
+			printToLog("You: \"Hello again.\"");
+			await sleep(3000);
+			printToLog("Head 3: \"Do we know each other?\"");
+			await sleep(3000);
+			printToLog("Head 1: *Snoring*");
+			await sleep(2000);
+			printToLog("Head 2: *Snoring*");
+			await sleep(2000);
+			printToLog("You: \"Uhh... Nevermind.\"");
+			break;
+	}
 }
 
 async function startVagueConversation() {
 	printToLog("Three headed man: \"blurghrlurghlurghrulgh ruhlgruh ruh...\"");
 	await sleep(3000);
-	printToLog("You: \"Sigh. I guess talking to him will be of little use for me.\"");
+	printToLog("You: \"*Sigh* I guess talking to him will be of little use for me.\"");
 	await sleep(4000);
 	printToLog("You: \"Unless...\"");
 	await sleep(4000);

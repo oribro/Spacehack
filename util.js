@@ -709,7 +709,7 @@ function loadGame(afterGameDraw) {
 			var loadedPlotTree = JSON.parse(localStorage.getItem("plot"));
 			
 			for(plotNode in PLOT) {
-				if(loadedPlotTree[plotNode].completed == true) {
+				if(loadedPlotTree[plotNode].isCompleted == true) {
 					PLOT[plotNode].complete();
 				}
 			}
