@@ -50,6 +50,8 @@ const STRINGS = {
 	"examine_gravel": "\"Rock reduced to little stones.\"",
 
 	"examine_metal": "\"It's probably not native to this planet. I wonder how it can be of use.\"",
+
+	"examine_wallet": "\"Used to store money. It must be valuable to the three headed humanoid.\"",
 	
 	"examine_ship_fire": "\"Ship caught fire. I should put it out.\"",
 	
@@ -95,6 +97,10 @@ const STRINGS = {
 	"examine_fishing rod": `I can use it to catch fish`,
 
 	"examine_fishing_spot": `There are fish swimming in the water`,
+
+	"examine_snake_r": "It's a long reptile with a strong venom. I wouldn't want to mess with it",
+	
+	"examine_snake_l": "It's a long reptile with a strong venom. I wouldn't want to mess with it",
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	

@@ -184,7 +184,10 @@ const ENV = {
 		
 		"sign_r": `T_SIGN;${STRINGS["examine_sign"]}`,
 
-		"fishing_spot": `T_FISHING_SPOT;${STRINGS["examine_fishing_spot"]}`
+		"fishing_spot": `T_FISHING_SPOT;${STRINGS["examine_fishing_spot"]}`,
+
+		"snake_r": `T_SNAKE_R;${STRINGS["examine_snake_r"]}`,
+		"snake_l": `T_SNAKE_L;${STRINGS["examine_snake_l"]}`
 }
 
 
