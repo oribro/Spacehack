@@ -1380,8 +1380,18 @@ class NPC extends Character{
 				player.die(`Killed by ${this.type}`);
 			}
 			printToLog("The " + this.type.toLowerCase() + " attacks!");
+			if (this.type === "Snake")
+				this.applyPoison(player, 5)
 		}
 		return;
+	}
+
+	/* Poisons the player for the given duration in turns */
+	applyPoison(player, duration) {
+		player.pStatus = PLAYER_STATUS.POISONED;
+		document.getElementById("status-value").innerHTML = player.pStatus;
+		printToLog(STRINGS["poisoned"]);
+		player.poisonCounter = POISON_PERIOD - duration;
 	}
 	
 	/* Reduces dmg amount from NPC's hp and plays a grunting sound */
