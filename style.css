@@ -399,3 +399,17 @@ footer {
     opacity: 0;
   }
 }
+
+/* Mobile phones support */
+@media (min-width: 320px) and (max-width: 700px) {
+	#inventory {
+ 		width: 10vw;
+ 	}
+  	.left-window {
+  		width: 10vw;
+  	}
+  	#log {
+  		height: 30vh;
+  	}
+  
+}
