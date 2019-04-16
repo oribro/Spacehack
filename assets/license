@@ -1,7 +1,15 @@
 This file lists license types for the assets we use in our game.
 
+##### Tiles #####
+
 coins.png:  Creative Commons Zero (CC0) 
 https://www.kisscc0.com/png/gold-coin-gold-coin-computer-icons-hyperlink-gold-zje0k6/
+
+gate.png, brick_wall1.png, brick_wall2.png, brick_wall3.png, urban_floor.png: 
+By Hyptosis @ https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
+Under CC BY 3.0 https://creativecommons.org/licenses/by/3.0/
+
+##### Sounds #####
 
 fire.mp3, water-splash.mp3: Thanks to SoundJay
 https://www.soundjay.com/tos.html

@@ -378,6 +378,11 @@ footer {
 	-webkit-animation: none;
 }
 
+/* City wall corners symmetry */
+#o0327, #o1404 {
+	transform: scaleX(-1);
+}
+
 @-webkit-keyframes glitter {
   0% {
     -webkit-transform: scale(0.3) rotate(0deg);

@@ -46,6 +46,7 @@ const T_SIGN_R = ASSETS + TILESET + "sign_r.png";
 const T_GROUND 	= ASSETS + TILESET + "ground1.png";
 const T_VEGETATION1 = ASSETS + TILESET + "vegetation1.png";
 const T_VEGETATION2 = ASSETS + TILESET + "vegetation2.png";
+const T_VEGETATION3 = ASSETS + TILESET + "vegetation3.png";
 const T_BOULDER1 = ASSETS + TILESET + "boulder1.png";
 const T_BOULDER2 = ASSETS + TILESET + "boulder2.png";
 const T_BOULDER3 = ASSETS + TILESET + "boulder3.png";
@@ -65,6 +66,11 @@ const T_LAKE7 = ASSETS + TILESET + "lake7.png";
 const T_LAKE8 = ASSETS + TILESET + "lake8.png";
 const T_ROCK = ASSETS + TILESET + "rock.png";
 const T_FISHING_SPOT = ASSETS + TILESET + "fishing_spot.png";
+const T_GATE = ASSETS + TILESET + "gate.png";
+const T_URBAN_FLOOR = ASSETS + TILESET + "urban_floor.png";
+const T_BRICK_WALL1 = ASSETS + TILESET + "brick_wall1.png";
+const T_BRICK_WALL2 = ASSETS + TILESET + "brick_wall2.png";
+const T_BRICK_WALL3 = ASSETS + TILESET + "brick_wall3.png";
 
 /* Item tiles */
 const T_COINS = ASSETS + TILESET + "coins.png";

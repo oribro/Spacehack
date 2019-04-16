@@ -449,6 +449,66 @@ function spawnGameObjects(map, initial) {
 			}
 			
 			break;
+
+		case "2,0":
+			document.getElementById("map-value").innerHTML = "Alien city";
+			// Spawn terrain environment elements.
+			for(i = 0; i < HEIGHT; i++) {
+				biDigI = getTwoDigits(i);
+				var div = document.createElement("div");
+				div.setAttribute("id", "r"+biDigI);
+				div.setAttribute("class", "tileline");
+				document.getElementById("game-board").appendChild(div);
+				for(j = 0; j < WIDTH; j++) {
+					biDigJ = getTwoDigits(j);
+					let cell = "c"+biDigI+biDigJ;
+					var span = document.createElement("span");
+					span.setAttribute("id", cell);
+					document.getElementById("r"+biDigI).appendChild(span);
+					if(j == 0) {
+						setCell(cell, T_VEGETATION1, "true");
+					} else if (j == 1) {
+						setCell(cell, T_VEGETATION3, "true");
+					} else {
+						setCell(cell, T_GROUND, "true");
+					}
+				}
+			}
+
+			// City wall vertical
+			for(i = 3; i <= 14; i++) {
+				let biDigY = getTwoDigits(i);
+				if (i == 3) {
+					setTilesOnTop(T_BRICK_WALL2, "false", "c"+biDigY+"04", "c"+biDigY+"27");
+				}
+				else if (i == 9) {
+					setTileOnTop("c"+biDigY+"04", T_GATE, "false");
+					setTileOnTop("c"+biDigY+"27", T_BRICK_WALL1, "false");
+				}
+				else if (i == 14) {
+					setTilesOnTop(T_BRICK_WALL3, "false", "c"+biDigY+"04", "c"+biDigY+"27");
+				}
+				else {
+					setTilesOnTop(T_BRICK_WALL1, "false", "c"+biDigY+"04", "c"+biDigY+"27");
+				}
+			}
+
+			// City wall horizontal
+			for(i = 5; i <= 26; i++) {
+				let biDigX = getTwoDigits(i);
+				setTilesOnTop(T_BRICK_WALL1, "false", "c"+"03"+biDigX, "c"+"14"+biDigX);
+			}
+
+			// City floor
+			for(i = 4; i <= 13; i++) {
+				for(j = 5; j <= 26; j++) {
+					let biDigX = getTwoDigits(j);
+					let biDigY = getTwoDigits(i);
+					setTileOnTop("c"+biDigY+biDigX, T_URBAN_FLOOR, "true");
+				}
+			}
+			
+			break;
 	}
 	loadMapBigObjects(map);
 }
