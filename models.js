@@ -440,6 +440,14 @@ class Player extends Character {
 				}
 
 			} else if(cellElement.hasAttribute("env")) {
+				if (cellElement.getAttribute("env") === "gate" && cellElement.getAttribute("walkable") === "false") {
+					let accessory = document.getElementById("accessory-slot").innerHTML.split(" ")[0];
+					if (accessory === "Babelfish") 
+						await attemptToOpenCityGate(cellElement);
+					else 
+						printToLog("Some alien language is scribbled on the gate which you cannot understand.");
+					return;
+				}
 				printToLog(getDescription(cellElement.getAttribute("env")));
 				if(cellElement.getAttribute("env").search("ship") != -1) {
 					toggleWindow("parts", null, true);

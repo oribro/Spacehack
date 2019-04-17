@@ -840,3 +840,16 @@ function resumePlayerMovementAndCheckFireOnLoad(player) {
 			shouldFirePlay(player, 5, 7);
 		};
 }
+
+async function attemptToOpenCityGate(gateElement) {
+	printToLog("You read the message written on the gate:");
+	let code = parseInt(await promptInput("\"Welcome stranger. To identify, please enter the city access code:\""));
+	if (code === 8375) {
+		gateElement.setAttribute("walkable", "true");
+		printToLog("Welcome friend, we hope you'll enjoy our city.");
+		createSound(CONTAINER_OPEN, false);
+	}
+	else {
+		printToLog("We're sorry, the code you entered is invalid. Access denied.");
+	}
+}

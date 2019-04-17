@@ -101,6 +101,12 @@ const STRINGS = {
 	"examine_snake_r": "It's a long reptile with a strong venom. I wouldn't want to mess with it",
 	
 	"examine_snake_l": "It's a long reptile with a strong venom. I wouldn't want to mess with it",
+
+	"examine_brick_wall": "A very solid wall made of bricks.",
+
+	"examine_urban_floor": "It's a floor for house decoration.",
+
+	"examine_gate": "It's a large door and the access point to the city.",
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	

@@ -193,7 +193,13 @@ const ENV = {
 		"fishing_spot": `T_FISHING_SPOT;${STRINGS["examine_fishing_spot"]}`,
 
 		"snake_r": `T_SNAKE_R;${STRINGS["examine_snake_r"]}`,
-		"snake_l": `T_SNAKE_L;${STRINGS["examine_snake_l"]}`
+		"snake_l": `T_SNAKE_L;${STRINGS["examine_snake_l"]}`,
+
+		"brick_wall1": `T_BRICK_WALL1;${STRINGS["examine_brick_wall"]}`,
+
+		"urban_floor": `T_URBAN_FLOOR;${STRINGS["examine_urban_floor"]}`,
+
+		"gate": `T_GATE;${STRINGS["examine_gate"]}`
 }
 
 

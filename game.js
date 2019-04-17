@@ -494,14 +494,14 @@ function spawnGameObjects(map, initial) {
 			}
 
 			// City wall horizontal
-			for(i = 5; i <= 26; i++) {
+			for(i = 5; i < WIDTH; i++) {
 				let biDigX = getTwoDigits(i);
 				setTilesOnTop(T_BRICK_WALL1, "false", "c"+"03"+biDigX, "c"+"14"+biDigX);
 			}
 
 			// City floor
 			for(i = 4; i <= 13; i++) {
-				for(j = 5; j <= 26; j++) {
+				for(j = 5; j < WIDTH; j++) {
 					let biDigX = getTwoDigits(j);
 					let biDigY = getTwoDigits(i);
 					setTileOnTop("c"+biDigY+biDigX, T_URBAN_FLOOR, "true");
