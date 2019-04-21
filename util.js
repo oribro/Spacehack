@@ -340,6 +340,28 @@ function toggleWindow(name, player, force) {
 	return true;
 }
 
+/* Shows/hides the world map */
+function toggleWorldMap(player) {
+	var map = document.getElementById('world-map-wrapper');
+	var closeBtn = document.getElementById('close-world-map');
+	map.style.display = "block";
+	const WORLD_MAP_KEY = 78;
+
+	// Prepare exit mechanisms
+	closeBtn.onclick = () => map.style.display = "none";
+	window.onclick = event => {
+	  	if (event.target === map) {
+	    	map.style.display = "none";
+	  	}
+	};
+	document.body.onkeydown = event => {
+		if (event.keyCode === WORLD_MAP_KEY) {
+	    	map.style.display = "none";
+	  	}
+  		resumePlayerMovementAndCheckFireOnLoad(player);
+	};
+}
+
 /* Repopulates the player inventory */
 function repopInv(player) {
 	var invElement = document.getElementById("inventory");

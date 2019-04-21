@@ -20,6 +20,7 @@ const STATS = "s";
 const PARTS = "m";
 const BUILD = "b";
 const TALK = "t";
+const WORLD_MAP = "n";
 
 /* Show the key bindings on the 'controls' list */
 document.getElementById("examine-key").innerHTML = "'"+EXAMINE+"'";
@@ -35,6 +36,7 @@ document.getElementById("stats-key").innerHTML = "'"+STATS+"'";
 document.getElementById("parts-key").innerHTML = "'"+PARTS+"'";
 document.getElementById("build-key").innerHTML = "'"+BUILD+"'";
 document.getElementById("talk-key").innerHTML = "'"+TALK+"'";
+document.getElementById("world-map-key").innerHTML = "'"+WORLD_MAP+"'";
 
 /* Holds the current action so control() will know what to do */
 var actionExecuted;
@@ -136,6 +138,9 @@ function control(event, player) {
 			break;
 		case TALK:
 			player.talk();
+			break;
+		case WORLD_MAP:
+			toggleWorldMap(player);
 			break;
 	}
 }

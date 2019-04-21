@@ -48,6 +48,15 @@ const PLOT = {
 	RETURN_WALLET: RETURN_WALLET
 }
 
+/* Game zones identified by their coordinates */
+const ZONES = {
+	"0,0": "Crash site",
+	"1,0": "Plains",
+	"0,-1": "Beach",
+	"1,-1": "Lake",
+	"2,0": "Alien city"
+}
+
 /* Saves the "big objects" built in each map */
 var bigObjects = {};
 
@@ -115,7 +124,8 @@ window.onload = () => {
 	popBuildList(PARTS_REQS);
 	popBuildList(WORKBENCH_REQS);
 	popBuildList(BIG_OBJECTS_REQS);
-	
+
+	initWorldMap();
 }
 
 /* Draws a map on the game board according to the map parameter.
@@ -511,6 +521,17 @@ function spawnGameObjects(map, initial) {
 			break;
 	}
 	loadMapBigObjects(map);
+}
+
+/* Initializes the world map on game start */
+function initWorldMap() {
+	let map = document.getElementById("world-map");
+	for (let [coord, name] of Object.entries(ZONES)) {
+		let zone = document.createElement("div");
+		zone.setAttribute("id", name.toLowerCase().replace(/\s+/g, "_"));
+		zone.setAttribute("class", "zone");
+		map.appendChild(zone);
+	}
 }
 
 /* Manages plot events */
