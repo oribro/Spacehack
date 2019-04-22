@@ -199,6 +199,9 @@ class Player extends Character {
 				printToLog("\"I should find a way to put out the fire before I begin exploring this place.\"");
 			} else {
 				saveMapItems(this.mapX+","+this.mapY, true);
+				// Remove world map position indicator from the previous map.
+				let youAreHere = document.getElementsByClassName("you_are_here")[0];
+				youAreHere.parentNode.removeChild(youAreHere);
 				if(newPos[0] >= WIDTH) {
 					this.mapX++;
 					newBiDig = this.moveChar(0, newPos[1]);
@@ -219,6 +222,8 @@ class Player extends Character {
 					spawnGameObjects(this.mapX+","+this.mapY);
 				}
 				loadMapItems(this.mapX+","+this.mapY);
+				// Set world map position indicator to the next map.
+				setPlayerWorldMapPositionIndicatorTo(this.mapX+","+this.mapY);
 				// Draw the character symbol at the updated location.
 				this.draw(...newBiDig);
 				this.getHungrier();

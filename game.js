@@ -66,7 +66,9 @@ var bigObjects = {};
 window.onload = () => {
 
 	var player;
-	
+
+	initWorldMap();
+
 	if(localStorage.length != 0) {
 		player = loadGame();
 		
@@ -124,8 +126,6 @@ window.onload = () => {
 	popBuildList(PARTS_REQS);
 	popBuildList(WORKBENCH_REQS);
 	popBuildList(BIG_OBJECTS_REQS);
-
-	initWorldMap();
 }
 
 /* Draws a map on the game board according to the map parameter.
@@ -135,6 +135,8 @@ window.onload = () => {
  */
 function spawnGameObjects(map, initial) {
 	var i, j, biDigI, biDigJ;
+	if (initial)
+		updateWorldMapOnDiscovery(map);
 	// Delete and recreate the game-board DOM element.
 	var board = document.getElementById("game-board");
 	document.getElementById("game-board-wrapper").removeChild(board);
@@ -530,8 +532,53 @@ function initWorldMap() {
 		let zone = document.createElement("div");
 		zone.setAttribute("id", name.toLowerCase().replace(/\s+/g, "_"));
 		zone.setAttribute("class", "zone");
+		let unknownZone = document.createElement("span");
+		unknownZone.innerHTML = '&#63;';
+		unknownZone.setAttribute("class", "unknown_zone");
+		zone.appendChild(unknownZone);
 		map.appendChild(zone);
 	}
+}
+
+/* Sets the player position arrow in the world map to the given zone */
+function setPlayerWorldMapPositionIndicatorTo(map) {
+	let zoneName = ZONES[map];
+	let zoneId = zoneName.toLowerCase().replace(/\s+/g, "_");
+	let zone = document.getElementById(zoneId);
+	let youAreHere = document.createElement("span");
+	youAreHere.innerHTML = '&#8675';
+	youAreHere.setAttribute("class", "you_are_here");
+	zone.appendChild(youAreHere);
+}
+
+/* Registers the given map in the world map as a place the player visited .
+* Map: string. formatted "x,y" where x represents the horizontal location and y the vertical location.
+*/
+function updateWorldMapOnDiscovery(map) {
+	let zoneName = ZONES[map];
+	let zoneId = zoneName.toLowerCase().replace(/\s+/g, "_");
+	let zone = document.getElementById(zoneId);
+	zone.innerText = zoneName;
+	switch (zoneId) {
+		case "crash_site":
+			zone.style.background = "#F4A460";
+			setPlayerWorldMapPositionIndicatorTo(map);
+			break;
+		case "plains":
+			zone.style.background = "#228B22";
+			break;
+		case "lake":
+			zone.style.background = "#40E0D0";
+			break;
+		case "beach":
+			zone.style.background = "#FFD700";
+			break;
+		case "alien_city":
+			zone.style.background = "#000080";
+			break;
+	}
+	if (zoneId !== "crash_site")
+		printToLog(`\"${zoneName}\" area has been added to your world map.`);
 }
 
 /* Manages plot events */

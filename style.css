@@ -429,67 +429,100 @@ footer {
 }
 
 #world-map {
+	position: relative;
 	display: grid;
 	grid-gap: 5% 0;
-    background-color: #fefefe;
+    background-color: black;
+    border: 2px solid orange;
+    border-radius: 4px;
     margin: 15%;
-    padding: 20px;
-    border: 1px solid #888;
+    padding: 5vh 5vh;
     width: 50%; 
 }
 
+#world-map-title {
+	font-size: 2vw;
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 1;
+	grid-row-end: 2;
+}
+
 .close-popup {
+	position: absolute;
+	top: 1vw;
+	right: 1vw;
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 2vw;
     font-weight: bold;
 }
 
 .close-popup:hover,
 .close-popup:focus {
-    color: black;
+    color: orange;
     text-decoration: none;
     cursor: pointer;
 }
 
 /* World map zones */
 .zone {
-	width: 200px;
-    height: 100px;
+	position: relative;
+	width: 15vw;
+    height: 7.5vh;
     background: gray;
+    color: black;
+    text-align: center;
+	vertical-align: middle;
+	line-height: 7.5vh;
+	font-size: 1.5vw;
 }
 
 #crash_site {
 	grid-column-start: 1;
 	grid-column-end: 2;
-	grid-row-start: 2;
-	grid-row-end: 3;
+	grid-row-start: 3;
+	grid-row-end: 4;
 }
 
 #beach {
 	grid-column-start: 1;
 	grid-column-end: 2;
-	grid-row-start: 1;
-	grid-row-end: 2;
+	grid-row-start: 2;
+	grid-row-end: 3;
 }
 
 #plains {
 	grid-column-start: 2;
 	grid-column-end: 3;
-	grid-row-start: 2;
-	grid-row-end: 3;
+	grid-row-start: 3;
+	grid-row-end: 4;
 }
 
 #lake {
 	grid-column-start: 2;
 	grid-column-end: 3;
-	grid-row-start: 1;
-	grid-row-end: 2;
+	grid-row-start: 2;
+	grid-row-end: 3;
 }
 
 #alien_city {
 	grid-column-start: 3;
 	grid-column-end: 4;
-	grid-row-start: 2;
-	grid-row-end: 3;
+	grid-row-start: 3;
+	grid-row-end: 4;
+}
+
+.you_are_here {
+	position: absolute;
+	line-height: 0;
+	top: 1vw;
+	right: 1vw;
+	color: red;
+	font-size: 2vw;
+}
+
+.unknown_zone {
+	color: black;
+	font-size: 2vw;
 }
