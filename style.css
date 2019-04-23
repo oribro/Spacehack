@@ -27,6 +27,7 @@ h2 {
 
 .left-window {
 	border-right: 2px solid orange;
+	width: fit-content;
 	padding: 0px 10px 10px;
 	float: left;
 	grid-column-start: 1;
@@ -257,6 +258,7 @@ p.stat {
 	color: orange;
 	float: left;
 	width: 100%;
+	height: 6em;
 	resize: none;
 	box-sizing: border-box;
     border-top: 2px solid orange;
@@ -299,6 +301,7 @@ p.stat {
 	grid-column-end: 4;
 	grid-row-start: 1;
 	grid-row-end: 5;
+	width: fit-content;
 	padding: 0px 10px;
 	border-left: 2px solid orange;
 	display: none;
@@ -400,21 +403,6 @@ footer {
     -webkit-transform: scale(0.3) rotate(0deg);
     opacity: 0;
   }
-}
-
-
-/* Mobile phones display */
-@media only screen and (min-width: 500px) {
-	#inventory {
- 		width: 10vw;
- 	}
-  	.left-window {
-  		width: 10vw;
-  	}
-  	#log {
-  		height: 30vh;
-  	}
-  
 }
 
 #world-map-wrapper {
