@@ -264,16 +264,18 @@ class Player extends Character {
 	updateIfPoisoned() {
 		if (this.pStatus === PLAYER_STATUS.POISONED) {
 			if (this.poisonCounter === POISON_PERIOD) {
+				document.getElementById("status-value").style.color = "orange";
 				document.getElementById("status-value").innerHTML = PLAYER_STATUS.HEALTHY;
 				this.pStatus = PLAYER_STATUS.HEALTHY;
 				this.poisonCounter = 1;
 				printToLog("The poison fades away and you're cured.");
 				return;
 			}
-			this.health = this.health - 1;
+			this.decHealth(1);
+			/*this.health = this.health - 1;
 			document.getElementById("hp-value").innerHTML = this.health;
 			if (this.health === 0)
-				this.die("Poisoned");
+				this.die("Poisoned");*/
 			this.poisonCounter++;
 		}
 	}
@@ -287,6 +289,7 @@ class Player extends Character {
 			if (distanceFromTree < 2) {
 				this.pStatus = PLAYER_STATUS.POISONED;
 				document.getElementById("status-value").innerHTML = this.pStatus;
+				document.getElementById("status-value").style.color = "darkred";
 				printToLog(STRINGS["poisonous_tree"]);
 			}
 
@@ -295,6 +298,7 @@ class Player extends Character {
 				this.pStatus === PLAYER_STATUS.POISONED) {
 				this.pStatus = PLAYER_STATUS.HEALTHY;
 				document.getElementById("status-value").innerHTML = this.pStatus;
+				document.getElementById("status-value").style.color = "orange";
 				printToLog(STRINGS["poisonous_tree_withdrawal"]);
 			}
 		}
@@ -716,6 +720,7 @@ class Player extends Character {
 				if (POISONOUS_FOOD.indexOf(item.name) !== -1) {
 					this.pStatus = PLAYER_STATUS.POISONED;
 					document.getElementById("status-value").innerHTML = this.pStatus;
+					document.getElementById("status-value").style.color = "darkred";
 					printToLog(STRINGS["poisoned"]);
 					this.poisonCounter = 1;
 				}
@@ -1198,6 +1203,25 @@ class Player extends Character {
 	set incHealth(addHp) {
 		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
 		document.getElementById("hp-value").innerHTML = this.hp;
+		if(this.health >= 10 && this.health < 20) {
+			document.getElementById("hp-value").style.color = "darkorange";
+		} else if (this.health >= 20) {
+			document.getElementById("hp-value").style.color = "orange";
+		}
+	}
+	// Decrease player health by 'value'. If health becomes non-positive kill the player and show cause.
+	decHealth(value, cause) {
+		this.health = this.health - value;
+		document.getElementById("hp-value").innerHTML = this.health;
+		if(this.health < 20 && this.health >= 10) {
+			document.getElementById("hp-value").style.color = "darkorange";
+		} else if (this.health < 10) {
+			document.getElementById("hp-value").style.color = "darkred";
+		}
+		document.getElementById("hp-value").innerHTML = this.health;
+		if(this.health <= 0) {
+			this.die(cause);
+		}
 	}
 	set status(newStatus) {
 		this.pStatus = newStatus;
@@ -1214,7 +1238,6 @@ class Player extends Character {
 			repopInv(this);
 			printToLog("You are now level " + this.lvl + ".");
 		}
-		
 	}
 }
 
