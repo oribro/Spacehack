@@ -21,7 +21,7 @@ h1 {
 	margin-bottom: 0;
 }
 
-h2 {
+h2, h3 {
 	text-align: center;
 }
 
@@ -412,8 +412,14 @@ footer {
     left: 0;
     top: 0;
     width: 100%; 
-    height: 100%; 
-    background-color: rgba(0,0,0,0.4);
+   
+	background-color: rgba(0,0,0,0.4);
+	height: -webkit-fill-available; /* Chrome vertical centering */
+	height: -moz-available; 		/* Firefox vertical centering */
+	display: flex;
+	visibility: hidden;
+	flex-direction: column;
+	justify-content: center;
 }
 
 #world-map {
@@ -423,9 +429,13 @@ footer {
     background-color: black;
     border: 2px solid orange;
     border-radius: 4px;
-    margin: 15%;
+
     padding: 5vh 5vh;
-    width: 50%; 
+	width: 50%; 
+	margin: auto;
+	text-align: center;
+	line-height: 100%;
+	
 }
 
 #world-map-title {
@@ -434,23 +444,17 @@ footer {
 	grid-column-end: 4;
 	grid-row-start: 1;
 	grid-row-end: 2;
+	margin: 0;
 }
 
-.close-popup {
-	position: absolute;
-	top: 1vw;
-	right: 1vw;
-    color: #aaa;
-    float: right;
-    font-size: 2vw;
-    font-weight: bold;
-}
-
-.close-popup:hover,
-.close-popup:focus {
-    color: orange;
-    text-decoration: none;
-    cursor: pointer;
+#world-map-subtitle {
+	font-size: 1vw;
+	grid-column-start: 1;
+	grid-column-end: 4;
+	grid-row-start: 2;
+	grid-row-end: 3;
+	margin: 0;
+	padding-bottom: 2vh;
 }
 
 /* World map zones */
@@ -469,36 +473,36 @@ footer {
 #crash_site {
 	grid-column-start: 1;
 	grid-column-end: 2;
-	grid-row-start: 3;
-	grid-row-end: 4;
+	grid-row-start: 4;
+	grid-row-end: 5;
 }
 
 #beach {
 	grid-column-start: 1;
 	grid-column-end: 2;
-	grid-row-start: 2;
-	grid-row-end: 3;
+	grid-row-start: 3;
+	grid-row-end: 4;
 }
 
 #plains {
 	grid-column-start: 2;
 	grid-column-end: 3;
-	grid-row-start: 3;
-	grid-row-end: 4;
+	grid-row-start: 4;
+	grid-row-end: 5;
 }
 
 #lake {
 	grid-column-start: 2;
 	grid-column-end: 3;
-	grid-row-start: 2;
-	grid-row-end: 3;
+	grid-row-start: 3;
+	grid-row-end: 4;
 }
 
 #alien_city {
 	grid-column-start: 3;
 	grid-column-end: 4;
-	grid-row-start: 3;
-	grid-row-end: 4;
+	grid-row-start: 4;
+	grid-row-end: 5;
 }
 
 .you_are_here {

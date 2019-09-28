@@ -140,7 +140,7 @@ function control(event, player) {
 			player.talk();
 			break;
 		case WORLD_MAP:
-			toggleWorldMap(player);
+			toggleWindow("world-map-wrapper");
 			break;
 	}
 }

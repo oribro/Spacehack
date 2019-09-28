@@ -105,9 +105,17 @@ function hideLeftWindow() {
  * Returns true if window was open when called, false otherwise.
  */
 function toggleWindow(name, player, force) {
-	var window = document.getElementById(name);
+    var window = document.getElementById(name);
+    if(name == "world-map-wrapper") {
+        if(window.style.visibility != "visible") {
+            window.style.visibility = "visible";
+        } else {
+            window.style.visibility = "hidden";
+        }
+        return true;
+    }
 	if(window.style.display != "block") {
-		if(window.getAttribute("id") == "inventory") {
+		if(name == "inventory") {
 			repopInv(player);
 		} else if (window.getAttribute("class") == "left-window") {
 			hideLeftWindow();
@@ -118,28 +126,6 @@ function toggleWindow(name, player, force) {
 		window.style.display = "none";
 	}
 	return true;
-}
-
-/* Shows/hides the world map */
-function toggleWorldMap(player) {
-	var map = document.getElementById('world-map-wrapper');
-	var closeBtn = document.getElementById('close-world-map');
-	map.style.display = "block";
-	const WORLD_MAP_KEY = 78;
-
-	// Prepare exit mechanisms
-	closeBtn.onclick = () => map.style.display = "none";
-	window.onclick = event => {
-	  	if (event.target === map) {
-	    	map.style.display = "none";
-	  	}
-	};
-	document.body.onkeydown = event => {
-		if (event.keyCode === WORLD_MAP_KEY) {
-	    	map.style.display = "none";
-	  	}
-  		resumePlayerMovementAndCheckFireOnLoad(player);
-	};
 }
 
 /* Repopulates the player inventory */
