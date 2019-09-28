@@ -159,8 +159,7 @@ class Player extends Character {
 		this.mapY = 0;
 
 		this.pStatus = PLAYER_STATUS.HEALTHY;
-		document.getElementById("status-value").innerHTML = this.pStatus;
-
+		setStatusStat(this.pStatus);
 	}
 
 	move(event) {
@@ -231,8 +230,9 @@ class Player extends Character {
 				incrementTurnCounter(this);
 				// Increase XP on every turn.
 				this.xp += XP_TURN;
-				document.getElementById("xp-value").innerHTML = this.xp;
-				document.getElementById("coords-value").innerHTML = "(" + this.mapX + "," + this.xPos + " ; " + this.mapY + "," + this.yPos + ")";
+				setXpStat(this.xp);
+				// Update the coordinates stat.
+				setCoordsStat(this.mapX, this.xPos, this.mapY, this.yPos);
 			}
 		}
 		
@@ -247,9 +247,9 @@ class Player extends Character {
 			incrementTurnCounter(this);
 			// Increase XP on every turn.
 			this.xp += XP_TURN;
-			document.getElementById("xp-value").innerHTML = this.xp;
+			setXpStat(this.xp);
 			// Update the coordinates stat.
-			document.getElementById("coords-value").innerHTML = "(" + this.mapX + "," + this.xPos + " ; " + this.mapY + "," + this.yPos + ")";
+			setCoordsStat(this.mapX, this.xPos, this.mapY, this.yPos);
 		}
 	}
 
@@ -264,18 +264,13 @@ class Player extends Character {
 	updateIfPoisoned() {
 		if (this.pStatus === PLAYER_STATUS.POISONED) {
 			if (this.poisonCounter === POISON_PERIOD) {
-				document.getElementById("status-value").style.color = "orange";
-				document.getElementById("status-value").innerHTML = PLAYER_STATUS.HEALTHY;
 				this.pStatus = PLAYER_STATUS.HEALTHY;
+				setStatusStat(this.pStatus);
 				this.poisonCounter = 1;
 				printToLog("The poison fades away and you're cured.");
 				return;
 			}
 			this.decHealth(1);
-			/*this.health = this.health - 1;
-			document.getElementById("hp-value").innerHTML = this.health;
-			if (this.health === 0)
-				this.die("Poisoned");*/
 			this.poisonCounter++;
 		}
 	}
@@ -288,8 +283,7 @@ class Player extends Character {
 			// Check if the player is around the poisonous tree.
 			if (distanceFromTree < 2) {
 				this.pStatus = PLAYER_STATUS.POISONED;
-				document.getElementById("status-value").innerHTML = this.pStatus;
-				document.getElementById("status-value").style.color = "darkred";
+				setStatusStat(this.pStatus);
 				printToLog(STRINGS["poisonous_tree"]);
 			}
 
@@ -297,8 +291,7 @@ class Player extends Character {
 			else if (distanceFromTree >= 2 && distanceFromTree < 3 &&
 				this.pStatus === PLAYER_STATUS.POISONED) {
 				this.pStatus = PLAYER_STATUS.HEALTHY;
-				document.getElementById("status-value").innerHTML = this.pStatus;
-				document.getElementById("status-value").style.color = "orange";
+				setStatusStat(this.pStatus);
 				printToLog(STRINGS["poisonous_tree_withdrawal"]);
 			}
 		}
@@ -352,11 +345,11 @@ class Player extends Character {
 		if(this.hunger == 0) {
 			printToLog(STRINGS[EVENT.HUNGRY3]);
 			this.pStatus = PLAYER_STATUS.MALNOURISHED;
-			document.getElementById("status-value").innerHTML = this.pStatus;
+			setStatusStat(this.pStatus);
 		}
 		if(this.hunger < 0) {
 			this.health = this.health - 1;
-			document.getElementById("hp-value").innerHTML = this.health;
+			setHpStat(this.health);
 		}
 		if(this.health === 0 && this.hunger < 0){
 			this.die("Staying hungry for too long");
@@ -373,7 +366,7 @@ class Player extends Character {
 				computedDmg = 0;
 			}
 			this.health = this.health - computedDmg;
-			document.getElementById("hp-value").innerHTML = this.health;
+			setHpStat(this.health);
 		}
 		
 		var grunt = new sound(GRUNT);
@@ -719,8 +712,7 @@ class Player extends Character {
 				// Check if the item is considered poisonous.
 				if (POISONOUS_FOOD.indexOf(item.name) !== -1) {
 					this.pStatus = PLAYER_STATUS.POISONED;
-					document.getElementById("status-value").innerHTML = this.pStatus;
-					document.getElementById("status-value").style.color = "darkred";
+					setStatusStat(this.pStatus);
 					printToLog(STRINGS["poisoned"]);
 					this.poisonCounter = 1;
 				}
@@ -744,7 +736,7 @@ class Player extends Character {
 				// Check for poison
 				if (this.pStatus === PLAYER_STATUS.POISONED) {
 					this.pStatus = PLAYER_STATUS.HEALTHY;
-					document.getElementById("status-value").innerHTML = this.pStatus;
+					setStatusStat(this.pStatus);
 					printToLog("The " + item.name + " cures you of poison.");
 				}
 				createSound(RELIEF, false);
@@ -815,7 +807,7 @@ class Player extends Character {
 					this.removeItemFromInventory("Wood", parseInt(partReqs.split(";")[1]));
 					this.removeItemFromInventory("Gravel", parseInt(partReqs.split(";")[2]));
 					// Mark the part off the parts list.
-					document.getElementById(partKey.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
+					markBuilt(partKey);
 					// Add part to ship visually.
 					repairShip(partKey);
 					// Mark that the part was built and save for later.
@@ -940,7 +932,7 @@ class Player extends Character {
 		if(item.type == "Weapon") {
 			this.equipment.Weapon = item;
 			this.dmg += parseInt(item.value);
-			document.getElementById("dmg-value").innerHTML = this.dmg;
+			setDmgStat(this.dmg);
 			createSound(EQUIP_WEAPON, false);
 		} else {
 			if(item.type == "Mask") {
@@ -952,7 +944,7 @@ class Player extends Character {
 				this.equipment.Accessory = item;
 			}
 			this.def += parseInt(item.value);
-			document.getElementById("def-value").innerHTML = this.def;
+			setDefStat(this.def);
 			if(playSound === undefined) {
 				createSound(EQUIP_CLOTHING, false);
 			}
@@ -1013,18 +1005,18 @@ class Player extends Character {
 			if(item.type == "Weapon") {
 				createSound(EQUIP_WEAPON, false);
 				this.dmg -= parseInt(item.value);
-				document.getElementById("dmg-value").innerHTML = this.dmg;
-				document.getElementById("weapon-slot").innerHTML = "Hands (0)";
+				setDmgStat(this.dmg);
+				setWeaponSlot("Hands (0)");
 			} else {
 				createSound(EQUIP_CLOTHING, false);
 				this.def -= parseInt(item.value);
-				document.getElementById("def-value").innerHTML = this.def;
+				setDefStat(this.def);
 				if(item.type == "Mask") {
-					document.getElementById("mask-slot").innerHTML = "";
+					setMaskSlot("");
 				} else if(item.type == "Suit") {
-					document.getElementById("suit-slot").innerHTML = "";
+					setSuitSlot("");
 				} else {
-					document.getElementById("accessory-slot").innerHTML = "";
+					setAccessorySlot("");
 				}
 			}
 			repopInv(this);
@@ -1140,7 +1132,7 @@ class Player extends Character {
 				} else {
 					this.xp += XP_MULTIPLIER * XP_TURN;
 				}
-				document.getElementById("xp-value").innerHTML = this.xp;
+				setXpStat(this.xp);
 			} else {
 				printToLog("You attack the air next to you. The air is oblivious.");
 			}
@@ -1195,30 +1187,19 @@ class Player extends Character {
 		// Check if the player is overcoming malnourishment.
 		if (this.hunger <= 0 && this.hunger + addHunger > 0) {
 			this.pStatus = PLAYER_STATUS.HEALTHY;
-			document.getElementById("status-value").innerHTML = this.pStatus;
+			setStatusStat(this.pStatus);
 		}
 		this.hunger += addHunger;
 	}
 	// Increase player health without exceeding max possible health.
 	set incHealth(addHp) {
 		MAX_HP - this.hp >= addHp ? this.hp += addHp : this.hp += MAX_HP - this.hp;
-		document.getElementById("hp-value").innerHTML = this.hp;
-		if(this.health >= 10 && this.health < 20) {
-			document.getElementById("hp-value").style.color = "darkorange";
-		} else if (this.health >= 20) {
-			document.getElementById("hp-value").style.color = "orange";
-		}
+		setHpStat(this.hp);
 	}
 	// Decrease player health by 'value'. If health becomes non-positive kill the player and show cause.
 	decHealth(value, cause) {
 		this.health = this.health - value;
-		document.getElementById("hp-value").innerHTML = this.health;
-		if(this.health < 20 && this.health >= 10) {
-			document.getElementById("hp-value").style.color = "darkorange";
-		} else if (this.health < 10) {
-			document.getElementById("hp-value").style.color = "darkred";
-		}
-		document.getElementById("hp-value").innerHTML = this.health;
+		setHpStat(this.hp);
 		if(this.health <= 0) {
 			this.die(cause);
 		}
@@ -1232,9 +1213,9 @@ class Player extends Character {
 			this.xp -= this.lvl * 1000;
 			this.lvl++;
 			this.dmg += this.lvl * 5;
-			document.getElementById("xp-value").innerHTML = this.xp;
-			document.getElementById("lvl-value").innerHTML = this.lvl;
-			document.getElementById("dmg-value").innerHTML = this.dmg;
+			setXpStat(this.xp);
+			setLvlStat(this.lvl);
+			setDmgStat(this.dmg);
 			repopInv(this);
 			printToLog("You are now level " + this.lvl + ".");
 		}
@@ -1425,7 +1406,7 @@ class NPC extends Character{
 	/* Poisons the player for the given duration in turns */
 	applyPoison(player, duration) {
 		player.pStatus = PLAYER_STATUS.POISONED;
-		document.getElementById("status-value").innerHTML = player.pStatus;
+		setStatusStat(player.pStatus);
 		printToLog(STRINGS["poisoned"]);
 		player.poisonCounter = POISON_PERIOD - duration;
 	}
