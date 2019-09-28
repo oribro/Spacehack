@@ -293,7 +293,7 @@ function isNumOrAlphabetKey(keyCode) {
 	if(keyCode >= '0'.charCodeAt(0) && keyCode <= '9'.charCodeAt(0) || 
 	   keyCode >= 'A'.charCodeAt(0) && keyCode <= 'Z'.charCodeAt(0) || 
 	   keyCode >= 'a'.charCodeAt(0) && keyCode <= 'z'.charCodeAt(0) ||
-	   keyCode == 188 || keyCode == 189)
+	   keyCode == 188 || keyCode == 189 || keyCode >= 96 && keyCode <= 105)
 	{
 		return true;
 	}
