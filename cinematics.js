@@ -47,7 +47,6 @@ function spawnPlayer(player) {
 	player.draw(...playerPos);
 	//log = log.slice(0, log.lastIndexOf("\n") - 1);
 	printToLog(STRINGS[EVENT.EXIT_SHIP]);
-	printToLog(`\"Crash site\" area has been added to your world map`);
 	createSound(FIRE_SOUND, true);
 	document.body.onkeydown = function(event) {
 		control(event, player);

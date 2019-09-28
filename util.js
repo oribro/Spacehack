@@ -416,7 +416,7 @@ function getRandomPosition(xMax=HEIGHT, yMax=WIDTH) {
 /** Increments turn counter and prints it to the stat line, advances NPCs **/
 function incrementTurnCounter(player) {
 	turn++;
-	document.getElementById("turn-value").innerHTML = turn;
+	setTurnStat(turn);
 	player.updateLevel();
 	npcs.forEach(function(npc) {
 		if(npc.status == "enemy") {
@@ -427,6 +427,9 @@ function incrementTurnCounter(player) {
 			return;
 		}
 	});
+	if(turn == 1) {
+		printTurnOneMsgs();
+	}
 	managePlot(player);
 	saveGame(player);
 }

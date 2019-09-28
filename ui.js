@@ -61,6 +61,10 @@ function setCoordsStat(mapX, xPos, mapY, yPos) {
     document.getElementById("coords-value").innerHTML = "(" + mapX + "," + xPos + " ; " + mapY + "," + yPos + ")";
 }
 
+function setTurnStat(turn) {
+    document.getElementById("turn-value").innerHTML = turn;
+}
+
 /* Marks a ship part from the list as built. */
 function markBuilt(partKey) {
     document.getElementById(partKey.toLowerCase()+"-reqs").parentNode.style.textDecorationLine = "line-through";
@@ -258,4 +262,9 @@ function showProgressBar(period) {
 	      bar.style.width = width + '%'; 
 	    }
   	}
+}
+
+/* Prints messages that should be displayed on turn one */
+function printTurnOneMsgs() {
+    printToLog(`\"Crash site\" area has been added to your world map.`);
 }
