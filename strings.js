@@ -107,6 +107,8 @@ const STRINGS = {
 	"examine_urban_floor": "It's a floor for house decoration.",
 
 	"examine_gate": "It's a large door and the access point to the city.",
+
+	"examine_octoman": "It's a man with eight legs. Or an octopus with a human head.",
 	
 	"examine_nothing": "\"There's nothing interesting around.\"",
 	

@@ -519,7 +519,10 @@ function spawnGameObjects(map, initial) {
 					setTileOnTop("c"+biDigY+biDigX, T_URBAN_FLOOR, "true");
 				}
 			}
-			
+
+			// Octoman.
+			npcs.push(new NPC(13, 6, "Octoman", "friend"));
+
 			break;
 	}
 	loadMapBigObjects(map);

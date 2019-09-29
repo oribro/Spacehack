@@ -23,6 +23,7 @@ const T_CHICK_L = ASSETS + TILESET + "chick.png";
 const T_TRIHEADHUMANOID = ASSETS + TILESET + "triheadhumanoid.png";
 const T_SNAKE_R = ASSETS + TILESET + "snake_r.png";
 const T_SNAKE_L = ASSETS + TILESET + "snake_l.png";
+const T_OCTOMAN = ASSETS + TILESET + "octoman.png";
 
 /* Object tiles */
 const T_SHIP2 = ASSETS + TILESET + "ship2.png";
@@ -199,7 +200,9 @@ const ENV = {
 
 		"urban_floor": `T_URBAN_FLOOR;${STRINGS["examine_urban_floor"]}`,
 
-		"gate": `T_GATE;${STRINGS["examine_gate"]}`
+		"gate": `T_GATE;${STRINGS["examine_gate"]}`,
+
+		"octoman": `T_OCTOMAN;${STRINGS["examine_octoman"]}`
 }
 
 
