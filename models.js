@@ -679,7 +679,8 @@ class Player extends Character {
 				listLength = Object.keys(BIG_OBJECTS_REQS).length;
 				break;
 			case "trade":
-				var itemSel = parseInt(await promptInput("Choose item number from the inventory:"));
+				var itemSel = parseInt(await promptInput("Choose item number from the inventory to sell," +
+					"or choose an item letter from the store to buy:"));
 		}
 		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
@@ -927,10 +928,12 @@ class Player extends Character {
 	async trade() {
 		createSound(TRADE, false);
 		var persist = toggleWindow("inventory", this, true);
-		var itemSel = await this.itemSelection("inventory");
+		toggleWindow("store", this);
+		var itemSel = await this.itemSelection("trade");
 		if(!persist) {
 			toggleWindow("inventory", this);
 		}
+		hideLeftWindow();
 		// Ilegal selection. Nothing to do here.
 		if (!itemSel)
 			return;
