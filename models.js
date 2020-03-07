@@ -678,6 +678,8 @@ class Player extends Character {
 				var itemSel = parseInt(await promptInput("Choose item number from the big objects list:"));
 				listLength = Object.keys(BIG_OBJECTS_REQS).length;
 				break;
+			case "trade":
+				var itemSel = parseInt(await promptInput("Choose item number from the inventory:"));
 		}
 		if(isNaN(itemSel)) {
 			printToLog(STRINGS["use_err_msg"]);
@@ -907,6 +909,10 @@ class Player extends Character {
 				return;
 
 			switch (env) {
+				case "octoman":
+					this.trade();
+					break;
+
 				case "triheadhumanoid":
 					talkToTriHeadHumanoid(this);
 					break;
@@ -916,6 +922,19 @@ class Player extends Character {
 					break;
 			}
 		}
+	}
+
+	async trade() {
+		createSound(TRADE, false);
+		var persist = toggleWindow("inventory", this, true);
+		var itemSel = await this.itemSelection("inventory");
+		if(!persist) {
+			toggleWindow("inventory", this);
+		}
+		// Ilegal selection. Nothing to do here.
+		if (!itemSel)
+			return;
+		var item = this.getInventory()[itemSel-1];
 	}
 
 	/* Takes an item and equips it 

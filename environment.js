@@ -123,6 +123,7 @@ const SNAKE_HISS = ASSETS + SOUNDS + "snake_hiss.ogg";
 /* Object sounds */
 const CONTAINER_OPEN = ASSETS + SOUNDS + "container-open.wav";
 const BUILDING = ASSETS + SOUNDS + "build.wav";
+const TRADE = ASSETS + SOUNDS + "trade.wav";
 
 /* Environment sounds */
 const FIRE_SOUND = ASSETS + SOUNDS + "fire.mp3";
