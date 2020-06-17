@@ -30,6 +30,11 @@ const USER_ACTION = {
 }
 
 var npcs = [];
+var storeInv = [
+	new Item("Bow"),
+	new Item("Crossbow"),
+	new Item("Arrows")
+];
 
 /*
 *	Class for a game character
@@ -929,6 +934,7 @@ class Player extends Character {
 		createSound(TRADE, false);
 		var persist = toggleWindow("inventory", this, true);
 		toggleWindow("store", this);
+		repopInv(this, true);
 		var itemSel = await this.itemSelection("trade");
 		if(!persist) {
 			toggleWindow("inventory", this);
@@ -938,6 +944,22 @@ class Player extends Character {
 		if (!itemSel)
 			return;
 		var item = this.getInventory()[itemSel-1];
+		if (item.value > 1) {
+			var amount = parseInt(await promptInput("How many would you like to sell?"));
+			if (amount < 1 || amount > item.value) {
+				printToLog(STRINGS["not_in_range"]);
+				return;
+			}
+			if (amount == item.value) {
+				this.removeItemFromInventory(item.name, item.value)
+				return;
+			}
+			item.value -= amount;
+			repopInv(this);
+		}
+		else {
+			this.removeItemFromInventory(item.name, item.value)
+		}
 	}
 
 	/* Takes an item and equips it 

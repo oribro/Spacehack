@@ -128,10 +128,14 @@ function toggleWindow(name, player, force) {
 	return true;
 }
 
-/* Repopulates the player inventory */
-function repopInv(player) {
-	var invElement = document.getElementById("inventory");
-	
+/* Repopulates the player inventory or store inventory*/
+function repopInv(player, store=false) {
+	var invElement;
+	if (store)
+		invElement = document.getElementById("store");
+	else
+		invElement = document.getElementById("inventory");
+
 	// Removes old inventory list.
 	var invLists = document.getElementsByClassName("inv-list");
 	if(invLists.length > 0) {
@@ -141,8 +145,14 @@ function repopInv(player) {
 	// Creates new inventory list.
 	var olElement = document.createElement("ol");
 	olElement.setAttribute("class", "inv-list");
+	if (store)
+		olElement.setAttribute("type", "a");
 	invElement.appendChild(olElement);
-	var inventory = player.getInventory();
+	var inventory;
+	if (store)
+		inventory = storeInv;
+	else
+		inventory = player.getInventory();
 	var i;
 	for(i = 0; i < inventory.length; i++) {
 		var liElement = document.createElement("li");
