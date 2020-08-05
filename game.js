@@ -143,8 +143,7 @@ function spawnGameObjects(map, initial) {
 	board = document.createElement("div");
 	board.setAttribute("id", "game-board");
 	document.getElementById("game-board-wrapper").insertBefore(board, document.getElementById("game-board-wrapper").lastElementChild);
-	//switch (map) {
-	switch("2,0") {
+	switch (map) {
 		// Map 0,0 (Spawn map).
 		case "0,0":
 			document.getElementById("map-value").innerHTML = "Crash site";
